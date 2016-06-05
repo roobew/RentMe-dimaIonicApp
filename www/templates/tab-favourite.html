@@ -1,0 +1,22 @@
+<ion-view view-title="Preferiti">
+    <ion-content >
+
+        <div ng-controller="MapCtrl" ng-init="init()" id="map" data-tap-disabled="true"></div>
+
+        <button>TRY HTTP</button>
+        <ion-list ng-controller="FavouriteListCtrl">
+            <ion-item class="item item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="f in elencoFav" type="item-text-wrap" href="#/tab/favourites/{{f.id}}">
+                <img ng-src="{{f.previewImg}}" />
+                <h2>{{f.title}}</h2>
+                <h4>{{f.zone}}</h4>
+                <h5>{{f.via}}</h5>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                <ion-option-button class="button-assertive" ng-click="removeFav(f)">
+                  Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-view>
