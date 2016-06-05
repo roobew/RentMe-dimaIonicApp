@@ -22,10 +22,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
         url: '/tab',
         abstract: true,
-        templateUrl: 'templates/tabs.html'
+        templateUrl: 'templates/menu.html',
+        controller: 'AppCtrl'
     })
 
   // Each tab has its own nav history stack:
@@ -34,66 +35,78 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     url: '/search',
     views: {
       'tab-search': {
-        templateUrl: 'templates/tab-search.html',
+        templateUrl: 'templates/search/tab-search.html',
         controller: 'SearchCtrl'
       }
     }
   })
+  .state('tab.result', {
+    url: '/search/result',
+    views: {
+      'tab-cerca': {
+        templateUrl: 'templates/search/result.html',
+        controller: "ResultCtrl"
+      }
+    }
+  })
 
-    .state('tab.home', {
+  
+  .state('tab.home', {
       url: '/home',
         views: {
             'tab-home': {
-            templateUrl: 'templates/tab-home.html',
+            templateUrl: 'templates/home/tab-home.html',
             controller: 'HomeCtrl'
             }
         }
     })
 
+  
   .state('tab.rent', {
       url: '/rent',
         views: {
             'tab-rent': {
-            templateUrl: 'templates/tab-rent.html',
+            templateUrl: 'templates/rent/tab-rent.html',
             controller: 'RentCtrl'
             }
         }
     })
 
+  
   .state('tab.chats', {
       url: '/chats',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
+          templateUrl: 'templates/chat/tab-chats.html',
           controller: 'ChatsCtrl'
         }
       }
     })
-    .state('tab.chat-detail', {
+  .state('tab.chat-detail', {
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
+          templateUrl: 'templates/chat/chat-detail.html',
           controller: 'ChatDetailCtrl'
         }
       }
     })
 
+  
   .state('tab.favourite', {
     url: '/favourites',
     views: {
       'tab-favourite': {
-        templateUrl: 'templates/tab-favourite.html'
+        templateUrl: 'templates/favourite/tab-favourite.html'
         //controller: 'FavouriteCtrl'
       }
     }
   })
-
   .state('tab.favourite-detail', {
       url: '/favourites/:favId',
       views: {
         'tab-favourite': {
-          templateUrl: 'templates/favourite-detail.html',
+          templateUrl: 'templates/favourite/favourite-detail.html',
           controller: 'FavouriteDetailCtrl'
         }
       }
@@ -102,4 +115,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/home');
 
-});
+})
+
+.config(['$ionicConfigProvider', function($ionicConfigProvider) {
+
+    $ionicConfigProvider.tabs.position('bottom'); // other values: top
+
+}]);
