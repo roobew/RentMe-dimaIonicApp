@@ -1,6 +1,89 @@
 angular.module('starter.controllers', [])
+.controller('AppCtrl', function($scope) {
+    $scope.platform = ionic.Platform.platform();
+})
 
-.controller('SearchCtrl', function($scope) {})
+.controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
+    $scope.modalData = {"msg" : 'Select'};
+    $scope.loginData = {};
+    // Create the modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
+        id: 'place',
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modalPlace = modal;
+    });
+    
+    $ionicModal.fromTemplateUrl('templates/search/modalPrice.html', {
+        id: 'price',
+        scope: $scope
+    }).then(function(modal) {
+        $scope.modalPrice = modal;
+    });
+    // Triggered in the modal to close it
+    $scope.closeModal = function($string) {
+        switch($string){
+            case 'place':
+                $scope.modalPlace.hide();
+                break;
+            case 'price':
+                $scope.modalPrice.hide();
+                break;
+        }
+
+    };
+    // Open the modal
+    $scope.openModal = function($string) {
+        switch($string){
+            case 'place':
+                $scope.modalPlace.show();
+                break;
+            case 'price':
+                $scope.modalPrice.show();
+                break;
+        }
+    };
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function($string) {
+        console.log('Doing login', $string);
+        $scope.closeModal($string);
+    };
+})
+
+.controller('ResultCtrl', function($scope) {
+    $scope.map=false;
+    $scope.switchView = function(){
+        $scope.map = !$scope.map;
+    }
+
+})
+
+.controller('modalPlaceCtrl', function($scope, $ionicModal) {
+  $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  
+  $ionicModal.fromTemplateUrl('templates/search/modalZone.html', {
+    scope: $scope,
+    animation: 'slide-in-up',
+    focusFirstInput: true
+  }).then(function(modal) {
+    $scope.modalCtrl = modal;
+  });
+  
+  $scope.openModal = function() {          
+    $scope.modalCtrl.show();
+  };
+    
+  $scope.hideModal = function() {
+        $scope.modalCtrl.hide();
+  };
+  
+  $scope.doSomething = function(item) {
+    $scope.modalData.msg = item;
+    $scope.modalCtrl.hide();
+  };
+
+})
+
 
 .controller('HomeCtrl', function($scope) {})
 
