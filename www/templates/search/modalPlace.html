@@ -6,7 +6,7 @@
       <h1 class="title">Place</h1>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin('place')">
+    <form ng-submit="submit('place')">
       <!--<div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
@@ -20,16 +20,18 @@
           <button class="button button-block button-positive" type="submit">Log in</button>
         </label>
       </div>-->
+        <button ng-hide="true"></button>
         <ion-list>
             <label class="item">
-                <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive" ng-click="doSomething('Current Position','1')">Posizione Attuale</button>
+                <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive" ng-click="doSomething('Current Position',1)">Current Position</button>
             </label>
             <label class="item">
-                <button class="button button-block button-clear button-dark" ng-click="openModal()">{{modalData.zone}}</button>
+                <button class="button button-block button-clear button-dark" ng-click="openModalZone()">{{modalData.zone}}</button>
             </label>
             <br>
-            <label class="item item-input">
-                <input type="text" ng-model="modalData.address" placeholder="Via" ng-click="doSomething(modalData.address,'3')">
+            <label class="item">
+                <input type="text" ng-model="modalData.address" placeholder="Via" ng-change="doSomething(modalData.address,3)" ng-click="doSomething(modalData.address,3)">
+
             </label>
         </ion-list>
     </form>

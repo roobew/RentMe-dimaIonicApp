@@ -4,7 +4,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
-    $scope.modalData = {"zone" : 'Select',
+    $scope.modalData = {"choice" : '-1',
+                        "curPos" : 'Current Position',
+                        "zone" : 'Select',
                         "address" : '',
                         "place" : 'Select',
                         "type" : 'Select',
@@ -12,14 +14,19 @@ angular.module('starter.controllers', [])
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
-        scope: $scope
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
+
     }).then(function(modal) {
         $scope.modalPlace = modal;
     });
     
     $ionicModal.fromTemplateUrl('templates/search/modalPrice.html', {
         id: 'price',
-        scope: $scope
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
     }).then(function(modal) {
         $scope.modalPrice = modal;
     });
@@ -47,12 +54,7 @@ angular.module('starter.controllers', [])
         }
     };
     // Perform the login action when the user submits the login form
-    $scope.doLogin = function($string) {
-        alert('coiao');
-        //$scope.modalData.zone = 'Select';
-        //$scope.modalData.place = $scope.modalData.address;
-        $scope.closeModal($string);
-    };
+
 })
 
 .controller('ResultCtrl', function($scope) {
@@ -64,43 +66,71 @@ angular.module('starter.controllers', [])
 })
 
 .controller('modalPlaceCtrl', function($scope, $ionicModal) {
-  $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  $scope.months = ['Zone 1','Zone 2','Zone 3','Zone 4'];
   
   $ionicModal.fromTemplateUrl('templates/search/modalZone.html', {
     scope: $scope,
-    animation: 'slide-in-up',
+    animation: 'null', //slide-in-up',
     focusFirstInput: true
   }).then(function(modal) {
-    $scope.modalCtrl = modal;
+    $scope.modalZone = modal;
   });
   
-  $scope.openModal = function() {
-    $scope.modalCtrl.show();
+  $scope.openModalZone = function() {
+    $scope.modalData.choice = 2;
+    $scope.modalZone.show();
   };
     
-  $scope.hideModal = function() {
-        $scope.modalCtrl.hide();
+  $scope.hideModalZone = function() {
+        $scope.modalZone.hide();
   };
   
   $scope.doSomething = function(item,n) {
-    $scope.modalData.place = item;
+    //$scope.modalData.place = item;
+      //alert('dosome');
       switch(n){
-          case '1':
+          case 1:
+              $scope.modalData.choice = 1;
               $scope.modalData.zone = 'Select';
               $scope.modalData.address = '';
+              $scope.modalData.place = $scope.modalData.curPos;
               break;
-          case '2':
+          case 2:
+              $scope.modalData.choice = 2;
                $scope.modalData.zone = item;
                $scope.modalData.address = '';
+               $scope.modalData.place = $scope.modalData.zone;
+              $scope.modalZone.hide();
               break;
-          case '3':
+          case 3:
+              $scope.modalData.choice = 3;
+              //alert($scope.modalData.choice);
               $scope.modalData.zone = 'Select';
-              $scope.modalData.address = item;
+              //$scope.modalData.address = item;
+              $scope.modalData.place = $scope.modalData.address;
               break;
       }
-    $scope.modalCtrl.hide();
+
   };
 
+$scope.submit = function($string) {
+      //  alert($scope.modalData.choice);
+        switch($scope.modalData.choice){
+            case 1:
+                $scope.modalData.place = $scope.modalData.curPos;
+                break;
+            case 2:
+                //$scope.modalData.place = $scope.modalData.zone;
+                break;
+            case 3:
+                $scope.modalData.place = $scope.modalData.address;
+                break;
+        }
+        //$scope.modalPlace = $string;
+        //$scope.modalData.zone = 'Select';
+        //$scope.modalData.place = $scope.modalData.address;
+        $scope.closeModal($string);
+    };
 })
 
 
