@@ -7,3 +7,15 @@
 .blueItem{
     color:blue;
 }
+
+.tabs-top >.tabs, .tabs.tabs-top
+{
+    top: 7.5em !important;
+}
+
+.has-cazzo{
+   top: 12em !important;
+}
+.has-minchia{
+   top: 3em !important;
+}

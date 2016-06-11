@@ -71,6 +71,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
     })
+  .state('tab.rent.bozze', {
+        url: '/rent/bozze',
+        views: {
+            'rent-bozze': {
+            templateUrl: 'templates/rent/bozze.html'
+            }
+        }
+    })
+
+  .state('tab.rent.pubblicati', {
+        url: '/rent/pubblicati',
+        views: {
+            'rent-pubblicati': {
+            templateUrl: 'templates/rent/pubblicati.html'
+            }
+        }
+    })
 
   
   .state('tab.chats', {
