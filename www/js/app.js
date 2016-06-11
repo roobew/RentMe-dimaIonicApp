@@ -43,7 +43,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   .state('tab.result', {
     url: '/search/result',
     views: {
-      'tab-cerca': {
+      'tab-search': {
         templateUrl: 'templates/search/result.html',
         controller: "ResultCtrl"
       }

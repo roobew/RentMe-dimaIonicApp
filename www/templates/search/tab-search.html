@@ -4,26 +4,26 @@
         <ion-list>
             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-click="openModal('place')">
                 <h2>Dove?</h2>
-                <h4 class="blueItem">{{modalData.msg}}</h4>
+                <h4 class="blueItem">{{modalData.place}}</h4>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 
             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap">
                 <h2>Tipo?</h2>
-                <h4 class="blueItem">Scegli</h4>
+                <h4 class="blueItem">{{modalData.type}}</h4>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 
             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-click="openModal('price')">
                 <h2>Prezzo?</h2>
-                <h4 class="blueItem">Scegli</h4>
+                <h4 class="blueItem">{{modalData.price}}</h4>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 
             <div class="row" style="margin-top:1em;s">
-                <button class="button button-positive col">
+                <a class="button button-positive col" href="#/tab/search/result ">
                     Cerca
-                </button>
+                </a>
             </div>
             <!---->
         </ion-list>

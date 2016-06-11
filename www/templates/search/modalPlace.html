@@ -22,14 +22,14 @@
       </div>-->
         <ion-list>
             <label class="item">
-                <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive">Posizione Attuale</button>
+                <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive" ng-click="doSomething('Current Position','1')">Posizione Attuale</button>
             </label>
             <label class="item">
-                <button class="button button-block button-clear button-dark" ng-click="openModal()">{{modalData.msg}}</button>
+                <button class="button button-block button-clear button-dark" ng-click="openModal()">{{modalData.zone}}</button>
             </label>
             <br>
             <label class="item item-input">
-                <input type="text" ng-model="loginData.username" placeholder="Via">
+                <input type="text" ng-model="modalData.address" placeholder="Via" ng-click="doSomething(modalData.address,'3')">
             </label>
         </ion-list>
     </form>

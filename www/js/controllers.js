@@ -4,8 +4,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
-    $scope.modalData = {"msg" : 'Select'};
-    $scope.loginData = {};
+    $scope.modalData = {"zone" : 'Select',
+                        "address" : '',
+                        "place" : 'Select',
+                        "type" : 'Select',
+                        "price" : 'Select'};
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
@@ -45,7 +48,9 @@ angular.module('starter.controllers', [])
     };
     // Perform the login action when the user submits the login form
     $scope.doLogin = function($string) {
-        console.log('Doing login', $string);
+        alert('coiao');
+        //$scope.modalData.zone = 'Select';
+        //$scope.modalData.place = $scope.modalData.address;
         $scope.closeModal($string);
     };
 })
@@ -69,7 +74,7 @@ angular.module('starter.controllers', [])
     $scope.modalCtrl = modal;
   });
   
-  $scope.openModal = function() {          
+  $scope.openModal = function() {
     $scope.modalCtrl.show();
   };
     
@@ -77,8 +82,22 @@ angular.module('starter.controllers', [])
         $scope.modalCtrl.hide();
   };
   
-  $scope.doSomething = function(item) {
-    $scope.modalData.msg = item;
+  $scope.doSomething = function(item,n) {
+    $scope.modalData.place = item;
+      switch(n){
+          case '1':
+              $scope.modalData.zone = 'Select';
+              $scope.modalData.address = '';
+              break;
+          case '2':
+               $scope.modalData.zone = item;
+               $scope.modalData.address = '';
+              break;
+          case '3':
+              $scope.modalData.zone = 'Select';
+              $scope.modalData.address = item;
+              break;
+      }
     $scope.modalCtrl.hide();
   };
 
