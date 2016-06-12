@@ -5,34 +5,22 @@
     </div>
       <h1 class="title">Place</h1>
   </ion-header-bar>
-  <ion-content>
-    <form ng-submit="submit('place')">
-      <!--<div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>-->
-        <button ng-hide="true"></button>
+  <ion-content class="padding">
+    <form>
         <ion-list>
-            <label class="item">
+            <ion-item class="item item-input" style="visiblity: hidden; width:0px; height: 0px; background: transparent; border: 0;">
+                <input type="submit" style="width:0; height:0; background:transparent; border:0;" ng-click="submit('place',3)" >
+            </ion-item>
+            <ion-item class="item-input" type="item-text-wrap">
                 <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive" ng-click="doSomething('Current Position',1)">Current Position</button>
-            </label>
-            <label class="item">
+            </ion-item>
+            <ion-item class="item-input" type="item-text-wrap">
                 <button class="button button-block button-clear button-dark" ng-click="openModalZone()">{{modalData.zone}}</button>
-            </label>
-            <br>
-            <label class="item">
-                <input type="text" ng-model="modalData.address" placeholder="Via" ng-change="doSomething(modalData.address,3)" ng-click="doSomething(modalData.address,3)">
-
-            </label>
+            </ion-item>
+            <ion-item class="item-input" type="item-text-wrap">
+                <input type="text" ng-model="modalData.address" placeholder="Via"  ng-click="doSomething(modalData.address,3)"/>
+                <button type="submit" class="button button-small button-positive" style="margin: 12px" ng-click="submit('place',3)">GO</button>
+            </ion-item>
         </ion-list>
     </form>
   </ion-content>

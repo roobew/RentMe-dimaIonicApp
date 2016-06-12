@@ -86,41 +86,38 @@ angular.module('starter.controllers', [])
   };
   
   $scope.doSomething = function(item,n) {
-    //$scope.modalData.place = item;
-      //alert('dosome');
       switch(n){
           case 1:
               $scope.modalData.choice = 1;
               $scope.modalData.zone = 'Select';
               $scope.modalData.address = '';
               $scope.modalData.place = $scope.modalData.curPos;
+              $scope.submit('place',1);
               break;
           case 2:
               $scope.modalData.choice = 2;
-               $scope.modalData.zone = item;
-               $scope.modalData.address = '';
-               $scope.modalData.place = $scope.modalData.zone;
+              $scope.modalData.zone = item;
+              $scope.modalData.address = '';
+              $scope.modalData.place = $scope.modalData.zone;
               $scope.modalZone.hide();
+              $scope.submit('place',2);
               break;
           case 3:
               $scope.modalData.choice = 3;
-              //alert($scope.modalData.choice);
               $scope.modalData.zone = 'Select';
-              //$scope.modalData.address = item;
-              $scope.modalData.place = $scope.modalData.address;
               break;
       }
 
   };
 
-$scope.submit = function($string) {
-      //  alert($scope.modalData.choice);
+$scope.submit = function($string,n) {
+    $scope.modalData.choice=n;
         switch($scope.modalData.choice){
             case 1:
                 $scope.modalData.place = $scope.modalData.curPos;
                 break;
             case 2:
-                //$scope.modalData.place = $scope.modalData.zone;
+                $scope.modalData.place = $scope.modalData.zone;
                 break;
             case 3:
                 $scope.modalData.place = $scope.modalData.address;
