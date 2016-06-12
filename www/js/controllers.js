@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
 .controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
     $scope.modalData = {"choice" : '-1',
                         "curPos" : 'Current Position',
-                        "zone" : 'Select',
+                        "zone" : 'Select a Zone',
                         "address" : '',
                         "place" : 'Select',
                         "type" : 'Select',
@@ -46,6 +46,8 @@ angular.module('starter.controllers', [])
     $scope.openModal = function($string) {
         switch($string){
             case 'place':
+                $scope.modalData.zone="Select a Zone";
+                $scope.modalData.address="";
                 $scope.modalPlace.show();
                 break;
             case 'price':
@@ -89,7 +91,7 @@ angular.module('starter.controllers', [])
       switch(n){
           case 1:
               $scope.modalData.choice = 1;
-              $scope.modalData.zone = 'Select';
+              $scope.modalData.zone = 'Select a Zone';
               $scope.modalData.address = '';
               $scope.modalData.place = $scope.modalData.curPos;
               $scope.submit('place',1);
@@ -103,8 +105,8 @@ angular.module('starter.controllers', [])
               $scope.submit('place',2);
               break;
           case 3:
-              $scope.modalData.choice = 3;
-              $scope.modalData.zone = 'Select';
+
+              $scope.modalData.zone = 'Select a Zone';
               break;
       }
 
@@ -120,6 +122,7 @@ $scope.submit = function($string,n) {
                 $scope.modalData.place = $scope.modalData.zone;
                 break;
             case 3:
+                $scope.modalData.choice = 3;
                 $scope.modalData.place = $scope.modalData.address;
                 break;
         }
