@@ -1,14 +1,14 @@
 <ion-content class="has-cazzo">
-    <ion-list>
-      <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" >
-        <h2>Annuncio 1</h2>
+    <ion-list ng-controller="RentPubblicatiCtrl">
+      <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" href="#/tab/rent/pubblicati/rent-detail/{{e.id}}">
+        <h2>{{e.title}}</h2>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
          <ion-option-button class="button-calm"
                        ng-click="edit(item)">
             Edit
         </ion-option-button>
-        <ion-option-button class="button-assertive">
+        <ion-option-button class="button-assertive" ng-click="removePubblicato(e)">
           Delete
         </ion-option-button>
       </ion-item>

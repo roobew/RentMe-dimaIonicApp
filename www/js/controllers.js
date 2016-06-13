@@ -136,7 +136,18 @@ $scope.submit = function($string,n) {
 
 .controller('HomeCtrl', function($scope) {})
 
-.controller('RentCtrl', function($scope) {})
+.controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
+
+    $scope.elencoPubblicati = RentPubblicatiList.pubblicatiArray;
+
+    $scope.removePubblicato = function(ss){
+        RentPubblicatiList.rimuoviPubblicato(ss);
+    }
+})
+
+.controller('RentDetailCtrl', function($scope, $stateParams, RentPubblicatiList) {
+  $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
 

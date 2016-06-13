@@ -66,8 +66,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/rent',
         views: {
             'tab-rent': {
-            templateUrl: 'templates/rent/tab-rent.html',
-            controller: 'RentCtrl'
+            templateUrl: 'templates/rent/tab-rent.html'
             }
         }
     })
@@ -85,6 +84,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         views: {
             'rent-pubblicati': {
             templateUrl: 'templates/rent/pubblicati.html'
+            }
+        }
+    })
+
+  .state('tab.rent.pubblicati.rent-detail', {
+        url: '/rent/pubblicati/:rentID',
+        views: {
+            'rent-detail': {
+            templateUrl: 'templates/rent/rent-detail.html'
             }
         }
     })

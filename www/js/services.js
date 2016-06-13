@@ -95,4 +95,28 @@ angular.module('starter.services', [])
 
 })
 
+.service('RentPubblicatiList', function(){
+    this.pubblicatiArray = [
+        {id:0, title:"Palude infestata", zone:"Bonola", previewImg:url1, via:"Piazza duomo Milano"},
+        {id:1, title:"Casa Zio Samir", zone:"Baghdad", previewImg:url2, via:"Città studi Milano"},
+        {id:2, title:"Villa esplosiva", zone:"Quarto Oggiaro", previewImg:url3, via:"San Babila Milano"},
+        {id:3, title:"Catapecchia Abusiva", zone:"Catania Alta", previewImg:url4, via:"Stadio Meazza milano"}
+    ];
+
+    this.rimuoviPubblicato = function (i){
+        this.pubblicatiArray.splice(this.pubblicatiArray.indexOf(i), 1);
+    }
+
+    this.getPubblicato = function(xx){
+       for (var i = 0; i < this.pubblicatiArray.length; i++) {
+            if (this.pubblicatiArray[i].id === parseInt(xx)) {
+              return this.pubblicatiArray[i];
+                console.log("Trovato!");
+            }
+          }
+          return null;
+        }
+
+})
+
 ;
