@@ -1,6 +1,6 @@
 <ion-content class="has-cazzo">
     <ion-list ng-controller="RentPubblicatiCtrl">
-      <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" href="#/tab/rent/pubblicati/rent-detail/{{e.id}}">
+      <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" ui-sref="tab.rent.pubblicati.rent-detail({ rentID: e.id })">
         <h2>{{e.title}}</h2>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
@@ -15,3 +15,8 @@
 
     </ion-list>
 </ion-content>
+
+<!--
+    ng-href="#tab/rent/pubblicati/rent-detail/{{e.id}}"
+    ui-sref="tab.rent.pubblicati.rent-detail({ rentID: e.id })"
+-->
