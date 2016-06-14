@@ -138,7 +138,7 @@ $scope.submit = function($string,n) {
 
 .controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
 
-    $scope.elencoPubblicati = RentPubblicatiList.pubblicatiArray;
+    $scope.elencoPubblicati = RentPubblicatiList.all();
 
     $scope.removePubblicato = function(ss){
         RentPubblicatiList.rimuoviPubblicato(ss);

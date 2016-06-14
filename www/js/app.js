@@ -61,41 +61,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
     })
 
-  
   .state('tab.rent', {
-      url: '/rent',
-        views: {
-            'tab-rent': {
+    url: '/rent',
+    views: {
+        'tab-rent': {
             templateUrl: 'templates/rent/tab-rent.html'
             }
         }
     })
-  .state('tab.rent.bozze', {
-        url: '/rent/bozze',
+  .state('tab.rent.pubblicati', {
+        url: '/pubblicati',
+        views: {
+            'rent-pubblicati': {
+            templateUrl: 'templates/rent/pubblicati.html',
+            controller: 'RentPubblicatiCtrl'
+            }
+        }
+    })
+
+  .state('tab.rent.rent-detailP', {
+        url: '/pubblicati/:rentID',
+        views: {
+            'rent-pubblicati': {
+            templateUrl: 'templates/rent/rent-detail.html',
+            controller: 'RentDetailCtrl'
+
+            }
+        }
+    })
+     .state('tab.rent.bozze', {
+        url: '/bozze',
         views: {
             'rent-bozze': {
             templateUrl: 'templates/rent/bozze.html'
             }
         }
     })
-
-  .state('tab.rent.pubblicati', {
-        url: '/rent/pubblicati',
+  .state('tab.rent.rent-detailB', {
+        url: '/bozze/:rentID',
         views: {
-            'rent-pubblicati': {
-            templateUrl: 'templates/rent/pubblicati.html'
-            }
-        }
-    })
-
-  .state('tab.rent.pubblicati.rent-detail', {
-        url: '/rent/pubblicati/:rentID',
-        views: {
-            'rent-detail': {
+            'rent-bozze': {
             templateUrl: 'templates/rent/rent-detail.html'
             }
         }
     })
+
 
   
   .state('tab.chats', {
