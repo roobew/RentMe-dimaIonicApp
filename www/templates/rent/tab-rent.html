@@ -1,4 +1,5 @@
 <ion-view view-title="">
+
       <ion-nav-bar class="bar-positive">
           <ion-nav-back-button>
           </ion-nav-back-button>
@@ -14,10 +15,16 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <div class="tabs-striped tabs-top tabs-background-positive tabs-color-light" >
+    <div class="tabs-striped tabs-top tabs-background-stable tabs-color-positive" >
         <div class="tabs">
-            <a class="tab-item" ui-sref="tab.rent.pubblicati">Pubblicati</a>
-            <a class="tab-item" ui-sref="tab.rent.bozze">Bozze</a>
+            <a class="tab-item" ui-sref="tab.rent.pubblicati"
+               ng-class="{'active':selectedTab==='pub'}"  ng-click="selectedTab='pub'">
+                Pubblicati
+            </a>
+            <a class="tab-item" ui-sref="tab.rent.bozze"
+               ng-class=" {'active':selectedTab === 'boz'}"  ng-click="selectedTab = 'boz'">
+                Bozze
+            </a>
         </div>
     </div>
 

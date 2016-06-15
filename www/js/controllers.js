@@ -137,7 +137,9 @@ $scope.submit = function($string,n) {
 .controller('HomeCtrl', function($scope) {})
 
 .controller('RentCtrl', function($scope) {
-
+    $scope.selectedTab = 'pub';
+    var myEl = angular.element( document.querySelector( '#divID' ) );
+myEl.removeClass('red');
 })
 .controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
 
