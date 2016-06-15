@@ -5,42 +5,31 @@ navigation history that also transitions its views in and out.
 -->
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-
-      <ion-nav-buttons side="left">
-        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-        </button>
-      </ion-nav-buttons>
-
-
-    </ion-nav-bar>
 
     <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
       <!-- Cerca Tab -->
-      <ion-tab title="Cerca" icon-off="ion-ios-search" icon-on="ion-ios-search-strong" href="#/tab/search">
+      <ion-tab title="Cerca" icon-off="ion-ios-search" icon-on="ion-ios-search-strong" ui-sref="tab.search">
         <ion-nav-view name="tab-search"></ion-nav-view>
       </ion-tab>
 
       <!-- Affitta Tab -->
-      <ion-tab title="Affitta" icon-off="ion-ios-pricetags-outline" icon-on="ion-ios-pricetags" href="#/tab/rent">
+      <ion-tab title="Affitta" icon-off="ion-ios-pricetags-outline" icon-on="ion-ios-pricetags" ui-sref="tab.rent.pubblicati">
         <ion-nav-view name="tab-rent"></ion-nav-view>
       </ion-tab>
 
        <!-- Home Tab -->
-      <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" href="#/tab/home">
+      <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" ui-sref="tab.home">
         <ion-nav-view name="tab-home"></ion-nav-view>
       </ion-tab>
 
           <!-- Preferiti Tab -->
-      <ion-tab title="Preferiti" icon-off="ion-ios-star-outline" icon-on="ion-ios-star" href="#/tab/favourites">
+      <ion-tab title="Preferiti" icon-off="ion-ios-star-outline" icon-on="ion-ios-star" ui-sref="tab.favourite">
         <ion-nav-view name="tab-favourite"></ion-nav-view>
       </ion-tab>
 
       <!-- Messaggi Tab -->
-      <ion-tab title="Messaggi" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/tab/chats">
+      <ion-tab title="Messaggi" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" ui-sref="tab.chats">
         <ion-nav-view name="tab-chats"></ion-nav-view>
       </ion-tab>
 

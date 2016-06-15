@@ -1,20 +1,28 @@
 
 <ion-view view-title="Risultati Ricerca">
-    <ion-nav-back-button>
-      </ion-nav-back-button>
-    <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear {{map==true?'ion-ios-list-outline':'ion-map'}}"
-                ng-click="switchView()"></button>
-        <!--
-            ---CODICE PER CAMBIARE ICONE IN BASE AL SO---
-                {{
-                    map==true?
-                       platform=='ios'?'ion-ios-list-outline':platform=='android'?'ion-android-list':'ion-document-text'
-                       :
-                       platform=='ios'?'ion-ios-world':platform=='android'?'ion-android-map' :'ion-map'
-                }}
-        -->
-    </ion-nav-buttons>
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+        </ion-nav-buttons>
+
+        <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear {{map==true?'ion-ios-list-outline':'ion-map'}}"
+                    ng-click="switchView()"></button>
+            <!--
+                ---CODICE PER CAMBIARE ICONE IN BASE AL SO---
+                    {{
+                        map==true?
+                           platform=='ios'?'ion-ios-list-outline':platform=='android'?'ion-android-list':'ion-document-text'
+                           :
+                           platform=='ios'?'ion-ios-world':platform=='android'?'ion-android-map' :'ion-map'
+                    }}
+            -->
+        </ion-nav-buttons>
+    </ion-nav-bar>
 
     <ion-content name="lista" ng-hide="map">
         lista

@@ -136,13 +136,16 @@ $scope.submit = function($string,n) {
 
 .controller('HomeCtrl', function($scope) {})
 
+.controller('RentCtrl', function($scope) {
+
+})
 .controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
 
     $scope.elencoPubblicati = RentPubblicatiList.all();
 
     $scope.removePubblicato = function(ss){
         RentPubblicatiList.rimuoviPubblicato(ss);
-    }
+    };
 })
 
 .controller('RentDetailCtrl', function($scope, $stateParams, RentPubblicatiList) {
@@ -232,6 +235,8 @@ $scope.submit = function($string,n) {
 
         $scope.map = map;
     };
+
+
 /*
     $scope.centerOnMe = function() {
         if(!$scope.map) {

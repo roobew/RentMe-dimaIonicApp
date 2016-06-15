@@ -1,7 +1,22 @@
-<ion-view>
-    <ion-content class="has-cazzo">
-        <ion-list  ng-controller="RentPubblicatiCtrl">
-             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" href="#/tab/rent/pubblicati/{{ e.id }}">
+<ion-view view-title="Rent">
+    <ion-nav-bar class="bar-positive">
+          <ion-nav-back-button>
+          </ion-nav-back-button>
+
+          <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+            </button>
+          </ion-nav-buttons>
+
+          <ion-nav-buttons side="right">
+            <button class="button button-icon button-clear ion-plus-round" ng-click="">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-content class="has-cazzo padding has-tabs-top">
+        <ion-list>
+             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" ui-sref="tab.rentDetail({rentID: e.id})">
                 <h2>{{e.title}}</h2>
                 <i class="icon ion-chevron-right icon-accessory"></i>
 

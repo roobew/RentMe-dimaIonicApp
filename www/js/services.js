@@ -95,7 +95,7 @@ angular.module('starter.services', [])
 
 })
 
-.service('RentPubblicatiList', function(){
+.factory('RentPubblicatiList', function(){
     var pubblicatiArray = [
         {id:0, title:"Palude infestata", zone:"Bonola", previewImg:url1, via:"Piazza duomo Milano"},
         {id:1, title:"Casa Zio Samir", zone:"Baghdad", previewImg:url2, via:"Città studi Milano"},
@@ -104,6 +104,7 @@ angular.module('starter.services', [])
     ];
 return {
     all : function(){
+         console.log("all!");
         return pubblicatiArray;
     },
 
@@ -125,5 +126,6 @@ return {
 };
 
 })
+
 
 ;
