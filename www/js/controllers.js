@@ -143,7 +143,35 @@ $scope.submit = function($string,n) {
 
 
 // TAB-AFFITTA Controller
-.controller('RentCtrl', function($scope) {
+.controller('RentCtrl', function($scope, $http) {
+
+    $http({
+        //method : "POST",
+        method : "GET",
+        url : 'http://rentme.altervista.org/IONIC/get_annuncio.php',
+        /*headers: {
+            //'Content-Type': undefined
+            "Access-Control-Allow-Origin" : "*"
+
+        },
+        data: { id_user: '23' }*/
+    }).then(function mySucces(response) {
+
+        //FavouriteList.setFavArray(response.data);
+        //$scope.elencoFav = FavouriteList.getFavArray();
+        console.log("Get_Annuncio: ");
+        console.log(response.data);
+
+
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+
+        //$scope.removeFav = function(ss){
+        //    FavouriteList.rimuovi(ss);
+       // }
+
+
     $scope.selectedTab = 'pub';
     var myEl = angular.element( document.querySelector( '#divID' ) );
     myEl.removeClass('red');
@@ -278,6 +306,7 @@ $scope.submit = function($string,n) {
 
         FavouriteList.setFavArray(response.data);
         $scope.elencoFav = FavouriteList.getFavArray();
+        console.log("Get_Preferiti: ");
         console.log(response.data);
 
 
