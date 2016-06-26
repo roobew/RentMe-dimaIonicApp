@@ -278,6 +278,7 @@ myEl.removeClass('red');
 })
 
 .controller('FavouriteDetailCtrl', function($scope, $stateParams, FavouriteList) {
-  $scope.f = FavouriteList.getFavourite($stateParams.favId);
+
+    $scope.f = FavouriteList.getFavourite($stateParams.favId);
 });
 

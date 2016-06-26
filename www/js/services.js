@@ -71,9 +71,6 @@ angular.module('starter.services', [])
         },
 
         rimuovi : function (i){
-            console.log(i);
-            console.log("IndexOf: "+favArray.indexOf(i));
-            console.log("Element: "+favArray[i]);
             favArray.splice(favArray.indexOf(i), 1);
         },
 
@@ -83,7 +80,7 @@ angular.module('starter.services', [])
 
         getFavourite : function(xx){
             for (var i = 0; i < favArray.length; i++) {
-                if (favArray[i].id === parseInt(xx)) {
+                if (favArray[i].id_annuncio == parseInt(xx)) {
                     console.log("Trovato");
                     return favArray[i];
                 }
