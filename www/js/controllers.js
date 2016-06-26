@@ -3,6 +3,7 @@ angular.module('starter.controllers', [])
     $scope.platform = ionic.Platform.platform();
 })
 
+// TAB-SEARCH Controller
 .controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
     $scope.modalData = {"choice" : '-1',
                         "curPos" : 'Current Position',
@@ -134,8 +135,14 @@ $scope.submit = function($string,n) {
 })
 
 
+
+// TAB-HOME Controller
 .controller('HomeCtrl', function($scope) {})
 
+
+
+
+// TAB-AFFITTA Controller
 .controller('RentCtrl', function($scope) {
     $scope.selectedTab = 'pub';
     var myEl = angular.element( document.querySelector( '#divID' ) );
@@ -154,6 +161,8 @@ myEl.removeClass('red');
   $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
 })
 
+
+// TAB-MESSAGGI Controller
 .controller('ChatsCtrl', function($scope, Chats) {
 
   $scope.chats = Chats.all();
@@ -165,25 +174,9 @@ myEl.removeClass('red');
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
-/*
-.controller('FavouriteListCtrl', function($scope, Favourites) {
 
-    $scope.favouriteArray=Favourites.all();
-    $scope.remove = function(f) {
-        Favourites.remove(f);
-    };
-})
-*/
 
-.controller('FavouriteListCtrl', function($scope, FavouriteList) {
-
-    $scope.elencoFav = FavouriteList.favArray;
-
-    $scope.removeFav = function(ss){
-        FavouriteList.rimuovi(ss);
-    }
-})
-
+// TAB_FAVORITI Controller
 
 .controller('MapCtrl', function($scope, $ionicLoading, $compile, FavouriteList){
 
@@ -200,9 +193,12 @@ myEl.removeClass('red');
             mapOptions);
 
         var address, title;
-        FavouriteList.favArray.forEach(function(elem){
-            address= elem.via;
-            title=elem.title;
+        //console.log("google maps");
+        FavouriteList.getFavArray().forEach(function(elem){
+            console.log("Elem vale: "+elem);
+
+            address= elem.indirizzo;
+            title=elem.titolo;
             console.log("Ehi ehi "+address);
 
             var contentString = "<div><a ng-click='clickTest()'>"+title+"</a></div>";
@@ -232,14 +228,9 @@ myEl.removeClass('red');
 
         });
 
-
-
-
         $scope.map = map;
     };
 
-
-/*
     $scope.centerOnMe = function() {
         if(!$scope.map) {
             return;
@@ -257,10 +248,32 @@ myEl.removeClass('red');
           alert('Unable to get location: ' + error.message);
         });
     };
-*/
+})
+/*
     $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
     };
+*/
+
+.controller('FavouriteListCtrl', function($scope, $http, FavouriteList) {
+
+    $http({
+        method : "GET",
+        url : 'http://rentme.altervista.org/IONIC/get_preferiti.php'
+    }).then(function mySucces(response) {
+
+        FavouriteList.setFavArray(response.data);
+        $scope.elencoFav = FavouriteList.getFavArray();
+        console.log(response.data);
+
+
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+
+        $scope.removeFav = function(ss){
+            FavouriteList.rimuovi(ss);
+        }
 
 })
 

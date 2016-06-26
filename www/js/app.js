@@ -18,7 +18,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
   $stateProvider
 
   // setup an abstract state for the tabs directive
@@ -101,10 +100,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
     })
 
-
-
-
-
   
   .state('tab.chats', {
       url: '/chats',
@@ -131,7 +126,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     views: {
       'tab-favourite': {
         templateUrl: 'templates/favourite/tab-favourite.html'
-        //controller: 'FavouriteCtrl'
       }
     }
   })

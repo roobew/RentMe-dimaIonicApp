@@ -56,42 +56,54 @@ angular.module('starter.services', [])
   };
 })
 
-.service('FavouriteList', function($http){
-    this.favArray = [
+.factory('FavouriteList', function(){
+    /*var favArray = [
         {id:0, title:"Casa diroccata", zone:"Centro", previewImg:url1, via:"Piazza duomo Milano"},
         {id:1, title:"Casa Zio Samir", zone:"Baghdad", previewImg:url2, via:"Città studi Milano"},
         {id:2, title:"Villa esplosiva", zone:"Quarto Oggiaro", previewImg:url3, via:"San Babila Milano"},
         {id:3, title:"Catapecchia Abusiva", zone:"Catania Alta", previewImg:url4, via:"Stadio Meazza milano"}
-    ];
+    ];*/
 
-    this.provaRequest = function (){
-        $http.get("http://rentme.altervista.org/IONIC/http_prova.php", { params: { "v1": "value1", "v2": "value2" } })
-            .success(function(data) {
-                //$scope.firstname = data.firstname;
-                //$scope.lastname = data.lastname;
-            console.log(data);
-            })
-            .error(function(data) {
-                alert("ERROR");
-            });
-    }
+    var favArray = [];
+    return{
+        getFavArray : function(){
+            return favArray;
+        },
 
-    this.aggiungi = function (newElement){
-        this.favArray.push(newElement);
-    }
+        rimuovi : function (i){
+            console.log(i);
+            console.log("IndexOf: "+favArray.indexOf(i));
+            console.log("Element: "+favArray[i]);
+            favArray.splice(favArray.indexOf(i), 1);
+        },
 
-    this.rimuovi = function (i){
-        this.favArray.splice(this.favArray.indexOf(i), 1);
-    }
+        aggiungi : function (newElement){
+            favArray.push(newElement);
+        },
 
-    this.getFavourite = function(xx){
-       for (var i = 0; i < this.favArray.length; i++) {
-            if (this.favArray[i].id === parseInt(xx)) {
-              return this.favArray[i];
+        getFavourite : function(xx){
+            for (var i = 0; i < favArray.length; i++) {
+                if (favArray[i].id === parseInt(xx)) {
+                    console.log("Trovato");
+                    return favArray[i];
+                }
             }
-          }
-          return null;
+            console.log("Non trovato");
+            return null;
+        },
+
+        setFavArray : function(myArray){
+            favArray = myArray;
+        },
+
+        printArray : function(){
+            console.log("Printing");
+            for(var i=0; i<favArray.length; i++){
+                console.log("Elemento "+i);
+            }
+            console.log("End Printing");
         }
+    };
 
 })
 
@@ -102,30 +114,30 @@ angular.module('starter.services', [])
         {id:2, title:"Villa esplosiva", zone:"Quarto Oggiaro", previewImg:url3, via:"San Babila Milano"},
         {id:3, title:"Catapecchia Abusiva", zone:"Catania Alta", previewImg:url4, via:"Stadio Meazza milano"}
     ];
-return {
-    all : function(){
-         console.log("all!");
-        return pubblicatiArray;
-    },
 
-    rimuoviPubblicato : function (i){
-        this.pubblicatiArray.splice(this.pubblicatiArray.indexOf(i), 1);
-    },
+    return {
+        all : function(){
+            //console.log("all!");
+            return pubblicatiArray;
+        },
 
-    getPubblicato : function(xx){
-        console.log("qui!");
-       for (var i = 0; i < pubblicatiArray.length; i++) {
-            if (pubblicatiArray[i].id === parseInt(xx)) {
-                console.log("Trovato!");
-                return pubblicatiArray[i];
+        rimuoviPubblicato : function (i){
+            pubblicatiArray.splice(pubblicatiArray.indexOf(i), 1);
+        },
 
+        getPubblicato : function(xx){
+            console.log("qui!");
+            for (var i = 0; i < pubblicatiArray.length; i++) {
+                if (pubblicatiArray[i].id === parseInt(xx)) {
+                    console.log("Trovato!");
+                    return pubblicatiArray[i];
+                }
             }
-          }
-          return null;
+
+            return null;
         }
-};
+    };
 
-})
+});
 
 
-;
