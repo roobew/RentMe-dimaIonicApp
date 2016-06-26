@@ -1,4 +1,4 @@
-<ion-view view-title="{{f.titolo}}">
+<ion-view view-title="">
 
     <ion-nav-bar class="bar-positive">
       <ion-nav-back-button>
@@ -10,10 +10,10 @@
       </ion-nav-buttons>
     </ion-nav-bar>
   <ion-content class="padding">
-    <img ng-src="{{f.imgPreview}}" style="width: 64px; height: 64px">
-        <p>{{f.titolo}}</p>
-        <p>{{f.zona}}</p>
-        <p>{{f.indirizzo}}</p>
+    <h4>{{f.titolo}}</h4>
+      <img ng-src="{{f.imgPreview}}" style="width: 64px; height: 64px">
+        <h5>{{f.zona}}</ph5>
+        <h6>{{f.indirizzo}}</h6>
         <p>{{f.prezzo}}</p>
         <p>{{f.descrizione}}</p>
   </ion-content>
