@@ -146,7 +146,7 @@ $scope.submit = function($string,n) {
 .controller('RentCtrl', function($scope) {
     $scope.selectedTab = 'pub';
     var myEl = angular.element( document.querySelector( '#divID' ) );
-myEl.removeClass('red');
+    myEl.removeClass('red');
 })
 .controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
 
@@ -255,11 +255,25 @@ myEl.removeClass('red');
     };
 */
 
+.controller('FavouriteSwitchCtrl', function($scope) {
+    $scope.mapFavoriti=false;
+    $scope.switchPreferitiView = function(){
+        $scope.mapFavoriti = !$scope.mapFavoriti;
+    }
+})
+
 .controller('FavouriteListCtrl', function($scope, $http, FavouriteList) {
 
     $http({
+        //method : "POST",
         method : "GET",
-        url : 'http://rentme.altervista.org/IONIC/get_preferiti.php'
+        url : 'http://rentme.altervista.org/IONIC/get_preferiti.php',
+        /*headers: {
+            //'Content-Type': undefined
+            "Access-Control-Allow-Origin" : "*"
+
+        },
+        data: { id_user: '23' }*/
     }).then(function mySucces(response) {
 
         FavouriteList.setFavArray(response.data);
