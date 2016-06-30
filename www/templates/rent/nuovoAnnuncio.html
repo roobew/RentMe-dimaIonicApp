@@ -1,0 +1,19 @@
+ <ion-modal-view>
+     <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <button class="button button-clear ion-chevron-left" ng-click="closeModal()"></button>
+        </div>
+        <h1 class="title">Nuovo annuncio</h1>
+     </ion-header-bar>
+
+
+    <ion-content class="has-header">
+        <ion-list>
+            <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="i in item">
+                <h2>{{i.nome}}</h2>
+                <p>{{i.valore}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+  </ion-modal-view>

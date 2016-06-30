@@ -1,19 +1,19 @@
 <ion-view view-title="">
+    <ion-nav-bar class="bar-positive" ng-controller="NuovoAnnuncioCtrl">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
 
-      <ion-nav-bar class="bar-positive">
-          <ion-nav-back-button>
-          </ion-nav-back-button>
-
-          <ion-nav-buttons side="left">
+        <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
             </button>
-          </ion-nav-buttons>
+        </ion-nav-buttons>
 
-          <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear ion-plus-round" ng-click="">
+        <ion-nav-buttons side="right">
+            <button class="button button-icon ion-compose" ng-click="modal.show()">
             </button>
         </ion-nav-buttons>
     </ion-nav-bar>
+
 
     <div class="has-header tabs-striped tabs-top tabs-background-stable tabs-color-positive" >
         <div class="tabs">
@@ -28,6 +28,6 @@
         </div>
     </div>
 
-
     <ui-view name="rent-page"></ui-view>
+
 </ion-view>

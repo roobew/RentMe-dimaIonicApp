@@ -57,12 +57,6 @@ angular.module('starter.services', [])
 })
 
 .factory('FavouriteList', function(){
-    /*var favArray = [
-        {id:0, title:"Casa diroccata", zone:"Centro", previewImg:url1, via:"Piazza duomo Milano"},
-        {id:1, title:"Casa Zio Samir", zone:"Baghdad", previewImg:url2, via:"Città studi Milano"},
-        {id:2, title:"Villa esplosiva", zone:"Quarto Oggiaro", previewImg:url3, via:"San Babila Milano"},
-        {id:3, title:"Catapecchia Abusiva", zone:"Catania Alta", previewImg:url4, via:"Stadio Meazza milano"}
-    ];*/
 
     var favArray = [];
     return{
@@ -135,6 +129,44 @@ angular.module('starter.services', [])
         }
     };
 
-});
+})
+
+.factory('NuovoAnnuncioService', function(){
+    var itemArray= [
+        {id:0, nome:"Nome Annuncio", valore:"-"},
+        {id:1, nome:"Tipo", valore:"-"},
+        {id:2, nome:"Descrizione", valore:"-"},
+        {id:3, nome:"Zona", valore:"-"},
+        {id:4, nome:"Indirizzo", valore:"-"},
+        {id:5, nome:"Numero Locali", valore:"-"},
+        {id:6, nome:"Superficie", valore:"-"},
+        {id:7, nome:"Piano", valore:"-"},
+        {id:8, nome:"Posti Letto Stanza", valore:"-"},
+        {id:9, nome:"Posti Letto Totali", valore:"-"},
+        {id:10, nome:"Autobus", valore:"-"},
+        {id:11, nome:"Metro", valore:"-"},
+        {id:12, nome:"Treno", valore:"-"},
+        {id:13, nome:"Tram", valore:"-"},
+        {id:14, nome:"Prezzo", valore:"-"},
+        {id:15, nome:"Foto", valore:"-"}
+    ];
+
+    return {
+        all : function(){
+            //console.log("all!");
+            return itemArray;
+        },
+    };
+
+})
+
+.factory('MapService', function(){
+    return {
+       initialize : function(){
+
+       }
+    };
+})
+;
 
 

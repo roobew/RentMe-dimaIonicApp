@@ -89,8 +89,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
     })
-
-
   .state('tab.rent.bozze', {
         url: '/bozze',
         views: {
@@ -99,6 +97,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
             }
         }
     })
+ /* .state('tab.rent.nuovo',{
+      url: '/nuovo',
+        views: {
+            'rent-nuovo': {
+            templateUrl: 'templates/rent/bozze.html'
+            }
+        }
+  })*/
 
   
   .state('tab.chats', {

@@ -134,7 +134,36 @@ $scope.submit = function($string,n) {
     };
 })
 
+.controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, NuovoAnnuncioService) {
+  $ionicModal.fromTemplateUrl('templates/rent/nuovoAnnuncio.html', {
+    scope: $scope,
+    //animation: 'slide-in-up'
+    animation: 'slide-in-right'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+      console.log("Open modal");
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
 
+    $scope.item = NuovoAnnuncioService.all();
+})
 
 // TAB-HOME Controller
 .controller('HomeCtrl', function($scope) {})
@@ -170,6 +199,8 @@ $scope.submit = function($string,n) {
         //$scope.removeFav = function(ss){
         //    FavouriteList.rimuovi(ss);
        // }
+
+
 
 
     $scope.selectedTab = 'pub';
@@ -221,7 +252,6 @@ $scope.submit = function($string,n) {
             mapOptions);
 
         var address, title;
-        //console.log("google maps");
         FavouriteList.getFavArray().forEach(function(elem){
             console.log("Elem vale: "+elem);
 
@@ -284,6 +314,7 @@ $scope.submit = function($string,n) {
 */
 
 .controller('FavouriteSwitchCtrl', function($scope) {
+
     $scope.mapFavoriti=false;
     $scope.switchPreferitiView = function(){
         $scope.mapFavoriti = !$scope.mapFavoriti;
@@ -308,7 +339,6 @@ $scope.submit = function($string,n) {
         $scope.elencoFav = FavouriteList.getFavArray();
         console.log("Get_Preferiti: ");
         console.log(response.data);
-
 
     }, function myError(response) {
         console.log(response.statusText);
