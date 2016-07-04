@@ -17,7 +17,8 @@ angular.module('starter.controllers', [])
 })
 
 // TAB-SEARCH Controller
-.controller('SearchCtrl', function($scope, $ionicModal, $timeout) {
+.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup) {
+
     $scope.modalData = {"choice" : '-1',
                         "curPos" : 'Current Position',
                         "zone" : 'Select a Zone',
@@ -86,6 +87,22 @@ angular.module('starter.controllers', [])
     };
     // Perform the login action when the user submits the login form
 
+     $scope.checkSearchField = function(e){
+        $scope.showAlert = function() {
+            var alertPopup = $ionicPopup.alert({
+                title: 'ERROR',
+                template: 'choice a location'
+            });
+
+            alertPopup.then(function(res) {});
+        };
+        if($scope.modalData.place == 'Select'){
+           $scope.showAlert();
+           // e.preventDefault();
+        }else
+            $state.go('tab.result');
+    };
+
 })
 
 .controller('ResultCtrl', function($scope, $http,ResultList) {
@@ -97,7 +114,7 @@ angular.module('starter.controllers', [])
     $http({
         //method : "POST",
         method : "GET",
-        url : 'http://rentme.altervista.org/IONIC/get_preferiti.php',
+        url : 'http://rentme.altervista.org/IONIC/get_annunci.php',
         /*headers: {
             //'Content-Type': undefined
             "Access-Control-Allow-Origin" : "*"
