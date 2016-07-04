@@ -167,6 +167,64 @@ angular.module('starter.services', [])
        }
     };
 })
+
+.factory('ResultList', function(){
+
+    var resArray = [];
+    return{
+        getResArray : function(){
+            return favArray;
+        },
+
+        rimuovi : function (i){
+            favArray.splice(favArray.indexOf(i), 1);
+        },
+
+        aggiungi : function (newElement){
+            favArray.push(newElement);
+        },
+
+        getResult : function(xx){
+            for (var i = 0; i < favArray.length; i++) {
+                if (favArray[i].id_annuncio == parseInt(xx)) {
+                    console.log("Trovato");
+                    return favArray[i];
+                }
+            }
+            console.log("Non trovato");
+            return null;
+        },
+
+        setResArray : function(myArray){
+            favArray = myArray;
+        },
+
+        printArray : function(){
+            console.log("Printing");
+            for(var i=0; i<favArray.length; i++){
+                console.log("Elemento "+i);
+            }
+            console.log("End Printing");
+        }
+    };
+
+})
+
+.service('UserService', function() {
+  // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
+  var setUser = function(user_data) {
+    window.localStorage.starter_facebook_user = JSON.stringify(user_data);
+  };
+
+  var getUser = function(){
+    return JSON.parse(window.localStorage.starter_facebook_user || '{}');
+  };
+
+  return {
+    getUser: getUser,
+    setUser: setUser
+  };
+});
 ;
 
 

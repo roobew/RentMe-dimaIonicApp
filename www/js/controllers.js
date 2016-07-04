@@ -1,6 +1,19 @@
+
 angular.module('starter.controllers', [])
+.controller('LoginCtrl', function($scope,$state,$q, UserService, $ionicLoading) {
+  $scope.startApp = function(){
+      $state.go('tab.home');
+  };
+})
+
 .controller('AppCtrl', function($scope) {
     $scope.platform = ionic.Platform.platform();
+     $scope.showLoading = function() {
+    //options default to values in $ionicLoadingConfig
+    $ionicLoading.show().then(function(){
+       console.log("The loading indicator is now displayed");
+    });
+  };
 })
 
 // TAB-SEARCH Controller
@@ -11,7 +24,8 @@ angular.module('starter.controllers', [])
                         "address" : '',
                         "place" : 'Select',
                         "type" : 'Select',
-                        "price" : 'Select'};
+                        "priceStart" : 'Select',
+                       "priceEnd": 'Select'};
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
@@ -22,7 +36,15 @@ angular.module('starter.controllers', [])
     }).then(function(modal) {
         $scope.modalPlace = modal;
     });
-    
+    $ionicModal.fromTemplateUrl('templates/search/modalType.html', {
+        id: 'type',
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
+
+    }).then(function(modal) {
+        $scope.modalType = modal;
+    });
     $ionicModal.fromTemplateUrl('templates/search/modalPrice.html', {
         id: 'price',
         scope: $scope,
@@ -36,6 +58,9 @@ angular.module('starter.controllers', [])
         switch($string){
             case 'place':
                 $scope.modalPlace.hide();
+                break;
+            case 'type':
+                $scope.modalType.hide();
                 break;
             case 'price':
                 $scope.modalPrice.hide();
@@ -51,6 +76,9 @@ angular.module('starter.controllers', [])
                 $scope.modalData.address="";
                 $scope.modalPlace.show();
                 break;
+             case 'type':
+                $scope.modalType.show();
+                break;
             case 'price':
                 $scope.modalPrice.show();
                 break;
@@ -60,16 +88,42 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ResultCtrl', function($scope) {
+.controller('ResultCtrl', function($scope, $http,ResultList) {
     $scope.map=false;
     $scope.switchView = function(){
         $scope.map = !$scope.map;
     }
 
+    $http({
+        //method : "POST",
+        method : "GET",
+        url : 'http://rentme.altervista.org/IONIC/get_preferiti.php',
+        /*headers: {
+            //'Content-Type': undefined
+            "Access-Control-Allow-Origin" : "*"
+
+        },
+        data: { id_user: '23' }*/
+    }).then(function mySucces(response) {
+
+        ResultList.setResArray(response.data);
+        $scope.elencoRes =ResultList.getResArray();
+        console.log("Get_Result: ");
+        console.log(response.data);
+
+    }, function myError(response) {
+        console.log(response.statusText);
+    });
+
+
+})
+.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
+
+    $scope.f = ResultList.getResult($stateParams.resId);
 })
 
 .controller('modalPlaceCtrl', function($scope, $ionicModal) {
-  $scope.months = ['Zone 1','Zone 2','Zone 3','Zone 4'];
+  $scope.zones = ['Zone 1','Zone 2','Zone 3','Zone 4'];
   
   $ionicModal.fromTemplateUrl('templates/search/modalZone.html', {
     scope: $scope,
@@ -113,7 +167,7 @@ angular.module('starter.controllers', [])
 
   };
 
-$scope.submit = function($string,n) {
+  $scope.submit = function($string,n) {
     $scope.modalData.choice=n;
         switch($scope.modalData.choice){
             case 1:
@@ -131,6 +185,48 @@ $scope.submit = function($string,n) {
         //$scope.modalData.zone = 'Select';
         //$scope.modalData.place = $scope.modalData.address;
         $scope.closeModal($string);
+    };
+})
+.controller('modalTypeCtrl', function($scope, $ionicModal) {
+    $scope.types = ['Appartamento','Stanza Singola','Stanza Privata'];
+     $scope.doSomething = function(item) {
+        // console.log(item);
+         $scope.modalData.type = item;
+          $scope.closeModal('type');
+     }
+})
+.controller('modalPriceCtrl', function($scope, $ionicModal, $ionicPopup) {
+    $scope.pricesS = [0,100,200,300,400,500,600,700,800,900,1000];
+    $scope.pricesE = [0,100,200,300,400,500,600,700,800,900,1000];
+    //$scope.priceStart = '0';
+   // $scope.priceEnd = '0';
+    $scope.doSomething = function(item,n) {
+        console.log(item);
+        switch(n){
+            case 1:
+                $scope.modalData.priceStart = item;
+                break;
+            case 2:
+                $scope.modalData.priceEnd = item;
+                break;
+        }
+     };
+    $scope.check = function (){
+        if($scope.modalData.priceStart >= $scope.modalData.priceEnd)
+           $scope.showAlert();
+        else
+            $scope.closeModal('price');
+    };
+    $scope.showAlert = function() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Wrong price range',
+             template: 'End value must be greater then the start value'
+        });
+
+        alertPopup.then(function(res) {
+            $scope.modalData.priceEnd = $scope.modalData.priceStart + 100;
+            console.log($scope.modalData.priceEnd);
+        });
     };
 })
 
@@ -277,7 +373,6 @@ $scope.submit = function($string,n) {
                         infowindow.close();
                         infowindow.open(map,marker);
                     });
-
                 }
                 else {
                     console.log("Geocode was not successful for the following reason: " + status);
@@ -320,7 +415,6 @@ $scope.submit = function($string,n) {
         $scope.mapFavoriti = !$scope.mapFavoriti;
     }
 })
-
 .controller('FavouriteListCtrl', function($scope, $http, FavouriteList) {
 
     $http({
@@ -349,7 +443,6 @@ $scope.submit = function($string,n) {
         }
 
 })
-
 .controller('FavouriteDetailCtrl', function($scope, $stateParams, FavouriteList) {
 
     $scope.f = FavouriteList.getFavourite($stateParams.favId);

@@ -17,15 +17,15 @@
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 
-            <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap">
-                <h2>Tipo?</h2>
+            <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-click="openModal('type')">
+                <h2> Tipo?</h2>
                 <h4 class="blueItem">{{modalData.type}}</h4>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 
             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-click="openModal('price')">
                 <h2>Prezzo?</h2>
-                <h4 class="blueItem">{{modalData.price}}</h4>
+                <h4 class="blueItem">{{modalData.priceStart}} - {{modalData.priceEnd}}</h4>
                 <i class="icon ion-chevron-right icon-accessory"></i>
             </ion-item>
 

@@ -5,7 +5,10 @@
 }
 
 .blueItem{
-    color:blue;
+    color:blue !important;
+}
+.center{
+    text-align: center;
 }
 
 
@@ -14,4 +17,16 @@
 }
 .has-minchia{
    top: 3em !important;
+}
+
+.facebook-sign-in {
+    color: white;
+    background-color: #3B5998;
+    font:  Helvetica;
+}
+
+.google-sign-in {
+     color: white;
+    background-color: #dd4b39;
+    font: Roboto;
 }

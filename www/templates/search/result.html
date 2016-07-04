@@ -1,5 +1,5 @@
 
-<ion-view view-title="Risultati Ricerca">
+<ion-view view-title="">
     <ion-nav-bar class="bar-positive">
         <ion-nav-back-button>
         </ion-nav-back-button>
@@ -25,7 +25,17 @@
     </ion-nav-bar>
 
     <ion-content name="lista" ng-hide="map">
-        lista
+       <ion-list >
+            <ion-item class="item item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="f in elencoRes" type="item-text-wrap" href="#/tab/search/result/{{f.id_annuncio}}">
+                <img ng-src="{{f.imgPreview}}" />
+                <h2>{{f.titolo}}</h2>
+                <h4>{{f.tipo}}</h4>
+                <h4>{{f.zona}}</h4>
+
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+            </ion-item>
+        </ion-list>
     </ion-content>
     <ion-content name="mappa" ng-show="map">
         mappa

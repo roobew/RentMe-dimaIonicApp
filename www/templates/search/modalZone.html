@@ -1,12 +1,13 @@
 <ion-modal-view >
-        <ion-header-bar class="bar bar-header bar-positive">
-
-          <button class="button button-clear ion-chevron-left" ng-click="hideModalZone();openModal('place');"></button>
-            <h1 class="title">Select Month</h1>
-        </ion-header-bar>
+        <ion-header-bar class="bar-positive">
+      <div class="buttons">
+      <button class="button button-clear ion-chevron-left" ng-click="closeModal('type')"></button>
+    </div>
+      <h1 class="title">Type</h1>
+  </ion-header-bar>
         <ion-content>
           <div class="list">
-            <ion-radio ng-model="modalData.zone" ng-repeat="item in months" ng-click="doSomething(item,2);">
+            <ion-radio ng-model="modalData.zone" ng-repeat="item in zones" ng-click="doSomething(item,2);">
               {{item}}
             </ion-radio>
           </div>
