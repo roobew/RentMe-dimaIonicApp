@@ -109,6 +109,16 @@ angular.module('starter.services', [])
             console.log(favArray);
         },
 
+        rimuoviPreferito : function(itemID){
+            for (var i = 0; i < favArray.length; i++) {
+                if (favArray[i].id_annuncio == parseInt(itemID)) {
+                    favArray.splice(i, 1);
+                    return;
+                }
+            }
+            console.log("Fav_ non trovato");
+        },
+
         aggiungi : function (newElement){
             favArray.push(newElement);
         },
@@ -356,39 +366,32 @@ angular.module('starter.services', [])
     var resArray = [];
     return{
         getResArray : function(){
-            return favArray;
+            return resArray;
+            console.log("QUAAA");
         },
 
         rimuovi : function (i){
-            favArray.splice(favArray.indexOf(i), 1);
+            resArray.splice(resArray.indexOf(i), 1);
         },
 
         aggiungi : function (newElement){
-            favArray.push(newElement);
+            resArray.push(newElement);
         },
 
         getResult : function(xx){
-            for (var i = 0; i < favArray.length; i++) {
-                if (favArray[i].id_annuncio == parseInt(xx)) {
-                    console.log("Trovato");
-                    return favArray[i];
+            for (var i = 0; i < resArray.length; i++) {
+                if (resArray[i].id_annuncio == parseInt(xx)) {
+                    //console.log("Trovato");
+                    return resArray[i];
                 }
             }
-            console.log("Non trovato");
+            //console.log("Non trovato");
             return null;
         },
 
         setResArray : function(myArray){
-            favArray = myArray;
+            resArray = myArray;
         },
-
-        printArray : function(){
-            console.log("Printing");
-            for(var i=0; i<favArray.length; i++){
-                console.log("Elemento "+i);
-            }
-            console.log("End Printing");
-        }
     };
 
 })

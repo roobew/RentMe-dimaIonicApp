@@ -1,8 +1,8 @@
 <ion-view view-title="">
 
     <ion-nav-bar class="bar-positive">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
+        <ion-nav-back-button>
+        </ion-nav-back-button>
 
         <ion-nav-buttons side="left">
             <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
@@ -10,15 +10,138 @@
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
-            <button class="button button-icon button-clear ion-star"></button>
+            <button class="button button-icon ion-email">
+            </button>
+
+            <button class="button button-icon ion-star" ng-click="addToPreferiti()" ng-class="getClass()">
+<!--                ng-class="{{isPreferiti? 'preferitiColor': 'nonPreferitiColor'}}">-->
+            </button>
         </ion-nav-buttons>
+
+
     </ion-nav-bar>
-  <ion-content class="padding">
-    <h4>{{f.titolo}}</h4>
-      <img ng-src="{{f.imgPreview}}" style="width: 64px; height: 64px">
-        <h5>{{f.zona}}</ph5>
-        <h6>{{f.indirizzo}}</h6>
-        <p>{{f.prezzo}}</p>
-        <p>{{f.descrizione}}</p>
+
+    <ion-content class="padding">
+        <ion-slides  options="options" slider="data.slider" style="height:12em;">
+            <ion-slide-page>
+                <img class="detailImageElement" ng-src="{{f.imgPreview}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img1!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img1}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img2!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img2}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img3!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img3}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img4!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img4}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img5!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img5}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img6!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img6}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img7!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img7}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img8!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img8}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img9!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img9}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="f.img10!=''?true:false">
+                <img class="detailImageElement" ng-src="{{f.img10}}">
+            </ion-slide-page>
+        </ion-slides>
+
+        <div class="row">
+            <div class="col">
+                <h4>{{f.titolo}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-75">
+                <h5>{{f.tipo}}</h5>
+            </div>
+
+            <div class="col col-25">
+               <h5> <b> {{f.prezzo}} € </b> </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-50">
+                <h5>{{f.zona}}</h5>
+            </div>
+
+            <div class="col col-50">
+                <h6>{{f.indirizzo}}</h6>
+            </div>
+        </div>
+
+
+
+        <div class="list">
+            <div class="item item-divider">
+                GENERALI
+            </div>
+
+            <h5 class="item">
+                Piano: {{f.piano}}
+            </h5>
+            <h5 class="item">
+                Superficie: {{f.superficie}} mq
+            </h5>
+            <h5 class="item">
+                Locali: {{f.num_locali}}
+            </h5>
+            <h5 class="item" ng-show="f.tipo=='Stanza Condivisa'?true:false">
+                Posti letto stanza: {{f.posti_letto}}
+            </h5>
+            <h5 class="item">
+                Posti letto totali: {{f.posti_letto_tot}}
+            </h5>
+
+            <div class="item item-divider">
+                MEZZI PUBBLICI
+            </div>
+            <h5 class="item" ng-if="f.metro != ' '">
+                Metro: {{f.metro}}
+            </h5>
+            <h5 class="item" ng-if="f.metro == ' '">
+                Metro: -
+            </h5>
+
+            <h5 class="item" ng-if="f.autobus != ' '">
+                Bus: {{f.autobus}}
+            </h5>
+            <h5 class="item" ng-if="f.autobus == ' '">
+                Bus: -
+            </h5>
+
+            <h5 class="item" ng-if="f.tram != ' '">
+                Tram: {{f.tram}}
+            </h5>
+            <h5 class="item" ng-if="f.tram == ' '">
+                Tram: -
+            </h5>
+
+            <h5 class="item" ng-if="f.treno != ' '">
+                Treno: {{f.treno}}
+            </h5>
+            <h5 class="item" ng-if="f.treno == ' '">
+                Treno: -
+            </h5>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                {{f.descrizione}}
+            </div>
+        </div>
+
   </ion-content>
 </ion-view>

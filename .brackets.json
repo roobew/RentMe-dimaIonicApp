@@ -59,6 +59,7 @@
         "C:/ionic/Dima_Ionic/plugins/cordova-plugin-inappbrowser/www/windows8/InAppBrowserProxy.js",
         "C:/ionic/Dima_Ionic/plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
         "C:/ionic/Dima_Ionic/platforms/ios/cordova/lib/copy-www-build-step.js",
-        "C:/ionic/Dima_Ionic/platforms/android/cordova/lib/check_reqs.js"
+        "C:/ionic/Dima_Ionic/platforms/android/cordova/lib/check_reqs.js",
+        "C:/Users/Stefano/Documents/DIMA_Ionic/www/lib/ionic-platform-web-client/src/core/promise.js"
     ]
 }

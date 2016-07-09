@@ -1,7 +1,7 @@
-#map {
-    width: 100vw;
+#map, #searchMap {
+    width: 95vw;
     height: 90vh;
-    margin-bottom: 1em;
+    :margin-bottom: 1em;
 }
 
 .blueItem{
@@ -62,3 +62,10 @@
     font-weight: bold;
 }
 
+.preferitiColor{
+    color: #ef473a !important;
+}
+
+.nonPreferitiColor{
+    color:#fff !important;
+}

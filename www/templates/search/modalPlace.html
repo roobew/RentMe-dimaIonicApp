@@ -3,7 +3,7 @@
       <div class="buttons">
       <button class="button button-clear ion-chevron-left" ng-click="closeModal('place')"></button>
     </div>
-      <h1 class="title">Place</h1>
+      <h1 class="title">Luogo</h1>
   </ion-header-bar>
   <ion-content class="has-header">
     <form>
@@ -12,15 +12,21 @@
                 <input type="submit" style="width:0; height:0; background:transparent; border:0;" ng-click="submit('place',3)" >
             </ion-item>
             <ion-item class="item-input" type="item-text-wrap">
-                <button class="button button-block button-clear button-dark icon-left ion-pinpoint button-positive" ng-click="doSomething('Current Position',1)">Current Position</button>
+                <button class="button button-block button-clear button-dark icon-left ion-location button-positive" ng-click="doSomething('Current Position',1)">Nelle vicinanze</button>
             </ion-item>
             <ion-item class="item-input" type="item-text-wrap">
                 <button class="button button-block button-clear button-dark" ng-click="openModalZone()">{{modalData.zone}}</button>
             </ion-item>
             <ion-item class="item-input" type="item-text-wrap">
-                <input type="text" ng-model="modalData.address" placeholder="Via"  ng-click="doSomething(modalData.address,3)"/>
-                <button type="submit" class="button button-small button-positive" style="margin: 12px" ng-click="submit('place',3)">GO</button>
+                <input type="text" ng-model="modalData.address" placeholder="Indi"  ng-click="doSomething(modalData.address,3)"/>
+                <button type="submit" class="button button-small button-positive" style="margin: 12px" ng-click="submit('place',3)">OK</button>
             </ion-item>
+<!--
+            <ion-item type="item-text-wrap">
+                <h2 style="text-align:center">Indirizzo</h2>
+                <input type="text" class="bozzaTextInput">
+            </ion-item>
+-->
         </ion-list>
       </form>
   </ion-content>
