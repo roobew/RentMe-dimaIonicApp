@@ -198,14 +198,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
-<<<<<<< HEAD
 
-}])
-
-
-
-;
-=======
     $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
 }])
 
@@ -222,4 +215,4 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     }
   };
 });
->>>>>>> origin/master
+

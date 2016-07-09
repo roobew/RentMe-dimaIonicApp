@@ -33,10 +33,10 @@
 
 }
 
-<<<<<<< HEAD
 .login {
     background: url('../img/Logo.png')  no-repeat center;
-=======
+}
+
 .detailImageElement{
     display: block;
     width: 100%;
@@ -60,5 +60,5 @@
 .bozzaError{
     color: red;
     font-weight: bold;
->>>>>>> origin/master
 }
+
