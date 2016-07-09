@@ -1,8 +1,9 @@
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services','ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
+     // openFB.init({appId: '867006893383189', tokenStore: window.localStorage});
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -15,10 +16,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
   });
+
 })
 
+/*.config(function($cordovaFacebookProvider) {
+  var appID = 867006893383189;
+  var version = "v2.0"; // or leave blank and default is v2.0
+  $cordovaFacebookProvider.browserInit(appID, version);
+})*/
+
 .config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
+
+    $stateProvider
 
   // setup an abstract state for the tabs directive
   .state('login', {
@@ -167,4 +176,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
 
-}]);
+}])
+
+
+
+;

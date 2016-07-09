@@ -1,0 +1,41 @@
+<ion-modal-view >
+  <ion-header-bar class="bar-positive">
+
+      <h1 class="title">SignUp</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <form>
+        <ion-list >
+            <label class="item item-input" >
+                <span class="input-label">Name</span>
+                <input type="text" ng-model="signUpData.custom.name" />
+            </label>
+            <label class="item item-input" >
+                <span class="input-label">Surname</span>
+                <input type="text" ng-model="signUpData.custom.surname" />
+            </label>
+            <label class="item item-input" >
+                <span class="input-label">Username</span>
+                <input type="text" ng-model="signUpData.username" placeholder="E-mail"/>
+            </label>
+          <label class="item item-input" >
+                <span class="input-label">E-mail</span>
+                <input type="email" ng-model="signUpData.email" placeholder="E-mail"/>
+            </label>
+            <label class="item item-input " >
+                <span class="input-label" >Password</span>
+                <input type="password"  ng-model="signUpData.password"    placeholder="Password"/>
+            </label>
+            <label class="item item-input " >
+                <span class="input-label" >Repeat Password</span>
+                <input type="password"  ng-model="check.password"    placeholder="Repeat Password"/>
+            </label>
+        </ion-list>
+
+        <div class="button-bar row">
+            <button class="button button-positive button-outline col col-50 " ng-click="signUp()" >Sign-Up</button>
+            <button class="button button-assertive button-outline col col-50" ng-click="closeSignUp()">Cancel</button>
+        </div>
+      </form>
+  </ion-content>
+</ion-modal-view>

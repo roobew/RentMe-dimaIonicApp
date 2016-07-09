@@ -1,23 +1,228 @@
 
 angular.module('starter.controllers', [])
-.controller('LoginCtrl', function($scope,$state,$q, UserService, $ionicLoading) {
-  $scope.startApp = function(){
-      $state.go('tab.home');
-  };
+.controller('LoginCtrl', function($scope,$state,$q, UserService, $ionicLoading,$ionicModal,$ionicPopup) {
+
+
+    $ionicModal.fromTemplateUrl('templates/signup.html', {
+        id: 'signup',
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
+
+    }).then(function(modal) {
+        $scope.modalsignup = modal;
+    });
+
+    $scope.openSignUp = function (){
+        $scope.modalsignup.show();
+    };
+    $scope.closeSignUp = function (){
+        $scope.modalsignup.hide();
+    };
+
+    $scope.loginData = {
+        "email": '',
+        "password": ''
+    };
+    $scope.signUpData = {
+        "email": '',
+        "password": '',
+        "username":''
+    };
+    $scope.signUpData.custom = {
+      'name': '',
+      'surname': ''
+    };
+    $scope.check={"password":''};
+    $scope.showAlert = function(string) {
+
+            var alertPopup = $ionicPopup.alert({
+                title: 'ERROR',
+                template: string
+            });
+
+            alertPopup.then(function(res) {
+                $scope.check.password='';
+                $scope.loginData.password='';
+            });
+        };
+
+    $scope.signUp = function(){
+        if($scope.signUpData.custom.name==''||
+           $scope.signUpData.custom.surname==''||
+           $scope.signUpData.username==''||
+           $scope.signUpData.email==''||
+           $scope.signUpData.password==''||
+           $scope.check.password==''
+          )
+            $scope.showAlert("Empty Fields");
+        else{
+
+            if($scope.signUpData.password != $scope.check.password){
+               $scope.showAlert("Password must be the same");
+               // e.preventDefault();
+            }else{
+                if($scope.signUpData.password.length<6){
+                    $scope.showAlert("Password too short");
+                }else{
+                    Ionic.Auth.signup($scope.signUpData).
+                    then(function(){
+                        $scope.closeSignUp();
+                        $scope.signUpData = '';
+                        $scope.check='';
+                    }, function(){
+                         $scope.showAlert("Something Wrong!");
+                    });
+                }
+            }
+        }
+    };
+    $scope.login = function(){
+        var authProvider = 'basic';
+        var authSettings = { 'remember': true };
+        var authSuccess = function(userRes) {
+             $scope.user = Ionic.User.current();
+            console.log("login");
+            console.log(Ionic.User.current());
+
+            $scope.startApp();
+
+          // user was authenticated, you can get the authenticated user
+          // with Ionic.User.current();
+        };
+        var authFailure = function(errors) {
+            $scope.showAlert("Wrong e-mail or password");
+          for (var err in errors) {
+             console.log(err);
+            // check the error and provide an appropriate message
+            // for your application
+          }
+        };
+        Ionic.Auth.login(authProvider, authSettings, $scope.loginData).then(authSuccess, authFailure);
+    };
+    $scope.facebookLogin = function() {
+
+             //window.open("http://google.com");
+        var authSuccess = function(user) {
+            console.log(user.details);
+            $scope.starrtApp();
+          // user was authenticated, you can get the authenticated user
+          // with Ionic.User.current();
+        };
+        var authFailure = function(errors) {
+
+              alert(errors);
+            console.log(errors);
+            // check the error and provide an appropriate message
+            // for your application
+
+        };
+       Ionic.Auth.login('facebook', {'remember': true}).then(authSuccess, authFailure);
+    };
+
+     $scope.startApp = function(){
+        $state.go('tab.home');
+    };
 })
 
-.controller('AppCtrl', function($scope) {
+.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup) {
+    $scope.user = Ionic.User.current();
+    $scope.logout = function(){
+        console.log("logout");
+        console.log(Ionic.User.current());
+        Ionic.Auth.logout();
+        $scope.user='';
+        console.log(Ionic.User.current());
+        $state.go('login');
+
+
+    };
+
     $scope.platform = ionic.Platform.platform();
-     $scope.showLoading = function() {
+    $scope.showLoading = function() {
     //options default to values in $ionicLoadingConfig
     $ionicLoading.show().then(function(){
        console.log("The loading indicator is now displayed");
     });
   };
+
+
+
+    $ionicModal.fromTemplateUrl('templates/editPw.html', {
+        id: 'edit',
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
+
+    }).then(function(modal) {
+        $scope.modalEditPw = modal;
+    });
+    $scope.openEditPw = function (){
+        $scope.modalEditPw.show();
+    };
+    $scope.closeEditPw = function (){
+        $scope.modalEditPw.hide();
+    };
+
+    $ionicModal.fromTemplateUrl('templates/editData.html', {
+        id: 'editData',
+        scope: $scope,
+        animation: 'null', //slide-in-up',
+        focusFirstInput: true
+
+    }).then(function(modal) {
+        $scope.modalEditData = modal;
+    });
+    $scope.openEditData = function (){
+        $scope.modalEditData.show();
+    };
+    $scope.closeEditData = function (){
+        $scope.modalEditData.hide();
+    };
+
+    $scope.showAlert = function(string) {
+
+            var alertPopup = $ionicPopup.alert({
+                title: 'ERROR',
+                template: string
+            });
+
+            alertPopup.then(function(res) {
+                $scope.check.password='';
+                $scope.edit.password='';
+            });
+        };
+
+    $scope.check={"password":''};
+    $scope.edit={
+        "image":'',
+        "password":''
+    };
+    $scope.confirmPw = function(){
+        console.log($scope.user.details.password);
+        console.log($scope.check.oldpassword);
+        console.log($scope.edit.password);
+        console.log($scope.check.password);
+            if($scope.check.password==$scope.edit.password){
+                if($scope.edit.password.length>5){
+                    $scope.user.details.password=$scope.edit.password;
+                    $scope.user.save();
+                    $scope.closeEditPw();
+                }else{
+                    $scope.showAlert("Password too short");
+                }
+            }else{
+                $scope.showAlert("Password must be the same");
+            }
+
+    };
+
+
 })
 
 // TAB-SEARCH Controller
 .controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup) {
+
 
     $scope.modalData = {"choice" : '-1',
                         "curPos" : 'Current Position',

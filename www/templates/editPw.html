@@ -1,0 +1,25 @@
+<ion-modal-view >
+  <ion-header-bar class="bar-positive">
+
+      <h1 class="title">Edit</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <form>
+        <ion-list >
+            <label class="item item-input " >
+                <span class="input-label" >New Password</span>
+                <input type="password"  ng-model="edit.password"    placeholder="Password"/>
+            </label>
+            <label class="item item-input " >
+                <span class="input-label" >Repeat Password</span>
+                <input type="password"  ng-model="check.password"    placeholder="Repeat Password"/>
+            </label>
+        </ion-list>
+
+        <div class="button-bar row">
+            <button class="button button-positive button-outline col col-50 " ng-click="confirmPw()" >Confirm</button>
+            <button class="button button-assertive button-outline col col-50" ng-click="closeEditPw()">Cancel</button>
+        </div>
+      </form>
+  </ion-content>
+</ion-modal-view>

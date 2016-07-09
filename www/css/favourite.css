@@ -8,7 +8,7 @@
     color:blue !important;
 }
 .center{
-    text-align: center;
+    text-align: center !important;
 }
 
 
@@ -31,4 +31,8 @@
     background-color: #dd4b39;
     font: Roboto;
 
+}
+
+.login {
+    background: url('../img/Logo.png')  no-repeat center;
 }

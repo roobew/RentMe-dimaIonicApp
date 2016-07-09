@@ -16,20 +16,32 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+      <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
+
+
+
 
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="cordova.js"></script>
+
+    <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+ <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+ <script src="cordova.js"></script>
+
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+     <!-- <script src="js/openFB.js"></script>-->
 
-<!--      <script href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"></script>-->
+
     <script src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
-</head>
-  <body ng-app="starter">
 
+
+<script src="lib/ngCordova/dist/ng-cordova.js"></script>
+
+    </head>
+  <body ng-app="starter">
 <!-- 
     <ion-nav-bar class="bar-positive">
       <ion-nav-back-button>
@@ -41,3 +53,5 @@
 
   </body>
 </html>
+
+

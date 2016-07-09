@@ -3,32 +3,30 @@ Create tabs with an icon and label, using the tabs-positive style.
 Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
-<ion-view>
+<ion-view class="login">
     <ion-content>
-        Login
+        <div class="col" style="top: 20vh">
+            <label class="item item-input item-floating-label" style="border-style: hidden; border-bottom-style: inherit;">
+                <span class="input-label center" style="max-width: 100% !important; width: 95% !important">E-mail</span>
+                <input type="email" ng-model="loginData.email" class="center row" style="width: 95%; padding:0px !important;" placeholder="E-mail"/>
+            </label>
 
-            <div class="col">
-                <label class="center item item-input item-floating-label" style="border-style: hidden;border-bottom-style: inherit;">
-                    <a class="input-label center">E-mail</a>
-                    <input type="email" class="center" placeholder="E-mail"/>
-                </label>
+            <label class="item item-input item-floating-label" style="border-style: hidden; border-bottom-style: inherit;">
+                <span class="input-label center" style="max-width: 100% !important; width:95% !important">Password</span>
+                <input type="password" ng-model="loginData.password" class="center row"  style="width: 95%; padding: 0px !important;" placeholder="Password"/>
+            </label>
+        </div>
 
-                <label class="center item item-input item-floating-label" style="border-style: hidden;border-bottom-style: inherit;">
-                    <a class="input-label center">Password</a>
-                    <input type="password"  class="center" placeholder="Password"/>
-                </label>
-            </div>
-
-            <div class="button-bar row">
-                <button class="button button-positive button-outline" >Login</button>
-                <button class="button button-assertive button-outline" >Sign-Up</button>
-            </div>
+        <div class="button-bar row">
+            <button class="button button-positive button-outline col col-50 " ng-click="login()" >Login</button>
+            <button class="button button-assertive button-outline col col-50" ng-click="openSignUp()">Sign-Up</button>
+        </div>
 
 
-        <div style="position: absolute; top: 75vh; width: 100%" class="center row">
+        <div style="position: absolute; top: 60vh; width: 100%" class="center col">
             <button ng-click="startApp()">DEBUG</button>
-            <a class="facebook-sign-in button button-block" style="" >Login with Facebook</a>
-            <a class="google-sign-in button button-block">Sign in with Google</a>
+            <a class="facebook-sign-in button button-block" ng-click="facebookLogin()" >Login with Facebook</a>
+            <a class="google-sign-in button button-block" ng-click="log()">Sign in with Google</a>
 
         </div>
     </ion-content>
