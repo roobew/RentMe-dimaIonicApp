@@ -1,5 +1,5 @@
-<ion-view view-title="Rent">
-    <ion-nav-bar class="bar-positive">
+<ion-view view-title="">
+    <ion-nav-bar class="bar-positive" ng-controller="NuovoAnnuncioCtrl">
         <ion-nav-back-button>
         </ion-nav-back-button>
 
@@ -8,23 +8,25 @@
             </button>
         </ion-nav-buttons>
 
+
         <ion-nav-buttons side="right">
-            <button class="button button-icon ion-compose" ng-click="modal.show()">
+            <button class="button button-icon ion-compose" ng-click="nuovoAnnuncioModal()">
             </button>
         </ion-nav-buttons>
+
     </ion-nav-bar>
 
     <ion-content class="has-header has-tabs-top">
         <ion-list>
-             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="e in elencoPubblicati" type="item-text-wrap" ui-sref="tab.rentDetail({rentID: e.id})">
-                <h2>{{e.title}}</h2>
+             <ion-item class="item-remove-animate item-icon-right" type="item-text-wrap" ng-repeat="p in elencoPubblicati" type="item-text-wrap" ui-sref="tab.rentDetail({rentID: p.id_annuncio})">
+                <h2>{{p.titolo}}</h2>
                 <i class="icon ion-chevron-right icon-accessory"></i>
 
                  <ion-option-button class="button-calm" ng-click="edit(item)">
                     Modifica
                 </ion-option-button>
-                <ion-option-button class="button-assertive" ng-click="removePubblicato(e)">
-                  Delete
+                <ion-option-button class="button-assertive" ng-click="removePubblicato(p)">
+                  Elimina
                 </ion-option-button>
               </ion-item>
         </ion-list>

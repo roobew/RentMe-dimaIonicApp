@@ -4,7 +4,7 @@ Each tab's child <ion-nav-view> directive will have its own
 navigation history that also transitions its views in and out.
 -->
 <ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
+  <ion-side-menu-content drag-content="false">
 
     <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
@@ -38,7 +38,7 @@ navigation history that also transitions its views in and out.
 
   </ion-side-menu-content>
 
-  <ion-side-menu side="left">
+  <ion-side-menu side="left" expose-aside-when="large">
     <ion-header-bar class="bar-stable">
       <h1 class="title">Username</h1>
     </ion-header-bar>
