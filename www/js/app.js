@@ -101,6 +101,17 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
             }
         }
     })
+
+  .state('tab.bozzaDetail', {
+        url: '/rent/bozze/:bozzaID',
+        views: {
+            'tab-rent': {
+            templateUrl: 'templates/rent/bozza-detail.html',
+            controller: 'BozzeDetailCtrl'
+
+            }
+        }
+    })
   .state('tab.rent.pubblicati', {
         url: '/pubblicati',
         views: {
@@ -115,7 +126,8 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         url: '/bozze',
         views: {
             'rent-page': {
-            templateUrl: 'templates/rent/bozze.html'
+            templateUrl: 'templates/rent/bozze.html',
+            controller: 'RentBozzeCtrl'
             }
         }
     })
@@ -157,6 +169,17 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       }
     }
   })
+
+  .state('tab.map', {
+    url: '/favourites/map',
+    views: {
+        'tab-favourite': {
+          templateUrl: 'templates/favourite/map.html',
+          controller: 'MapCtrl'
+        }
+      }
+  })
+
   .state('tab.favourite-detail', {
       url: '/favourites/:favId',
       views: {
@@ -175,9 +198,28 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
 .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
+<<<<<<< HEAD
 
 }])
 
 
 
 ;
+=======
+    $ionicConfigProvider.backButton.text('').icon('ion-chevron-left');
+}])
+
+.directive('stringToNumber', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModel) {
+      ngModel.$parsers.push(function(value) {
+        return '' + value;
+      });
+      ngModel.$formatters.push(function(value) {
+        return parseFloat(value, 10);
+      });
+    }
+  };
+});
+>>>>>>> origin/master

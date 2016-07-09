@@ -1,4 +1,4 @@
-<ion-view view-title="{{e.title}}">
+<ion-view view-title="">
     <ion-nav-bar class="bar-positive">
           <ion-nav-back-button>
           </ion-nav-back-button>
@@ -9,14 +9,127 @@
           </ion-nav-buttons>
     </ion-nav-bar>
     <ion-content class="padding">
-        <p>
-             Nome: {{e.title}}
-            <br>
-             via: {{e.via}}
-            <br>
-            Zona: {{e.zone}}
-            <br>
-        </p>
+        <ion-slides  options="options" slider="data.slider" style="height:12em;">
+            <ion-slide-page>
+                <img class="detailImageElement" ng-src="{{e.imgPreview}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img1!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img1}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img2!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img2}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img3!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img3}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img4!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img4}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img5!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img5}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img6!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img6}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img7!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img7}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img8!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img8}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img9!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img9}}">
+            </ion-slide-page>
+            <ion-slide-page ng-show="e.img10!=''?true:false">
+                <img class="detailImageElement" ng-src="{{e.img10}}">
+            </ion-slide-page>
+        </ion-slides>
+
+        <div class="row">
+            <div class="col">
+                <h4>{{e.titolo}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-75">
+                <h5>{{e.tipo}}</h5>
+            </div>
+
+            <div class="col col-25">
+               <h5> <b> {{e.prezzo}} € </b> </h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-50">
+                <h5>{{e.zona}}</h5>
+            </div>
+
+            <div class="col col-50">
+                <h6>{{e.indirizzo}}</h6>
+            </div>
+        </div>
+
+
+
+        <div class="list">
+            <div class="item item-divider">
+                GENERALI
+            </div>
+
+            <h5 class="item">
+                Piano: {{e.piano}}
+            </h5>
+            <h5 class="item">
+                Superficie: {{e.superficie}} mq
+            </h5>
+            <h5 class="item">
+                Locali: {{e.num_locali}}
+            </h5>
+            <h5 class="item" ng-show="e.tipo=='Stanza Condivisa'?true:false">
+                Posti letto stanza: {{e.posti_letto}}
+            </h5>
+            <h5 class="item">
+                Posti letto totali: {{e.posti_letto_tot}}
+            </h5>
+
+            <div class="item item-divider">
+                MEZZI PUBBLICI
+            </div>
+            <h5 class="item" ng-if="e.metro != ' '">
+                Metro: {{e.metro}}
+            </h5>
+            <h5 class="item" ng-if="e.metro == ' '">
+                Metro: -
+            </h5>
+
+            <h5 class="item" ng-if="e.autobus != ' '">
+                Bus: {{e.autobus}}
+            </h5>
+            <h5 class="item" ng-if="e.autobus == ' '">
+                Bus: -
+            </h5>
+
+            <h5 class="item" ng-if="e.tram != ' '">
+                Tram: {{e.tram}}
+            </h5>
+            <h5 class="item" ng-if="e.tram == ' '">
+                Tram: -
+            </h5>
+
+            <h5 class="item" ng-if="e.treno != ' '">
+                Treno: {{e.treno}}
+            </h5>
+            <h5 class="item" ng-if="e.treno == ' '">
+                Treno: -
+            </h5>
+        </div>
+
+        <div class="card">
+            <div class="item item-text-wrap">
+                {{e.descrizione}}
+            </div>
+        </div>
+
   </ion-content>
 </ion-view>
 
