@@ -605,8 +605,6 @@ angular.module('starter.controllers', [])
     RentPubblicatiList.call();
     BozzeList.call();
     FavouriteList.call();
-
-
 })
 
 
@@ -656,7 +654,7 @@ angular.module('starter.controllers', [])
     $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
 })
 
-.controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList) {
+.controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
     $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
@@ -793,10 +791,31 @@ angular.module('starter.controllers', [])
      hideSheet();
    }, 8000);
 
- };
+ }
+
+    $scope.takeImage = function() {
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.e.imgPreview = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    };
 })
 
-.controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList) {
+.controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList, $cordovaCamera) {
   console.log("Modal CTRL");
 
     $ionicModal.fromTemplateUrl('templates/rent/nuovoAnnuncio.html', {
@@ -816,7 +835,7 @@ angular.module('starter.controllers', [])
 
     $scope.closeModal = function() {
         console.log("Close Modal");
-        console.log(NuovoAnnuncioService.getNuovoAnnuncioArray());
+        //console.log(NuovoAnnuncioService.getNuovoAnnuncioArray());
 
         $scope.showNuovoAnnuncioSheet();
     };
@@ -836,7 +855,7 @@ angular.module('starter.controllers', [])
         // Execute action
     });
 
-    $scope.new = NuovoAnnuncioService.getNuovoAnnuncioArray();
+    $scope.n = NuovoAnnuncioService.getNuovoAnnuncioArray();
 
     $scope.showNuovoAnnuncioSheet = function() {
 
@@ -863,7 +882,7 @@ angular.module('starter.controllers', [])
                 console.log("Salvare bozza e inviare DB");
 
                 NuovoAnnuncioService.setCreated();
-                BozzeList.aggiungiBozza($scope.new);
+                BozzeList.aggiungiBozza($scope.n);
                 //console.log(BozzaList.getBozzeArray());
                 $scope.modal_uno.hide();
                 return true;
@@ -876,6 +895,27 @@ angular.module('starter.controllers', [])
        }, 8000);
 
     };
+
+    $scope.takeImage = function() {
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.n.imgPreview = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    }
 })
 
 
@@ -998,8 +1038,10 @@ angular.module('starter.controllers', [])
 
     $scope.f = FavouriteList.getFavourite($stateParams.favId);
 
+    $scope.inviaEmail = function(){
 
 
+    }
 
 
 });

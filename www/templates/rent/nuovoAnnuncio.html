@@ -11,12 +11,19 @@
          <ion-list>
             <ion-item type="item-text-wrap">
                 <h2>Titolo</h2>
-                <input type="text" class="bozzaTextInput" ng-model="new.titolo">
+                <input type="text" class="bozzaTextInput" ng-model="n.titolo">
             </ion-item>
+
+             <a class="item item-thumbnail-right" ng-click="takeImage()">
+                <img ng-src="{{n.imgPreview}}"/>
+                <h2>Immagine Copertina</h2>
+                 <h6>{{n.imgPreview}}</h6>
+             </a>
+
 
             <label class="item item-input">
               <span class="input-label">Prezzo</span>
-              <input type="number" string-to-number ng-model="new.prezzo">
+              <input type="number" string-to-number ng-model="n.prezzo">
             </label>
 
             <label class = "item item-input item-select">
@@ -24,7 +31,7 @@
                   Tipo
                </div>
 
-               <select ng-model="new.tipo">
+               <select ng-model="n.tipo">
                   <option value="Appartamento">Appartamento</option>
                   <option value="Stanza Singola">Stanza Singola</option>
                   <option value="Stanza Condivisa">Stanza Condivisa</option>
@@ -36,7 +43,7 @@
                   Zona
                </div>
 
-               <select ng-model="new.zona">
+               <select ng-model="n.zona">
                   <option value="Centro">Centro</option>
                   <option value="Citta' Studi">Citta' Studi</option>
                   <option value="Corso Buenos Aires">Corso Buenos Aires</option>
@@ -50,32 +57,32 @@
 
             <ion-item type="item-text-wrap">
                 <h2>Indirizzo</h2>
-                <input type="text" class="bozzaTextInput" ng-model="new.indirizzo">
+                <input type="text" class="bozzaTextInput" ng-model="n.indirizzo">
             </ion-item>
 
             <label class="item item-input">
               <span class="input-label">Piano</span>
-              <input type="number" string-to-number  ng-model="new.piano">
+              <input type="number" string-to-number  ng-model="n.piano">
             </label>
 
             <label class="item item-input">
               <span class="input-label">Locali</span>
-              <input type="number" string-to-number ng-model="new.num_locali">
+              <input type="number" string-to-number ng-model="n.num_locali">
             </label>
 
             <label class="item item-input">
               <span class="input-label">Superficie (mq)</span>
-              <input type="number" string-to-number ng-model="new.superficie">
+              <input type="number" string-to-number ng-model="n.superficie">
             </label>
 
             <label class="item item-input" ng-show="e.tipo=='Stanza Condivisa'">
               <span class="input-label">Posti letto stanza</span>
-              <input type="number" string-to-number ng-model="new.posti_letto">
+              <input type="number" string-to-number ng-model="n.posti_letto">
             </label>
 
             <label class="item item-input">
               <span class="input-label">Posti letto totali</span>
-              <input type="number" string-to-number ng-model="new.posti_letto_tot">
+              <input type="number" string-to-number ng-model="n.posti_letto_tot">
             </label>
 
         </ion-list>
@@ -84,26 +91,26 @@
         <ion-list>
             <ion-item type="item-text-wrap">
                 <h2>Metro</h2>
-                <input type="text" ng-model="new.metro">
+                <input type="text" ng-model="n.metro">
             </ion-item>
             <ion-item type="item-text-wrap">
                 <h2>Bus</h2>
-                <input type="text" ng-model="new.autobus">
+                <input type="text" ng-model="n.autobus">
             </ion-item>
             <ion-item type="item-text-wrap">
                 <h2>Tram</h2>
-                <input type="text" ng-model="new.tram">
+                <input type="text" ng-model="n.tram">
             </ion-item>
             <ion-item type="item-text-wrap">
                 <h2>Treno</h2>
-                <input type="text" ng-model="new.treno">
+                <input type="text" ng-model="n.treno">
             </ion-item>
         </ion-list>
         <br>
 
         <ion-item type="item-text-wrap">
             <h2>Descrizione</h2>
-            <input type="text" class="bozzaTextInput" ng-model="new.descrizione">
+            <input type="text" class="bozzaTextInput" ng-model="n.descrizione">
         </ion-item>
 
     </ion-content>
