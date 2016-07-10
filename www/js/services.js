@@ -369,6 +369,8 @@ angular.module('starter.services', [])
 
 
     var resArray = [];
+    var dist=[];
+    var cont=0;
 
     function callAjax(zone,address,type,priceStart,priceEnd){
 
@@ -399,13 +401,67 @@ angular.module('starter.services', [])
         }, function myError(response) {
             console.log(response.statusText);
         });
-    }
+    };
 
+    function vicino(km){
+        console.log("NEAR");
+        function distance(lat1, lon1, lat2, lon2, unit) {
+            var radlat1 = Math.PI * lat1/180
+            var radlat2 = Math.PI * lat2/180
+            var radlon1 = Math.PI * lon1/180
+            var radlon2 = Math.PI * lon2/180
+            var theta = lon1-lon2
+            var radtheta = Math.PI * theta/180
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            dist = Math.acos(dist)
+            dist = dist * 180/Math.PI
+            dist = dist * 60 * 1.1515
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist
+        };
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var userLatlng = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+            console.log(pos.coords.latitude);
+            console.log(pos.coords.longitude);
+            for (var i = 0; i < resArray.length; i++) {
+                 console.log(i);
+                 var geocoder = new google.maps.Geocoder();
+                 geocoder.geocode( { 'address': resArray[i].indirizzo}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        dist[cont++] = distance(pos.coords.latitude,pos.coords.longitude,results[0].geometry.location.lat(),results[0].geometry.location.lng(),'K');
+                        console.log("ci siamo");
+
+                        /*if(d>km){
+                            console.log("rimuovo");
+                            console.log(ind);
+                            console.log(resArray.length);
+                             resArray.splice(ind, 1);
+                            console.log(resArray.length);
+                        }*/
+
+                    }
+                    else {
+                        console.log("Geocode was not successful for the following reason: " + status);
+                    }
+                });
+            }
+            console.log(dist.length)
+
+        }, function(error) {
+            Console.log('Unable to get location: ' + error.message);
+        });
+    };
 
     return{
         call : function(zone,address,type,priceStart,priceEnd){
 
             callAjax(zone,address,type,priceStart,priceEnd);
+            return;
+        },
+
+        near : function(km){
+            vicino(km);
             return;
         },
 

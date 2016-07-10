@@ -331,7 +331,8 @@ angular.module('starter.controllers', [])
            $scope.showAlert();
            // e.preventDefault();
         }else{
-ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
+           ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
+              ResultList.near(15);
             $state.go('tab.result');
 
         }
