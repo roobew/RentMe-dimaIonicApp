@@ -25,20 +25,19 @@ angular.module('starter.controllers', [])
         "password": ''
     };
     $scope.signUpData = {
+        'name': '',
+        'surname': '',
         "email": '',
         "password": '',
         "username":''
     };
-    $scope.signUpData.custom = {
-      'name': '',
-      'surname': ''
-    };
+
     $scope.check={"password":''};
-    $scope.showAlert = function(string) {
+    $scope.showAlert = function(title,text) {
 
             var alertPopup = $ionicPopup.alert({
-                title: 'ERROR',
-                template: string
+                title: title,
+                template: text
             });
 
             alertPopup.then(function(res) {
@@ -48,8 +47,8 @@ angular.module('starter.controllers', [])
         };
 
     $scope.signUp = function(){
-        if($scope.signUpData.custom.name==''||
-           $scope.signUpData.custom.surname==''||
+        if($scope.signUpData.name==''||
+           $scope.signUpData.surname==''||
            $scope.signUpData.username==''||
            $scope.signUpData.email==''||
            $scope.signUpData.password==''||
@@ -65,18 +64,34 @@ angular.module('starter.controllers', [])
                 if($scope.signUpData.password.length<6){
                     $scope.showAlert("Password too short");
                 }else{
-                    Ionic.Auth.signup($scope.signUpData).
-                    then(function(){
-                        $scope.closeSignUp();
-                        $scope.signUpData = '';
-                        $scope.check='';
-                    }, function(){
-                         $scope.showAlert("Something Wrong!");
-                    });
+                        console.log("dentro register");
+                        console.log("Campi registrazione pieni");
+                        myUrl=  "http://rentme.altervista.org/registration.php?" +
+                                "name="        +  $scope.signUpData.name    +
+                                "&surname="     +   $scope.signUpData.surname    +
+                                "&email="       +   $scope.signUpData.email     +
+                                "&loginType="   +   'rentMe'                                    +
+                                "&password="    +  $scope.signUpData.password   ;
+                        console.log("ciaaaaaooo!!11!!");
+
+                        xhttp = new XMLHttpRequest;
+                        xhttp.open("GET", myUrl, false);
+                        xhttp.send();
+                        jUser=xhttp.response;
+                        if(JSON.parse(jUser).uRentMe!=null){
+                            localStorage.setItem("userData",jUser);
+                            $scope.closeSignUp();
+                        }else{
+                            console.log("ERROR");
+                            console.log(jUser);
+                            $scope.showAlert(JSON.parse(jUser).title,JSON.parse(jUser).message);
+                            //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
+                        }
                 }
             }
         }
     };
+
     $scope.login = function(){
         var authProvider = 'basic';
         var authSettings = { 'remember': true };
@@ -98,26 +113,27 @@ angular.module('starter.controllers', [])
             // for your application
           }
         };
-        Ionic.Auth.login(authProvider, authSettings, $scope.loginData).then(authSuccess, authFailure);
-    };
-    $scope.facebookLogin = function() {
+        //Ionic.Auth.login(authProvider, authSettings, $scope.loginData).then(authSuccess, authFailure);
+        console.log("tutto ok");
 
-             //window.open("http://google.com");
-        var authSuccess = function(user) {
-            console.log(user.details);
-            $scope.starrtApp();
-          // user was authenticated, you can get the authenticated user
-          // with Ionic.User.current();
-        };
-        var authFailure = function(errors) {
+        myUrl=  "http://rentme.altervista.org/login.php?" +
+                "email="       +   $scope.loginData.email      +
+                "&loginType="   +   'rentMe'                                    +
+                "&password="    +   $scope.loginData.password  ;
 
-              alert(errors);
-            console.log(errors);
-            // check the error and provide an appropriate message
-            // for your application
-
-        };
-       Ionic.Auth.login('facebook', {'remember': true}).then(authSuccess, authFailure);
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        jUser=xhttp.response;
+        if(JSON.parse(jUser).uRentMe!=null){
+            $scope.user = jUser;
+            console.log("dentro");
+            localStorage.setItem("userData",jUser);
+            $scope.startApp();
+        }else{
+            $scope.showAlert(JSON.parse(jUser).title,JSON.parse(jUser).message);
+            //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
+        }
     };
 
      $scope.startApp = function(){
@@ -126,13 +142,16 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup) {
-    $scope.user = Ionic.User.current();
+    $scope.$on('$ionicView.enter', function () {
+    console.log("abc");
+    $scope.user = JSON.parse(localStorage.getItem("userData"));
+  });
+
     $scope.logout = function(){
         console.log("logout");
-        console.log(Ionic.User.current());
-        Ionic.Auth.logout();
-        $scope.user='';
-        console.log(Ionic.User.current());
+
+        $scope.user={};
+        localStorage.clear();
         $state.go('login');
 
 
@@ -193,20 +212,25 @@ angular.module('starter.controllers', [])
             });
         };
 
-    $scope.check={"password":''};
+
     $scope.edit={
         "image":'',
-        "password":''
+        "password":'',
+        "check": ''
     };
     $scope.confirmPw = function(){
-        console.log($scope.user.details.password);
-        console.log($scope.check.oldpassword);
-        console.log($scope.edit.password);
-        console.log($scope.check.password);
-            if($scope.check.password==$scope.edit.password){
+
+            if($scope.edit.check==$scope.edit.password){
                 if($scope.edit.password.length>5){
-                    $scope.user.details.password=$scope.edit.password;
-                    $scope.user.save();
+                   myUrl=  "http://rentme.altervista.org/changePassword.php?" +
+                            "id="       +   $scope.user.idRENTME      +
+                            "&loginType="   +   'rentMe'                                    +
+                            "&password="    +   $scope.edit.password  ;
+                    xhttp = new XMLHttpRequest;
+                    xhttp.open("GET", myUrl, false);
+                    xhttp.send();
+                    jUser=xhttp.response;
+
                     $scope.closeEditPw();
                 }else{
                     $scope.showAlert("Password too short");
@@ -221,17 +245,19 @@ angular.module('starter.controllers', [])
 })
 
 // TAB-SEARCH Controller
-.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup) {
+.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList,$http) {
 
 
     $scope.modalData = {"choice" : '-1',
-                        "curPos" : 'Posizione attuale',
-                        "zone" : 'Seleziona una zona',
+
+                        "curPos" : 'Posizione Attuale',
+                        "zone" : '  Seleziona una zona',
                         "address" : '',
-                        "place" : 'Scegli',
-                        "type" : 'Scegli',
-                        "priceStart" : 'Scegli',
-                       "priceEnd": 'Scegli'};
+                        "place" : 'Seleziona',
+                        "type" : 'Seleziona',
+                        "priceStart" : 'Da',
+                       "priceEnd": 'A'};
+
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
@@ -301,12 +327,20 @@ angular.module('starter.controllers', [])
 
             alertPopup.then(function(res) {});
         };
-        if($scope.modalData.place == 'Select'){
+        if($scope.modalData.place == 'Seleziona'){
            $scope.showAlert();
            // e.preventDefault();
-        }else
+        }else{
+ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
             $state.go('tab.result');
+
+        }
     };
+
+
+
+
+
 
 })
 
@@ -316,52 +350,26 @@ angular.module('starter.controllers', [])
         $scope.map = !$scope.map;
     }
 
-    $http({
-        //method : "POST",
-        method : "GET",
-        url : 'http://rentme.altervista.org/IONIC/get_annunci.php',
-        /*headers: {
-            //'Content-Type': undefined
-            "Access-Control-Allow-Origin" : "*"
 
-        },
-        data: { id_user: '23' }*/
-    }).then(function mySucces(response) {
 
-        ResultList.setResArray(response.data);
-        $scope.elencoRes =ResultList.getResArray();
-        console.log("Get_Result: ");
-        console.log(response.data);
+     $scope.elencoRes = ResultList.getResArray();
 
-    }, function myError(response) {
-        console.log(response.statusText);
-    });
+    $scope.removeRes = function(ss){
+            ResultList.rimuovi(ss);
+        }
+
 
 
 })
-.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
-
-    $scope.f = ResultList.getResult($stateParams.resId);
 
 
-    $scope.getClass = function(){
-        $scope.isPreferito = FavouriteList.getFavourite($stateParams.resId)!= null?true:false;
-        $scope.class = $scope.isPreferito? 'preferitiColor':'nonPreferitiColor';
-        return $scope.class;
-    }
+.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
 
-    $scope.addToPreferiti = function(){
+    $scope.f = ResultList.getAnnuncio($stateParams.resId);
 
-        if(!$scope.isPreferito){
-            FavouriteList.aggiungi($scope.f);
-        }
-        else{
-            FavouriteList.rimuoviPreferito($scope.f.id_annuncio);
-        }
 
-        $scope.isPreferito = !$scope.isPreferito;
 
-    }
+
 
 })
 
@@ -439,7 +447,7 @@ angular.module('starter.controllers', [])
     };
 })
 .controller('modalTypeCtrl', function($scope, $ionicModal) {
-    $scope.types = ['Appartamento','Stanza Condivisa','Stanza Privata'];
+    $scope.types = ['Seleziona','Appartamento','Stanza Condivisa','Stanza Singola'];
      $scope.doSomething = function(item) {
         // console.log(item);
          $scope.modalData.type = item;
@@ -574,10 +582,11 @@ angular.module('starter.controllers', [])
 
 
 // TAB-HOME Controller
-.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList) {
+.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList,ResultList) {
     RentPubblicatiList.call();
     BozzeList.call();
     FavouriteList.call();
+
 
 })
 
