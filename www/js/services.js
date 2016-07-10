@@ -368,15 +368,23 @@ angular.module('starter.services', [])
 
     var resArray = [];
 
-    function callAjax(place,type,priceStart,priceEnd){
+    function callAjax(zone,address,type,priceStart,priceEnd){
+
+        console.log("http://rentme.altervista.org/IONIC/get_annunci.php?" +
+                    "zone=" + zone +
+                    "&address="       +  address   +
+                    "&tipo="       +  type   +
+                    "&min="   +       priceStart                            +
+                    "&max="    +    priceEnd);
         resArray = [];
         $http({
             method : "GET",
             url :   "http://rentme.altervista.org/IONIC/get_annunci.php?" +
-                    "place=" + place +
-                    "&tipo='"       +  type   +
-                    "'&min="   +       priceStart                            +
-                    "&max="    +    priceEnd,
+                    "zone=" + zone +
+                    "&address="       +  address   +
+                    "&tipo="       +  type   +
+                    "&min="   +       priceStart                            +
+                    "&max="    +    priceEnd
         }).then(function mySucces(response) {
             console.log("Get_Result: ");
 
@@ -393,8 +401,9 @@ angular.module('starter.services', [])
 
 
     return{
-        call : function(place,type,priceStart,priceEnd){
-            callAjax(place,type,priceStart,priceEnd);
+        call : function(zone,address,type,priceStart,priceEnd){
+
+            callAjax(zone,address,type,priceStart,priceEnd);
             return;
         },
 

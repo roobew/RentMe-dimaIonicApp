@@ -251,7 +251,7 @@ angular.module('starter.controllers', [])
     $scope.modalData = {"choice" : '-1',
 
                         "curPos" : 'Posizione Attuale',
-                        "zone" : 'Seleziona una zona',
+                        "zone" : '  Seleziona una zona',
                         "address" : '',
                         "place" : 'Seleziona',
                         "type" : 'Seleziona',
@@ -331,7 +331,7 @@ angular.module('starter.controllers', [])
            $scope.showAlert();
            // e.preventDefault();
         }else{
-            ResultList.call($scope.modalData.place,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
+ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
             $state.go('tab.result');
 
         }
@@ -447,7 +447,7 @@ angular.module('starter.controllers', [])
     };
 })
 .controller('modalTypeCtrl', function($scope, $ionicModal) {
-    $scope.types = ['Appartamento','Stanza Condivisa','Stanza Singola'];
+    $scope.types = ['Seleziona','Appartamento','Stanza Condivisa','Stanza Singola'];
      $scope.doSomething = function(item) {
         // console.log(item);
          $scope.modalData.type = item;
