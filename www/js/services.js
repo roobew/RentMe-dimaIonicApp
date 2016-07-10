@@ -369,8 +369,7 @@ angular.module('starter.services', [])
 
 
     var resArray = [];
-    var dist=[];
-    var cont=0;
+
 
     function callAjax(zone,address,type,priceStart,priceEnd){
 
@@ -397,6 +396,7 @@ angular.module('starter.services', [])
                 resArray.push(response.data[i]);
             }
 
+
             console.log(resArray);
         }, function myError(response) {
             console.log(response.statusText);
@@ -420,36 +420,30 @@ angular.module('starter.services', [])
             if (unit=="N") { dist = dist * 0.8684 }
             return dist
         };
+
         navigator.geolocation.getCurrentPosition(function(pos) {
+             var geocoder = new google.maps.Geocoder();
             var userLatlng = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
             console.log(pos.coords.latitude);
             console.log(pos.coords.longitude);
             for (var i = 0; i < resArray.length; i++) {
-                 console.log(i);
-                 var geocoder = new google.maps.Geocoder();
-                 geocoder.geocode( { 'address': resArray[i].indirizzo}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        dist[cont++] = distance(pos.coords.latitude,pos.coords.longitude,results[0].geometry.location.lat(),results[0].geometry.location.lng(),'K');
-                        console.log("ci siamo");
-
-                        /*if(d>km){
-                            console.log("rimuovo");
-                            console.log(ind);
-                            console.log(resArray.length);
-                             resArray.splice(ind, 1);
-                            console.log(resArray.length);
-                        }*/
-
-                    }
-                    else {
-                        console.log("Geocode was not successful for the following reason: " + status);
-                    }
-                });
+                console.log(i);
+                var d = distance(pos.coords.latitude,pos.coords.longitude,resArray[i].lat,resArray[i].long,'K');
+                console.log("ci siamo");
+                console.log(i);
+                console.log(d);
+                if(d>km){
+                    console.log("rimuovo");
+                    console.log(i);
+                    console.log(resArray.length);
+                    resArray.splice(i, 1);
+                    console.log(resArray.length);
+                }
             }
-            console.log(dist.length)
+            console.log(resArray.length);
 
         }, function(error) {
-            Console.log('Unable to get location: ' + error.message);
+            console.log('Unable to get location: ' + error.message);
         });
     };
 
