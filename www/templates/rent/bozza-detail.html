@@ -22,6 +22,15 @@
                 <input type="text" class="bozzaTextInput" ng-model="e.titolo" ng-change="bc.changed=true">
             </ion-item>
 
+
+
+            <a class="item item-thumbnail-right" ng-click="takeImage()">
+                <img ng-src="{{e.imgPreview}}">
+                <h2>Immagine Copertina</h2>
+
+             </a>
+
+
             <label class="item item-input">
               <span class="input-label" ng-class="prezzoClass">Prezzo</span>
               <input type="number" string-to-number ng-model="e.prezzo" ng-change="bc.changed=true">

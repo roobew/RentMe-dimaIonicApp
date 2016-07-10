@@ -309,7 +309,7 @@ angular.module('starter.services', [])
         treno:"-",
         tram:"-",
         prezzo:"-",
-        imgPreview:"-"
+        imgPreview:""
     }];
     return {
         getNuovoAnnuncioArray : function(){
@@ -348,7 +348,7 @@ angular.module('starter.services', [])
             nuovoAnnuncioArray[0].treno = "-";
             nuovoAnnuncioArray[0].tram = "-";
             nuovoAnnuncioArray[0].prezzo = "-";
-            nuovoAnnuncioArray[0].imgPreview = "-";
+            nuovoAnnuncioArray[0].imgPreview = "";
         },
 
     };

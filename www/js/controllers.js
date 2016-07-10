@@ -604,8 +604,6 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
     RentPubblicatiList.call();
     BozzeList.call();
     FavouriteList.call();
-
-
 })
 
 
@@ -655,7 +653,7 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
     $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
 })
 
-.controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList) {
+.controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
     $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
@@ -792,10 +790,31 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
      hideSheet();
    }, 8000);
 
- };
+ }
+
+    $scope.takeImage = function() {
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.e.imgPreview = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    };
 })
 
-.controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList) {
+.controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList, $cordovaCamera) {
   console.log("Modal CTRL");
 
     $ionicModal.fromTemplateUrl('templates/rent/nuovoAnnuncio.html', {
@@ -815,7 +834,7 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
 
     $scope.closeModal = function() {
         console.log("Close Modal");
-        console.log(NuovoAnnuncioService.getNuovoAnnuncioArray());
+        //console.log(NuovoAnnuncioService.getNuovoAnnuncioArray());
 
         $scope.showNuovoAnnuncioSheet();
     };
@@ -835,7 +854,7 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
         // Execute action
     });
 
-    $scope.new = NuovoAnnuncioService.getNuovoAnnuncioArray();
+    $scope.n = NuovoAnnuncioService.getNuovoAnnuncioArray();
 
     $scope.showNuovoAnnuncioSheet = function() {
 
@@ -862,7 +881,7 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
                 console.log("Salvare bozza e inviare DB");
 
                 NuovoAnnuncioService.setCreated();
-                BozzeList.aggiungiBozza($scope.new);
+                BozzeList.aggiungiBozza($scope.n);
                 //console.log(BozzaList.getBozzeArray());
                 $scope.modal_uno.hide();
                 return true;
@@ -875,6 +894,27 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
        }, 8000);
 
     };
+
+    $scope.takeImage = function() {
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.n.imgPreview = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    }
 })
 
 
@@ -997,8 +1037,10 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
 
     $scope.f = FavouriteList.getFavourite($stateParams.favId);
 
+    $scope.inviaEmail = function(){
 
 
+    }
 
 
 });
