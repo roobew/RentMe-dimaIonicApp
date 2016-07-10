@@ -110,9 +110,11 @@ angular.module('starter.services', [])
         },
 
         rimuoviPreferito : function(itemID){
+            console.log(favArray);
             for (var i = 0; i < favArray.length; i++) {
                 if (favArray[i].id_annuncio == parseInt(itemID)) {
                     favArray.splice(i, 1);
+                    console.log(favArray);
                     return;
                 }
             }

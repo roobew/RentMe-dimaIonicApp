@@ -363,13 +363,31 @@ ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.
 })
 
 
-.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
+.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
 
     $scope.f = ResultList.getAnnuncio($stateParams.resId);
 
+    $scope.getClass = function(){
+        $scope.isPreferito = FavouriteList.getFavourite($stateParams.resId)!=null?true:false;
+        console.log($scope.isPreferito);
+        if($scope.isPreferito){
+            return "preferitiColor";
+        }
+        else{
+            return "nonPreferitiColor";
+        }
+    }
 
+    $scope.addToPreferiti = function(){
 
+        if($scope.isPreferito){
+            FavouriteList.rimuoviPreferito($stateParams.resId);
+        }
+        else{
+            FavouriteList.aggiungi($scope.f);
 
+        }
+    }
 
 })
 
