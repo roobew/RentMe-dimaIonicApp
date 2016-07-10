@@ -402,8 +402,6 @@ angular.module('starter.services', [])
                 //console.log(response.data[i]);
                 resArray.push(response.data[i]);
             }
-
-
             console.log(resArray);
         }, function myError(response) {
             console.log(response.statusText);
@@ -435,7 +433,7 @@ angular.module('starter.services', [])
             console.log(pos.coords.longitude);
             for (var i = 0; i < resArray.length; i++) {
                 console.log(i);
-                var d = distance(pos.coords.latitude,pos.coords.longitude,resArray[i].lat,resArray[i].long,'K');
+                var d = distance(pos.coords.latitude,pos.coords.longitude,resArray[i].lat,resArray[i].lng,'K');
                 console.log("ci siamo");
                 console.log(i);
                 console.log(d);
