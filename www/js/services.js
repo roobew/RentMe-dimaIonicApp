@@ -367,10 +367,9 @@ angular.module('starter.services', [])
     return{
         getResArray : function(){
             return resArray;
-<<<<<<< HEAD
-=======
+
             console.log("QUAAA");
->>>>>>> origin/master
+
         },
 
         rimuovi : function (i){
@@ -382,15 +381,11 @@ angular.module('starter.services', [])
         },
 
         getResult : function(xx){
-<<<<<<< HEAD
-            for (var i = 0; i < favArray.length; i++) {
-                if (resArray[i].id_annuncio == parseInt(xx)) {
-                    console.log("Trovato");
-=======
+
             for (var i = 0; i < resArray.length; i++) {
                 if (resArray[i].id_annuncio == parseInt(xx)) {
                     //console.log("Trovato");
->>>>>>> origin/master
+
                     return resArray[i];
                 }
             }
@@ -401,7 +396,7 @@ angular.module('starter.services', [])
         setResArray : function(myArray){
             resArray = myArray;
         },
-<<<<<<< HEAD
+
 
         printArray : function(){
             console.log("Printing");
@@ -410,8 +405,7 @@ angular.module('starter.services', [])
             }
             console.log("End Printing");
         }
-=======
->>>>>>> origin/master
+
     };
 
 })

@@ -62,18 +62,16 @@
     font-weight: bold;
 }
 
-<<<<<<< HEAD
 
 .avatar {
         width: 50%;
     height: 50%;
     border-radius: 50%;
-=======
+}
 .preferitiColor{
     color: #ef473a !important;
 }
 
 .nonPreferitiColor{
     color:#fff !important;
->>>>>>> origin/master
 }

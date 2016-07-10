@@ -249,7 +249,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.modalData = {"choice" : '-1',
-<<<<<<< HEAD
+
                         "curPos" : 'Posizione Attuale',
                         "zone" : 'Seleziona una zona',
                         "address" : '',
@@ -257,15 +257,7 @@ angular.module('starter.controllers', [])
                         "type" : 'Seleziona',
                         "priceStart" : 'Da',
                        "priceEnd": 'A'};
-=======
-                        "curPos" : 'Posizione attuale',
-                        "zone" : 'Seleziona una zona',
-                        "address" : '',
-                        "place" : 'Scegli',
-                        "type" : 'Scegli',
-                        "priceStart" : 'Scegli',
-                       "priceEnd": 'Scegli'};
->>>>>>> origin/master
+
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
@@ -349,7 +341,9 @@ angular.module('starter.controllers', [])
         xhttp.send();
         jAnnunci=xhttp.response;
         if(JSON.parse(jAnnunci)[0].id_annuncio!=null){
+           // console.log(jAnnunci);
             ResultList.setResArray(jAnnunci);
+            ResultList.printArray();
             //localStorage.setItem("annunci",jAnnunci);
            $state.go('tab.result');
         }else{
@@ -377,14 +371,11 @@ angular.module('starter.controllers', [])
 
 
 })
-<<<<<<< HEAD
+
+
 .controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
     console.log($stateParams.resId);
     $scope.f = JSON.parse(localStorage.getItem("annunci"))[$stateParams.resId];//ResultList.getResult($stateParams.resId);
-=======
-.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
-
-    $scope.f = ResultList.getResult($stateParams.resId);
 
 
     $scope.getClass = function(){
@@ -406,7 +397,7 @@ angular.module('starter.controllers', [])
 
     }
 
->>>>>>> origin/master
+
 })
 
 .controller('modalPlaceCtrl', function($scope, $ionicModal) {
