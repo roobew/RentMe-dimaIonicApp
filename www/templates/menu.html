@@ -33,8 +33,8 @@ navigation history that also transitions its views in and out.
 
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" expose-aside-when="large">
-    <ion-header-bar class="bar-stable">
+  <ion-side-menu side="left" expose-aside-when="large" class="dark">
+    <!--<ion-header-bar class="bar-stable">
       <h1 class="title center" >{{user.username}}</h1>
     </ion-header-bar>
     <ion-content>
@@ -56,7 +56,29 @@ navigation history that also transitions its views in and out.
             Logout
         </ion-item>
       </ion-list>
-    </ion-content>
+    </ion-content>-->
+      <ion-header-bar class="bar-assertive">
+      </ion-header-bar>
+      <ion-content>
+        <ul class="list">
+          <div class="item divMenuContent">
+            <img class="menuImage" src="//ionicframework.com/img/docs/spengler.jpg">
+            <h2 style="margin-top:1em;">Nome</h2>
+            <h2 style="margin-top:0.3em;">Cognome</h2>
+            <h4 style="margin-top:1em;"><i>Email@email.it</i></h4>
+          </div>
+
+            <a href="#/event/check-in" class="item icon-left ion-person firsMenuElement" menu-close>
+              <span class="menuElementPadding">Modifica profilo</span>
+            </a>
+            <a href="#/event/attendees" class="item icon ion-person-stalker" menu-close>
+              <span class="menuElementPadding">Contatti</span>
+            </a>
+            <a href="" class="item icon ion-reply" menu-close>
+                <span class="menuElementPadding">Esci</span>
+            </a>
+        </ul>
+      </ion-content>
   </ion-side-menu>
 </ion-side-menus>
 
