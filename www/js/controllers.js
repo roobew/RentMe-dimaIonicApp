@@ -335,7 +335,7 @@ angular.module('starter.controllers', [])
            // e.preventDefault();
         }else{
            ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
-              ResultList.near(15);
+           ResultList.near(15);
             $state.go('tab.result');
 
         }
@@ -362,6 +362,22 @@ angular.module('starter.controllers', [])
 .controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
 
     $scope.f = ResultList.getAnnuncio($stateParams.resId);
+
+    $scope.inviaEmail = function(){
+        var url = "mailto:"+$scope.f.email+"?subject="+$scope.f.titolo+"&body=Ciao,%0D%0Asono interessato al tuo annuncio:%0D%0A%0D%0ATITOLO:"+$scope.f.titolo+
+                "%0D%0A%0D%0ADescrizione:"+$scope.f.descrizione+
+                "%0D%0AIndirizzo:"+$scope.f.indirizzo+
+                "%0D%0AZona:"+$scope.f.zona+
+                "%0D%0ATipo:"+$scope.f.tipo+
+                "%0D%0APiano:"+$scope.f.piano+
+                "%0D%0ANumero Locali:"+$scope.f.num_locali+
+                "%0D%0APrezzo:"+$scope.f.prezzo +
+                "%0D%0A%0D%0AAspetto tue notizie ed un eventuale incontro.%0D%0ASaluti";
+
+        window.location.href =url;
+
+
+    };
 
     $scope.getClass = function(){
         $scope.isPreferito = FavouriteList.getFavourite($stateParams.resId)!=null?true:false;
@@ -1210,9 +1226,20 @@ angular.module('starter.controllers', [])
     $scope.f = FavouriteList.getFavourite($stateParams.favId);
 
     $scope.inviaEmail = function(){
+        var url = "mailto:"+$scope.f.email+"?subject="+$scope.f.titolo+"&body=Ciao,%0D%0Asono interessato al tuo annuncio:%0D%0A%0D%0ATITOLO:"+$scope.f.titolo+
+                "%0D%0A%0D%0ADescrizione:"+$scope.f.descrizione+
+                "%0D%0AIndirizzo:"+$scope.f.indirizzo+
+                "%0D%0AZona:"+$scope.f.zona+
+                "%0D%0ATipo:"+$scope.f.tipo+
+                "%0D%0APiano:"+$scope.f.piano+
+                "%0D%0ANumero Locali:"+$scope.f.num_locali+
+                "%0D%0APrezzo:"+$scope.f.prezzo +
+                "%0D%0A%0D%0AAspetto tue notizie ed un eventuale incontro.%0D%0ASaluti";
+
+        window.location.href =url;
 
 
-    }
+    };
 
 
 });
