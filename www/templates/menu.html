@@ -40,15 +40,15 @@ navigation history that also transitions its views in and out.
 
   <ion-side-menu side="left" expose-aside-when="large">
     <ion-header-bar class="bar-stable">
-      <h1 class="title center" >{{user.details.username}}</h1>
+      <h1 class="title center" >{{user.username}}</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
         <ion-item class="item-remove-animate item-thumbnail center " type="item-text-wrap">
-            <img ng-src="{{user.details.image}}">
-            <h2>{{user.data.data.name}}</h2>
-            <h2>{{user.data.data.surname}}</h2>
-            <h2>{{user.details.email}}</h2>
+            <img class="avatar" ng-src="{{user.picture}}">
+            <h2>{{user.name}}</h2>
+            <h2>{{user.surname}}</h2>
+            <h2>{{user.email}}</h2>
         </ion-item>
         <ion-item menu-close ng-click="openEditData()">
           Modifica Dati

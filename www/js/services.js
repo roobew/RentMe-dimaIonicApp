@@ -353,25 +353,25 @@ angular.module('starter.services', [])
 
 .factory('ResultList', function(){
 
-    var resArray = [];
+    var resArray;
     return{
         getResArray : function(){
-            return favArray;
+            return resArray;
         },
 
         rimuovi : function (i){
-            favArray.splice(favArray.indexOf(i), 1);
+            resArray.splice(resArray.indexOf(i), 1);
         },
 
         aggiungi : function (newElement){
-            favArray.push(newElement);
+            resArray.push(newElement);
         },
 
         getResult : function(xx){
             for (var i = 0; i < favArray.length; i++) {
-                if (favArray[i].id_annuncio == parseInt(xx)) {
+                if (resArray[i].id_annuncio == parseInt(xx)) {
                     console.log("Trovato");
-                    return favArray[i];
+                    return resArray[i];
                 }
             }
             console.log("Non trovato");
@@ -379,12 +379,12 @@ angular.module('starter.services', [])
         },
 
         setResArray : function(myArray){
-            favArray = myArray;
+            resArray = myArray;
         },
 
         printArray : function(){
             console.log("Printing");
-            for(var i=0; i<favArray.length; i++){
+            for(var i=0; i<resArray.length; i++){
                 console.log("Elemento "+i);
             }
             console.log("End Printing");
