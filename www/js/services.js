@@ -109,6 +109,16 @@ angular.module('starter.services', [])
             console.log(favArray);
         },
 
+        rimuoviPreferito : function(itemID){
+            for (var i = 0; i < favArray.length; i++) {
+                if (favArray[i].id_annuncio == parseInt(itemID)) {
+                    favArray.splice(i, 1);
+                    return;
+                }
+            }
+            console.log("Fav_ non trovato");
+        },
+
         aggiungi : function (newElement){
             favArray.push(newElement);
         },
@@ -357,6 +367,10 @@ angular.module('starter.services', [])
     return{
         getResArray : function(){
             return resArray;
+<<<<<<< HEAD
+=======
+            console.log("QUAAA");
+>>>>>>> origin/master
         },
 
         rimuovi : function (i){
@@ -368,19 +382,26 @@ angular.module('starter.services', [])
         },
 
         getResult : function(xx){
+<<<<<<< HEAD
             for (var i = 0; i < favArray.length; i++) {
                 if (resArray[i].id_annuncio == parseInt(xx)) {
                     console.log("Trovato");
+=======
+            for (var i = 0; i < resArray.length; i++) {
+                if (resArray[i].id_annuncio == parseInt(xx)) {
+                    //console.log("Trovato");
+>>>>>>> origin/master
                     return resArray[i];
                 }
             }
-            console.log("Non trovato");
+            //console.log("Non trovato");
             return null;
         },
 
         setResArray : function(myArray){
             resArray = myArray;
         },
+<<<<<<< HEAD
 
         printArray : function(){
             console.log("Printing");
@@ -389,6 +410,8 @@ angular.module('starter.services', [])
             }
             console.log("End Printing");
         }
+=======
+>>>>>>> origin/master
     };
 
 })

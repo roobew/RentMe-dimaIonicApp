@@ -71,6 +71,17 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
         }
       }
     })
+
+  .state('tab.search-map', {
+    url: '/search/search_map',
+    views: {
+        'tab-search': {
+          templateUrl: 'templates/search/result-map.html',
+          controller: 'ResultMapCtrl'
+        }
+      }
+  })
+
   
   .state('tab.home', {
       url: '/home',
@@ -174,7 +185,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
     url: '/favourites/map',
     views: {
         'tab-favourite': {
-          templateUrl: 'templates/favourite/map.html',
+          templateUrl: 'templates/favourite/favourite-map.html',
           controller: 'MapCtrl'
         }
       }

@@ -249,6 +249,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.modalData = {"choice" : '-1',
+<<<<<<< HEAD
                         "curPos" : 'Posizione Attuale',
                         "zone" : 'Seleziona una zona',
                         "address" : '',
@@ -256,6 +257,15 @@ angular.module('starter.controllers', [])
                         "type" : 'Seleziona',
                         "priceStart" : 'Da',
                        "priceEnd": 'A'};
+=======
+                        "curPos" : 'Posizione attuale',
+                        "zone" : 'Seleziona una zona',
+                        "address" : '',
+                        "place" : 'Scegli',
+                        "type" : 'Scegli',
+                        "priceStart" : 'Scegli',
+                       "priceEnd": 'Scegli'};
+>>>>>>> origin/master
     // Create the modal that we will use later
     $ionicModal.fromTemplateUrl('templates/search/modalPlace.html', {
         id: 'place',
@@ -302,7 +312,7 @@ angular.module('starter.controllers', [])
     $scope.openModal = function($string) {
         switch($string){
             case 'place':
-                $scope.modalData.zone="Select a Zone";
+                $scope.modalData.zone="Scegli una zona";
                 $scope.modalData.address="";
                 $scope.modalPlace.show();
                 break;
@@ -367,13 +377,48 @@ angular.module('starter.controllers', [])
 
 
 })
+<<<<<<< HEAD
 .controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
     console.log($stateParams.resId);
     $scope.f = JSON.parse(localStorage.getItem("annunci"))[$stateParams.resId];//ResultList.getResult($stateParams.resId);
+=======
+.controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
+
+    $scope.f = ResultList.getResult($stateParams.resId);
+
+
+    $scope.getClass = function(){
+        $scope.isPreferito = FavouriteList.getFavourite($stateParams.resId)!= null?true:false;
+        $scope.class = $scope.isPreferito? 'preferitiColor':'nonPreferitiColor';
+        return $scope.class;
+    }
+
+    $scope.addToPreferiti = function(){
+
+        if(!$scope.isPreferito){
+            FavouriteList.aggiungi($scope.f);
+        }
+        else{
+            FavouriteList.rimuoviPreferito($scope.f.id_annuncio);
+        }
+
+        $scope.isPreferito = !$scope.isPreferito;
+
+    }
+
+>>>>>>> origin/master
 })
 
 .controller('modalPlaceCtrl', function($scope, $ionicModal) {
-  $scope.zones = ['Zone 1','Zone 2','Zone 3','Zone 4'];
+  $scope.zones = ["Centro",
+                  "Citta' Studi",
+                  "Corso Buenos Aires",
+                  "Porta Garibaldi",
+                  "Fiera - San Siro",
+                  "Navigli",
+                  "Porta Romana",
+                  "Porta Vittoria"
+                 ];
   
   $ionicModal.fromTemplateUrl('templates/search/modalZone.html', {
     scope: $scope,
@@ -396,7 +441,7 @@ angular.module('starter.controllers', [])
       switch(n){
           case 1:
               $scope.modalData.choice = 1;
-              $scope.modalData.zone = 'Select a Zone';
+              $scope.modalData.zone = 'Scegli una zona';
               $scope.modalData.address = '';
               $scope.modalData.place = $scope.modalData.curPos;
               $scope.submit('place',1);
@@ -411,7 +456,7 @@ angular.module('starter.controllers', [])
               break;
           case 3:
 
-              $scope.modalData.zone = 'Select a Zone';
+              $scope.modalData.zone = 'Scegli una zona';
               break;
       }
 
@@ -438,7 +483,7 @@ angular.module('starter.controllers', [])
     };
 })
 .controller('modalTypeCtrl', function($scope, $ionicModal) {
-    $scope.types = ['Appartamento','Stanza Singola','Stanza Privata'];
+    $scope.types = ['Appartamento','Stanza Condivisa','Stanza Privata'];
      $scope.doSomething = function(item) {
         // console.log(item);
          $scope.modalData.type = item;
@@ -478,6 +523,97 @@ angular.module('starter.controllers', [])
             console.log($scope.modalData.priceEnd);
         });
     };
+})
+
+.controller('ResultMapCtrl', function($scope, $ionicLoading, $compile, ResultList) {
+
+    console.log("RISULTATI MAPPA CTRL");
+    function initialize() {
+        var geocoder = new google.maps.Geocoder();
+        var myLatlng = new google.maps.LatLng(45.4642200,9.1905600);
+
+
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 12,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true
+        };
+
+        var map = new google.maps.Map(document.getElementById("searchMap"), mapOptions);
+        $scope.searchMap=map;
+        var address, title, imgSrc, zone, idAnnuncio, price;
+        ResultList.getResArray().forEach(function(elem){
+
+            address= elem.indirizzo;
+            title=elem.titolo;
+            imgSrc= elem.imgPreview;
+            zone= elem.zona;
+            idAnnuncio= elem.id_annuncio;
+            price= elem.prezzo
+
+            var contentString =
+                '<a href="#/tab/search/result/'+idAnnuncio+'">'+
+                    '<div style="text-align:center">'+
+                        '<img src="'+imgSrc+'" style="display:block; margin-left:auto; margin-right:auto;width:9em;height:7em;"/>'+
+                        '<h5>'+title+'</h5>'+
+                        '<h5>'+zone+' - '+price+'€ </h5>'+
+                    '</div>'+
+                '</a>'
+                       ;
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        title: elem.via
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function() {
+                        console.log("Inforview clicked");
+                        infowindow.close();
+                        infowindow.open(map,marker);
+                    });
+                }
+                else {
+                    console.log("Geocode was not successful for the following reason: " + status);
+                }
+            });
+
+        });
+    }
+
+    ionic.Platform.ready(initialize);
+
+    $scope.centerResultOnMe = function() {
+        console.log("Finding you.. ");
+        if(!$scope.searchMap) {
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            $scope.searchMap.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+
+            var userLatlng = new google.maps.LatLng(pos.coords.latitude,pos.coords.longitude);
+            var marker = new google.maps.Marker({
+                        map: $scope.searchMap,
+                        position: userLatlng,
+                        title: "Te"
+                    });
+
+        }, function(error) {
+            alert('Unable to get location: ' + error.message);
+        });
+    };
+
+    $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+    };
+
 })
 
 

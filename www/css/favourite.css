@@ -1,7 +1,7 @@
-#map {
-    width: 100vw;
+#map, #searchMap {
+    width: 95vw;
     height: 90vh;
-    margin-bottom: 1em;
+    :margin-bottom: 1em;
 }
 
 .blueItem{
@@ -62,9 +62,18 @@
     font-weight: bold;
 }
 
+<<<<<<< HEAD
 
 .avatar {
         width: 50%;
     height: 50%;
     border-radius: 50%;
+=======
+.preferitiColor{
+    color: #ef473a !important;
+}
+
+.nonPreferitiColor{
+    color:#fff !important;
+>>>>>>> origin/master
 }

@@ -10,8 +10,11 @@
         </ion-nav-buttons>
 
         <ion-nav-buttons side="right">
+<!--
             <button class="button button-icon button-clear {{map==true?'ion-ios-list-outline':'ion-map'}}"
                     ng-click="switchView()"></button>
+-->
+            <button class="button button-icon button-clear ion-map" ui-sref="tab.search-map"></button>
             <!--
                 ---CODICE PER CAMBIARE ICONE IN BASE AL SO---
                     {{
@@ -24,7 +27,7 @@
         </ion-nav-buttons>
     </ion-nav-bar>
 
-    <ion-content name="lista" ng-hide="map">
+    <ion-content name="lista">
        <ion-list >
             <ion-item class="item item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="f in elencoRes" type="item-text-wrap" href="#/tab/search/result/{{f.id_annuncio}}">
                 <img ng-src="{{f.imgPreview}}" />
@@ -38,9 +41,5 @@
             </ion-item>
         </ion-list>
     </ion-content>
-    <ion-content name="mappa" ng-show="map">
-        mappa
-    </ion-content>
-
 
 </ion-view>
