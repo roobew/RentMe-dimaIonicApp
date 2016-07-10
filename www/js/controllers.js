@@ -137,7 +137,7 @@ angular.module('starter.controllers', [])
     };
 
      $scope.startApp = function(){
-        $state.go('tab.home');
+        $state.go('tab.search');
     };
 })
 
@@ -245,8 +245,11 @@ angular.module('starter.controllers', [])
 })
 
 // TAB-SEARCH Controller
-.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList,$http) {
+.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList, RentPubblicatiList, BozzeList, FavouriteList) {
 
+    RentPubblicatiList.call();
+    BozzeList.call();
+    FavouriteList.call();
 
     $scope.modalData = {"choice" : '-1',
 
@@ -345,21 +348,13 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ResultCtrl', function($scope, $http,ResultList) {
-    $scope.map=false;
-    $scope.switchView = function(){
-        $scope.map = !$scope.map;
-    }
+.controller('ResultCtrl', function($scope,ResultList) {
 
-
-
-     $scope.elencoRes = ResultList.getResArray();
+    $scope.elencoRes = ResultList.getResArray();
 
     $scope.removeRes = function(ss){
             ResultList.rimuovi(ss);
         }
-
-
 
 })
 
@@ -600,16 +595,6 @@ angular.module('starter.controllers', [])
 })
 
 
-// TAB-HOME Controller
-.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList,ResultList) {
-    RentPubblicatiList.call();
-    BozzeList.call();
-    FavouriteList.call();
-})
-
-
-
-
 // TAB-AFFITTA Controller
 .controller('RentCtrl', function($scope) {
     //console.log("Rent Controller");
@@ -660,11 +645,6 @@ angular.module('starter.controllers', [])
     $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
 
     //ManageRentTabs.setBackFromBozze(true);
-
-    $scope.updateModel = function(x){
-
-        console.log(BozzeList.getBozzeChangedArray());
-    }
 
     $scope.myGoBack = function(){
 
@@ -778,9 +758,57 @@ angular.module('starter.controllers', [])
           // add cancel code..
         },
      buttonClicked: function(index) {
-         console.log("Da inviare al DB");
+         console.log("Annuncio-Bozza inviare al DB");
          RentPubblicatiList.AddNewElement($scope.e);
+
+         console.log("ID_ANNUNCIO: ")
+         console.log($scope.e.id_annuncio)
+         console.log("ID_UTENTE: ")
+         console.log($scope.e.id_utente)
+         console.log("LAt - Long: ")
+         console.log($scope.e.lat)
+         console.log($scope.e.long)
+
+         var myUrl=  "http://rentme.altervista.org/IONIC/salva_nuovoAnnuncio.php?" +
+                "id_annuncio="       +   $scope.e.id_annuncio      +
+                "id_utente="   +   $scope.e.id_utente       +
+                "descrizione="    +   $scope.e.descrizione  +
+                "autobus="    +   $scope.e.autobus  +
+                "metro="    +   $scope.e.metro  +
+                "tram="    +   $scope.e.tram  +
+                "treno="    +   $scope.e.treno  +
+                "indirizzo"    +   $scope.e.indirizzo  +
+                "zona"    +   $scope.e.zona  +
+                "titolo="    +   $scope.e.titolo  +
+                "imgPreview="    +   $scope.e.imgPreview  +
+                "img1="    +   $scope.e.img1  +
+                "img2="    +   $scope.e.img2  +
+                "img3="    +   $scope.e.img3  +
+                "img4="    +   $scope.e.img4  +
+                "img5="    +   $scope.e.img5  +
+                "img6="    +   $scope.e.img6  +
+                "num_locali="    +   $scope.e.num_locali  +
+                "piano="    +   $scope.e.piano  +
+                "tipo="    +   $scope.e.tipo  +
+                "superficie="    +   $scope.e.superficie  +
+                "prezzo="    +   $scope.e.prezzo  +
+                "posti_letto="    +   $scope.e.posti_letto  +
+                "posti_letto_tot="    +   $scope.e.posti_letto_tot  +
+                "lat="    +   $scope.e.lat  +
+                "lng="    +   $scope.e.long
+            ;
+
+        console.log("Sto inviando al DB..");
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        var resultCall=xhttp.response;
+
+        console.log(resultCall);
+        //console.log(JSON.parse(resultCall));
+
          BozzeList.rimuoviBozza($scope.e);
+
          $ionicHistory.goBack();
        return true;
      }
@@ -812,11 +840,73 @@ angular.module('starter.controllers', [])
         }, function(err) {
             // error
         });
-    };
+    }
+
+    $scope.takeMultipleImage = function(imageIndex){
+         var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        if(imageIndex==1){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img1 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==2){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img2 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==3){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img3 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==4){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img4 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==5){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img5 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==6){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img6 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+    }
 })
 
 .controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList, $cordovaCamera) {
-  console.log("Modal CTRL");
 
     $ionicModal.fromTemplateUrl('templates/rent/nuovoAnnuncio.html', {
         scope: $scope,
@@ -915,6 +1005,87 @@ angular.module('starter.controllers', [])
         }, function(err) {
             // error
         });
+    }
+
+    $scope.takeMultipleImage = function(imageIndex){
+         var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        if(imageIndex==1){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img1 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==2){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img2 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==3){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img3 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==4){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img4 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==5){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img5 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==6){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img6 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+    }
+
+    $scope.updateLatLong = function(){
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode( { 'address': $scope.n.indirizzo}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $scope.n.lat = results[0].geometry.location.lat();
+                    $scope.n.long = results[0].geometry.location.lng();
+
+                    console.log($scope.n.lat);
+                    console.log($scope.n.long);
+
+                }
+                else {
+                    console.log("Geocode was not successful for the following reason: " + status);
+                }
+            });
     }
 })
 

@@ -293,7 +293,7 @@ angular.module('starter.services', [])
 
     var nuovoAnnuncioArray = [{
         "id_annuncio":startingID,
-        "id_utente":"",
+        "id_utente":"23",
         "titolo":"Inserisci titolo",
         "tipo":"-",
         descrizione:"-",
@@ -309,7 +309,9 @@ angular.module('starter.services', [])
         treno:"-",
         tram:"-",
         prezzo:"-",
-        imgPreview:""
+        imgPreview:"",
+        img1:"", img2:"", img3:"",img4:"", img5:"", img6:"",
+        lat:"", long:""
     }];
     return {
         getNuovoAnnuncioArray : function(){
@@ -330,9 +332,8 @@ angular.module('starter.services', [])
                 var temp_ID= startingID;
             }
 
-            nuovoAnnuncioArray[0].id_annuncio = 543;
-            //nuovoAnnuncioArray[0].id_annuncio = temp_ID;
-            nuovoAnnuncioArray[0].id_utente = "";
+            nuovoAnnuncioArray[0].id_annuncio = temp_ID;
+            nuovoAnnuncioArray[0].id_utente = "23";
             nuovoAnnuncioArray[0].titolo = "-";
             nuovoAnnuncioArray[0].tipo = "-";
             nuovoAnnuncioArray[0].descrizione = "-";
@@ -348,7 +349,15 @@ angular.module('starter.services', [])
             nuovoAnnuncioArray[0].treno = "-";
             nuovoAnnuncioArray[0].tram = "-";
             nuovoAnnuncioArray[0].prezzo = "-";
-            nuovoAnnuncioArray[0].imgPreview = "";
+            nuovoAnnuncioArray[0].imgPreview = "",
+            nuovoAnnuncioArray[0].img1 = "",
+            nuovoAnnuncioArray[0].img2 = "",
+            nuovoAnnuncioArray[0].img3 = "",
+            nuovoAnnuncioArray[0].img4 = "",
+            nuovoAnnuncioArray[0].img5 = "",
+            nuovoAnnuncioArray[0].img6 = "",
+            nuovoAnnuncioArray[0].lat = "",
+            nuovoAnnuncioArray[0].long = "";
         },
 
     };
@@ -362,8 +371,6 @@ angular.module('starter.services', [])
        }
     };
 })
-
-
 
 .factory('ResultList', function($http){
 
@@ -524,6 +531,8 @@ angular.module('starter.services', [])
     setUser: setUser
   };
 });
+
+
 ;
 
 

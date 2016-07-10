@@ -83,3 +83,17 @@
 }
 
 
+.divScattaFotoImage{
+    display: block;
+    height: 5em;
+    margin-top: 0.3em;
+}
+
+.scattaFotoImage{
+    display: inline-block;
+    height: 100%;
+    width: 30%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border: 1px solid blue;
+}
