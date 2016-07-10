@@ -83,3 +83,42 @@
 }
 
 
+.divScattaFotoImage{
+    display: block;
+    height: 5em;
+    margin-top: 0.3em;
+}
+
+.scattaFotoImage{
+    display: inline-block;
+    height: 100%;
+    width: 30%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border: 1px solid blue;
+}
+
+.menuImage{
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.menuElementPadding{
+    margin-left: 1em;
+}
+
+.divMenuContent{
+    text-align: center;
+    border-bottom: 0;
+}
+
+.firsMenuElement{
+    margin-top: 3em;
+}
+
+.editDataTopImage{
+    border-top: 0;
+    margin-top: 1em;
+}

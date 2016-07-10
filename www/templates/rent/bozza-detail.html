@@ -27,7 +27,6 @@
             <a class="item item-thumbnail-right" ng-click="takeImage()">
                 <img ng-src="{{e.imgPreview}}">
                 <h2>Immagine Copertina</h2>
-
              </a>
 
 
@@ -123,6 +122,21 @@
             <input type="text" class="bozzaTextInput" ng-model="e.descrizione" ng-change="bc.changed=true">
         </ion-item>
 
+        <ion-item>
+            <h2>Inserisci altre foto</h2>
+            <div class="divScattaFotoImage" style="margin-top:1.5em;">
+                <img class="scattaFotoImage" ng-src="{{e.img1}}" ng-click="takeMultipleImage(1)"/>
+                <img class="scattaFotoImage" ng-src="{{e.img2}}" ng-click="takeMultipleImage(2)"/>
+                <img class="scattaFotoImage" ng-src="{{e.img3}}" ng-click="takeMultipleImage(3)"/>
+            </div>
+
+            <div class="divScattaFotoImage">
+                <img class="scattaFotoImage" ng-src="{{e.img4}}" ng-click="takeMultipleImage(4)"/>
+                <img class="scattaFotoImage" ng-src="{{e.img5}}" ng-click="takeMultipleImage(5)"/>
+                <img class="scattaFotoImage" ng-src="{{e.img6}}" ng-click="takeMultipleImage(6)"/>
+            </div>
+
+        </ion-item>
 
 
   </ion-content>

@@ -1,15 +1,56 @@
 <ion-modal-view >
-  <ion-header-bar class="bar-positive">
+    <ion-header-bar class="bar-assertive">
+<!--
+        <div class="buttons">
+            <button class="button button-clear ion-chevron-left" ng-click="closeEditData()"></button>
+        </div>
+-->
+        <h1 class="title">Dati utente</h1>
+     </ion-header-bar>
 
-      <h1 class="title">EditData</h1>
-  </ion-header-bar>
   <ion-content class="has-header">
 
 
-        <div class="button-bar row">
-            <button class="button button-positive button-outline col col-50 " ng-click="confirmData()" >Confirm</button>
-            <button class="button button-assertive button-outline col col-50" ng-click="closeEditData()">Cancel</button>
-        </div>
+        <ion-list>
 
+            <a class="item editDataTopImage" ng-click="takeProfileImage()">
+                <img class="menuImage" src="//ionicframework.com/img/docs/spengler.jpg" style="border:1px solid black;">
+<!--                    <img class="menuImage" ng-src="{{user.picture}}">-->
+            </a>
+
+            <ion-list>
+                <ion-item type="item-text-wrap">
+                    <input type="text" class="bozzaTextInput" disabled placeholder="Nome">
+<!--            <input type="text" class="bozzaTextInput" disabled ng-model="user.name">-->
+                </ion-item>
+
+                <ion-item type="item-text-wrap">
+                    <input type="text" class="bozzaTextInput" disabled placeholder="Cognome">
+<!--            <input type="text" class="bozzaTextInput" disabled ng-model="user.surname">-->
+                </ion-item>
+
+                <ion-item type="item-text-wrap">
+                    <input type="text" class="bozzaTextInput" disabled placeholder="Email">
+<!--            <input type="text" class="bozzaTextInput" disabled ng-model="user.email">-->
+                </ion-item>
+
+                <ion-item type="item-text-wrap">
+                    <input type="password" class="bozzaTextInput" placeholder="Password" ng-blur="focusOutPw1();" ng-model="pwList.pw1">
+<!--            <input type="password" class="bozzaTextInput" disabled ng-model="">-->
+                </ion-item>
+                <ion-item type="item-text-wrap" ng-show="needRepeatPassword">
+                    <input type="password" class="bozzaTextInput" placeholder="Ripeti password" ng-blur="focusOutPw2();" ng-model="pwList.pw2">
+<!--            <input type="password" class="bozzaTextInput" disabled ng-model="">-->
+                </ion-item>
+
+            </ion-list>
+
+        <div class="button-bar row">
+            <button class="button button-positive button-outline col col-50" ng-disabled="confermaDisabilitata" ng-click="confirmData()" >Modifica</button>
+            <button class="button button-assertive button-outline col col-50" ng-click="closeEditData()">Annulla</button>
+        </div>
+            <div style="dispaly:block; width:100%; text-align:center;">
+            <h6 style="color:red; font-weight:bold;" ng-show="pwDiverse">Password diverse</h6>
+      </ion-list>
   </ion-content>
 </ion-modal-view>

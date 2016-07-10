@@ -15,9 +15,8 @@
             </ion-item>
 
              <a class="item item-thumbnail-right" ng-click="takeImage()">
-                <img ng-src="{{n.imgPreview}}"/>
+                <img ng-src="{{n.imgPreview}}" style="border: 1px solid blue"/>
                 <h2>Immagine Copertina</h2>
-                 <h6>{{n.imgPreview}}</h6>
              </a>
 
 
@@ -57,7 +56,7 @@
 
             <ion-item type="item-text-wrap">
                 <h2>Indirizzo</h2>
-                <input type="text" class="bozzaTextInput" ng-model="n.indirizzo">
+                <input type="text" class="bozzaTextInput" ng-model="n.indirizzo" ng-blur="updateLatLong()">
             </ion-item>
 
             <label class="item item-input">
@@ -111,6 +110,22 @@
         <ion-item type="item-text-wrap">
             <h2>Descrizione</h2>
             <input type="text" class="bozzaTextInput" ng-model="n.descrizione">
+        </ion-item>
+
+        <ion-item>
+            <h2>Inserisci altre foto</h2>
+            <div class="divScattaFotoImage" style="margin-top:1.5em;">
+                <img class="scattaFotoImage" ng-src="{{n.img1}}" ng-click="takeMultipleImage(1)"/>
+                <img class="scattaFotoImage" ng-src="{{n.img2}}" ng-click="takeMultipleImage(2)"/>
+                <img class="scattaFotoImage" ng-src="{{n.img3}}" ng-click="takeMultipleImage(3)"/>
+            </div>
+
+            <div class="divScattaFotoImage">
+                <img class="scattaFotoImage" ng-src="{{n.img4}}" ng-click="takeMultipleImage(4)"/>
+                <img class="scattaFotoImage" ng-src="{{n.img5}}" ng-click="takeMultipleImage(5)"/>
+                <img class="scattaFotoImage" ng-src="{{n.img6}}" ng-click="takeMultipleImage(6)"/>
+            </div>
+
         </ion-item>
 
     </ion-content>

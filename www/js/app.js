@@ -82,17 +82,6 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       }
   })
 
-  
-  .state('tab.home', {
-      url: '/home',
-        views: {
-            'tab-home': {
-            templateUrl: 'templates/home/tab-home.html',
-            controller: 'HomeCtrl'
-            }
-        }
-    })
-
   .state('tab.rent', {
     url: '/rent',
     views: {

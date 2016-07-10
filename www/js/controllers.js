@@ -137,11 +137,11 @@ angular.module('starter.controllers', [])
     };
 
      $scope.startApp = function(){
-        $state.go('tab.home');
+        $state.go('tab.search');
     };
 })
 
-.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup) {
+.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController) {
     $scope.$on('$ionicView.enter', function () {
     console.log("abc");
     $scope.user = JSON.parse(localStorage.getItem("userData"));
@@ -186,14 +186,17 @@ angular.module('starter.controllers', [])
     $ionicModal.fromTemplateUrl('templates/editData.html', {
         id: 'editData',
         scope: $scope,
-        animation: 'null', //slide-in-up',
+        animation: 'slide-in-up', //slide-in-up',
         focusFirstInput: true
 
     }).then(function(modal) {
         $scope.modalEditData = modal;
     });
     $scope.openEditData = function (){
+        console.log("Open");
         $scope.modalEditData.show();
+        $scope.confermaDisabilitata = true;
+        $scope.pwDiverse = false;
     };
     $scope.closeEditData = function (){
         $scope.modalEditData.hide();
@@ -241,12 +244,72 @@ angular.module('starter.controllers', [])
 
     };
 
+    $scope.takeProfileImage = function(){
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.user.picture = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    }
+
+    $scope.pwList= ModificaPasswordController.getPwArray();
+
+
+    $scope.focusOutPw1 = function(){
+        console.log($scope.pwList.pw1);
+        console.log($scope.pwList.pw2);
+
+        $scope.needRepeatPassword = true;
+
+        if($scope.pwList.pw1 == $scope.pwList.pw2){
+            $scope.confermaDisabilitata = false;
+            $scope.pwDiverse = false;
+        }
+        else if($scope.pwList.pw2 != null){
+            $scope.pwDiverse = !$scope.pwDiverse;
+            $scope.confermaDisabilitata = true;
+        }
+    }
+
+    $scope.focusOutPw2 = function(){
+        console.log($scope.pwList.pw2);
+        if($scope.pwList.pw1 == $scope.pwList.pw2){
+            $scope.confermaDisabilitata = false;
+            $scope.pwDiverse = false;
+        }
+        else{
+            $scope.pwDiverse = true;
+            $scope.confermaDisabilitata = true;
+        }
+    }
+
+    $scope.confirmData = function(){
+        console.log("Modifica dati");
+        $scope.needRepeatPassword = false;
+        $scope.confermaDisabilitata = true;
+        $scope.pwDiverse = false;
+    }
 })
 
 // TAB-SEARCH Controller
-.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList,$http) {
+.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList, RentPubblicatiList, BozzeList, FavouriteList) {
 
+    RentPubblicatiList.call();
+    BozzeList.call();
+    FavouriteList.call();
 
     $scope.modalData = {"choice" : '-1',
 
@@ -345,21 +408,13 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ResultCtrl', function($scope, $http,ResultList) {
-    $scope.map=false;
-    $scope.switchView = function(){
-        $scope.map = !$scope.map;
-    }
+.controller('ResultCtrl', function($scope,ResultList) {
 
-
-
-     $scope.elencoRes = ResultList.getResArray();
+    $scope.elencoRes = ResultList.getResArray();
 
     $scope.removeRes = function(ss){
             ResultList.rimuovi(ss);
         }
-
-
 
 })
 
@@ -616,16 +671,6 @@ angular.module('starter.controllers', [])
 })
 
 
-// TAB-HOME Controller
-.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList,ResultList) {
-    RentPubblicatiList.call();
-    BozzeList.call();
-    FavouriteList.call();
-})
-
-
-
-
 // TAB-AFFITTA Controller
 .controller('RentCtrl', function($scope) {
     //console.log("Rent Controller");
@@ -676,11 +721,6 @@ angular.module('starter.controllers', [])
     $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
 
     //ManageRentTabs.setBackFromBozze(true);
-
-    $scope.updateModel = function(x){
-
-        console.log(BozzeList.getBozzeChangedArray());
-    }
 
     $scope.myGoBack = function(){
 
@@ -794,9 +834,57 @@ angular.module('starter.controllers', [])
           // add cancel code..
         },
      buttonClicked: function(index) {
-         console.log("Da inviare al DB");
+         console.log("Annuncio-Bozza inviare al DB");
          RentPubblicatiList.AddNewElement($scope.e);
+
+         console.log("ID_ANNUNCIO: ")
+         console.log($scope.e.id_annuncio)
+         console.log("ID_UTENTE: ")
+         console.log($scope.e.id_utente)
+         console.log("LAt - Long: ")
+         console.log($scope.e.lat)
+         console.log($scope.e.long)
+
+         var myUrl=  "http://rentme.altervista.org/IONIC/salva_nuovoAnnuncio.php?" +
+                "id_annuncio="       +   $scope.e.id_annuncio      +
+                "id_utente="   +   $scope.e.id_utente       +
+                "descrizione="    +   $scope.e.descrizione  +
+                "autobus="    +   $scope.e.autobus  +
+                "metro="    +   $scope.e.metro  +
+                "tram="    +   $scope.e.tram  +
+                "treno="    +   $scope.e.treno  +
+                "indirizzo"    +   $scope.e.indirizzo  +
+                "zona"    +   $scope.e.zona  +
+                "titolo="    +   $scope.e.titolo  +
+                "imgPreview="    +   $scope.e.imgPreview  +
+                "img1="    +   $scope.e.img1  +
+                "img2="    +   $scope.e.img2  +
+                "img3="    +   $scope.e.img3  +
+                "img4="    +   $scope.e.img4  +
+                "img5="    +   $scope.e.img5  +
+                "img6="    +   $scope.e.img6  +
+                "num_locali="    +   $scope.e.num_locali  +
+                "piano="    +   $scope.e.piano  +
+                "tipo="    +   $scope.e.tipo  +
+                "superficie="    +   $scope.e.superficie  +
+                "prezzo="    +   $scope.e.prezzo  +
+                "posti_letto="    +   $scope.e.posti_letto  +
+                "posti_letto_tot="    +   $scope.e.posti_letto_tot  +
+                "lat="    +   $scope.e.lat  +
+                "lng="    +   $scope.e.long
+            ;
+
+        console.log("Sto inviando al DB..");
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        var resultCall=xhttp.response;
+
+        console.log(resultCall);
+        //console.log(JSON.parse(resultCall));
+
          BozzeList.rimuoviBozza($scope.e);
+
          $ionicHistory.goBack();
        return true;
      }
@@ -828,11 +916,73 @@ angular.module('starter.controllers', [])
         }, function(err) {
             // error
         });
-    };
+    }
+
+    $scope.takeMultipleImage = function(imageIndex){
+         var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        if(imageIndex==1){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img1 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==2){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img2 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==3){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img3 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==4){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img4 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==5){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img5 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==6){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.e.img6 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+    }
 })
 
 .controller('NuovoAnnuncioCtrl', function($scope, $ionicModal, $ionicActionSheet, $timeout, NuovoAnnuncioService, BozzeList, $cordovaCamera) {
-  console.log("Modal CTRL");
 
     $ionicModal.fromTemplateUrl('templates/rent/nuovoAnnuncio.html', {
         scope: $scope,
@@ -931,6 +1081,87 @@ angular.module('starter.controllers', [])
         }, function(err) {
             // error
         });
+    }
+
+    $scope.takeMultipleImage = function(imageIndex){
+         var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        if(imageIndex==1){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img1 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==2){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img2 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==3){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img3 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==4){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img4 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==5){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img5 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+        else if(imageIndex==6){
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.n.img6 = "data:image/jpeg;base64," + imageData;
+
+            }, function(err) {
+                // error
+            });
+        }
+    }
+
+    $scope.updateLatLong = function(){
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode( { 'address': $scope.n.indirizzo}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    $scope.n.lat = results[0].geometry.location.lat();
+                    $scope.n.long = results[0].geometry.location.lng();
+
+                    console.log($scope.n.lat);
+                    console.log($scope.n.long);
+
+                }
+                else {
+                    console.log("Geocode was not successful for the following reason: " + status);
+                }
+            });
     }
 })
 

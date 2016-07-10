@@ -18,12 +18,7 @@ navigation history that also transitions its views in and out.
         <ion-nav-view name="tab-rent"></ion-nav-view>
       </ion-tab>
 
-       <!-- Home Tab -->
-      <ion-tab title="Home" icon-off="ion-ios-home-outline" icon-on="ion-ios-home" ui-sref="tab.home">
-        <ion-nav-view name="tab-home"></ion-nav-view>
-      </ion-tab>
-
-          <!-- Preferiti Tab -->
+        <!-- Preferiti Tab -->
       <ion-tab title="Preferiti" icon-off="ion-ios-star-outline" icon-on="ion-ios-star" ui-sref="tab.favourite">
         <ion-nav-view name="tab-favourite"></ion-nav-view>
       </ion-tab>
@@ -38,30 +33,32 @@ navigation history that also transitions its views in and out.
 
   </ion-side-menu-content>
 
-  <ion-side-menu side="left" expose-aside-when="large">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title center" >{{user.username}}</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item class="item-remove-animate item-thumbnail center " type="item-text-wrap">
-            <img class="avatar" ng-src="{{user.picture}}">
-            <h2>{{user.name}}</h2>
-            <h2>{{user.surname}}</h2>
-            <h2>{{user.email}}</h2>
-        </ion-item>
-        <ion-item menu-close ng-click="openEditData()">
-          Modifica Dati
-        </ion-item>
-        <ion-item menu-close ng-click="openEditPw()">
-          Modifica Password
-        </ion-item>
+  <ion-side-menu side="left" expose-aside-when="large" class="dark">
+      <ion-header-bar class="bar-assertive">
+      </ion-header-bar>
+      <ion-content>
+        <ul class="list">
+          <div class="item divMenuContent">
+            <img class="menuImage" src="//ionicframework.com/img/docs/spengler.jpg">
+<!--            <img class="menuImage" ng-src="{{user.picture}}">-->
+            <h2 style="margin-top:1em;">Nome</h2>
+<!--            <h2 style="margin-top:1em;">{{user.name}}</h2>-->
+            <h2 style="margin-top:0.3em;">Cognome</h2>
+<!--            <h2 style="margin-top:0.3em;">{{user.surname}}</h2>-->
+            <h4 style="margin-top:1em;"><i>nome.cognome@email.it</i></h4>
+<!--            <h4 style="margin-top:1em;"><i>{{user.email}}</i></h4>-->
+          </div>
 
-        <ion-item menu-close ng-click="logout()">
-            Logout
-        </ion-item>
-      </ion-list>
-    </ion-content>
+            <a class="item icon-left ion-person firsMenuElement" menu-close>
+              <span class="menuElementPadding" ng-click="openEditData()">Modifica profilo</span>
+            </a>
+            <a class="item icon ion-person-stalker" menu-close>
+              <span class="menuElementPadding" ng-click="openEditPw()">Contatti</span>
+            </a>
+            <a class="item icon ion-reply" menu-close>
+                <span class="menuElementPadding" ng-click="logout()">Esci</span>
+            </a>
+        </ul>
+      </ion-content>
   </ion-side-menu>
 </ion-side-menus>
-
