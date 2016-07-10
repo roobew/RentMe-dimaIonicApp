@@ -327,29 +327,12 @@ angular.module('starter.controllers', [])
 
             alertPopup.then(function(res) {});
         };
-        if($scope.modalData.place == 'Select'){
+        if($scope.modalData.place == 'Seleziona'){
            $scope.showAlert();
            // e.preventDefault();
         }else{
-            var myUrl = "http://rentme.altervista.org/IONIC/get_annunci.php?" +
-                "tipo='"       +  $scope.modalData.type   +
-                "'&min="   +       $scope.modalData.priceStart                            +
-                "&max="    +     $scope.modalData  .priceEnd;
-    console.log(myUrl);
-        xhttp = new XMLHttpRequest;
-        xhttp.open("GET", myUrl, false);
-        xhttp.send();
-        jAnnunci=xhttp.response;
-        if(JSON.parse(jAnnunci)[0].id_annuncio!=null){
-           // console.log(jAnnunci);
-            ResultList.setResArray(jAnnunci);
-            ResultList.printArray();
-            //localStorage.setItem("annunci",jAnnunci);
-           $state.go('tab.result');
-        }else{
-            $scope.showAlert(JSON.parse(jAnnunci).title,JSON.parse(jAnnunci).message);
-            //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
-        }
+            ResultList.call($scope.modalData.place,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
+            $state.go('tab.result');
 
         }
     };
@@ -366,7 +349,14 @@ angular.module('starter.controllers', [])
     $scope.switchView = function(){
         $scope.map = !$scope.map;
     }
-     $scope.elencoRes = /*JSON.parse(localStorage.getItem("annunci"));//*/ResultList.getResArray();
+
+
+
+     $scope.elencoRes = ResultList.getResArray();
+
+    $scope.removeRes = function(ss){
+            ResultList.rimuovi(ss);
+        }
 
 
 
@@ -374,28 +364,11 @@ angular.module('starter.controllers', [])
 
 
 .controller('ResultDetailCtrl', function($scope, $stateParams, ResultList) {
-    console.log($stateParams.resId);
-    $scope.f = JSON.parse(localStorage.getItem("annunci"))[$stateParams.resId];//ResultList.getResult($stateParams.resId);
+
+    $scope.f = ResultList.getAnnuncio($stateParams.resId);
 
 
-    $scope.getClass = function(){
-        $scope.isPreferito = FavouriteList.getFavourite($stateParams.resId)!= null?true:false;
-        $scope.class = $scope.isPreferito? 'preferitiColor':'nonPreferitiColor';
-        return $scope.class;
-    }
 
-    $scope.addToPreferiti = function(){
-
-        if(!$scope.isPreferito){
-            FavouriteList.aggiungi($scope.f);
-        }
-        else{
-            FavouriteList.rimuoviPreferito($scope.f.id_annuncio);
-        }
-
-        $scope.isPreferito = !$scope.isPreferito;
-
-    }
 
 
 })
@@ -474,7 +447,7 @@ angular.module('starter.controllers', [])
     };
 })
 .controller('modalTypeCtrl', function($scope, $ionicModal) {
-    $scope.types = ['Appartamento','Stanza Condivisa','Stanza Privata'];
+    $scope.types = ['Appartamento','Stanza Condivisa','Stanza Singola'];
      $scope.doSomething = function(item) {
         // console.log(item);
          $scope.modalData.type = item;
@@ -609,10 +582,11 @@ angular.module('starter.controllers', [])
 
 
 // TAB-HOME Controller
-.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList) {
+.controller('HomeCtrl', function($scope, RentPubblicatiList, BozzeList, FavouriteList,ResultList) {
     RentPubblicatiList.call();
     BozzeList.call();
     FavouriteList.call();
+
 
 })
 

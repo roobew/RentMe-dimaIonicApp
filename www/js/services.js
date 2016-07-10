@@ -361,31 +361,71 @@ angular.module('starter.services', [])
     };
 })
 
-.factory('ResultList', function(){
 
-    var resArray;
+
+.factory('ResultList', function($http){
+
+
+    var resArray = [];
+
+    function callAjax(place,type,priceStart,priceEnd){
+        resArray = [];
+        $http({
+            method : "GET",
+            url :   "http://rentme.altervista.org/IONIC/get_annunci.php?" +
+                    "place=" + place +
+                    "&tipo='"       +  type   +
+                    "'&min="   +       priceStart                            +
+                    "&max="    +    priceEnd,
+        }).then(function mySucces(response) {
+            console.log("Get_Result: ");
+
+            for(var i=0; i<response.data.length; i++){
+                //console.log(response.data[i]);
+                resArray.push(response.data[i]);
+            }
+
+            console.log(resArray);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+    }
+
+
     return{
+        call : function(place,type,priceStart,priceEnd){
+            callAjax(place,type,priceStart,priceEnd);
+            return;
+        },
+
         getResArray : function(){
             return resArray;
-
-            console.log("QUAAA");
-
         },
 
         rimuovi : function (i){
+            console.log(resArray);
             resArray.splice(resArray.indexOf(i), 1);
+            console.log(resArray);
+        },
+
+        rimuoviAnnuncio : function(itemID){
+            for (var i = 0; i < resArray.length; i++) {
+                if (resArray[i].id_annuncio == parseInt(itemID)) {
+                    resArray.splice(i, 1);
+                    return;
+                }
+            }
+            console.log("Res_ non trovato");
         },
 
         aggiungi : function (newElement){
             resArray.push(newElement);
         },
 
-        getResult : function(xx){
-
+        getAnnuncio : function(xx){
             for (var i = 0; i < resArray.length; i++) {
                 if (resArray[i].id_annuncio == parseInt(xx)) {
                     //console.log("Trovato");
-
                     return resArray[i];
                 }
             }
@@ -393,22 +433,14 @@ angular.module('starter.services', [])
             return null;
         },
 
-        setResArray : function(myArray){
-            resArray = myArray;
-        },
-
-
-        printArray : function(){
-            console.log("Printing");
-            for(var i=0; i<resArray.length; i++){
-                console.log("Elemento "+i);
-            }
-            console.log("End Printing");
-        }
+        //setResArray : function(myArray){
+        //    resArray = myArray;
+       // },
 
     };
 
 })
+
 
 .service('UserService', function() {
   // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
