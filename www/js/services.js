@@ -509,6 +509,19 @@ angular.module('starter.services', [])
 
 })
 
+.factory("ModificaPasswordController", function(){
+    var password1="", password2="";
+    var pwArray = [{
+        "pw1":"",
+        "pw2":""
+    }];
+    return {
+        getPwArray : function(){
+            return pwArray;
+        }
+
+    }
+})
 
 .service('UserService', function() {
   // For the purpose of this example I will store user data on ionic local storage but you should save it on a database
@@ -524,7 +537,8 @@ angular.module('starter.services', [])
     getUser: getUser,
     setUser: setUser
   };
-});
+})
+
 
 
 ;

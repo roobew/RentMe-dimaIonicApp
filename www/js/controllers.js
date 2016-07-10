@@ -141,7 +141,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup) {
+.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController) {
     $scope.$on('$ionicView.enter', function () {
     console.log("abc");
     $scope.user = JSON.parse(localStorage.getItem("userData"));
@@ -186,14 +186,17 @@ angular.module('starter.controllers', [])
     $ionicModal.fromTemplateUrl('templates/editData.html', {
         id: 'editData',
         scope: $scope,
-        animation: 'null', //slide-in-up',
+        animation: 'slide-in-up', //slide-in-up',
         focusFirstInput: true
 
     }).then(function(modal) {
         $scope.modalEditData = modal;
     });
     $scope.openEditData = function (){
+        console.log("Open");
         $scope.modalEditData.show();
+        $scope.confermaDisabilitata = true;
+        $scope.pwDiverse = false;
     };
     $scope.closeEditData = function (){
         $scope.modalEditData.hide();
@@ -241,7 +244,64 @@ angular.module('starter.controllers', [])
 
     };
 
+    $scope.takeProfileImage = function(){
+        var options = {
+            quality: 80,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 250,
+            targetHeight: 250,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
 
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.user.picture = "data:image/jpeg;base64," + imageData;
+
+        }, function(err) {
+            // error
+        });
+    }
+
+    $scope.pwList= ModificaPasswordController.getPwArray();
+
+
+    $scope.focusOutPw1 = function(){
+        console.log($scope.pwList.pw1);
+        console.log($scope.pwList.pw2);
+
+        $scope.needRepeatPassword = true;
+
+        if($scope.pwList.pw1 == $scope.pwList.pw2){
+            $scope.confermaDisabilitata = false;
+            $scope.pwDiverse = false;
+        }
+        else if($scope.pwList.pw2 != null){
+            $scope.pwDiverse = !$scope.pwDiverse;
+            $scope.confermaDisabilitata = true;
+        }
+    }
+
+    $scope.focusOutPw2 = function(){
+        console.log($scope.pwList.pw2);
+        if($scope.pwList.pw1 == $scope.pwList.pw2){
+            $scope.confermaDisabilitata = false;
+            $scope.pwDiverse = false;
+        }
+        else{
+            $scope.pwDiverse = true;
+            $scope.confermaDisabilitata = true;
+        }
+    }
+
+    $scope.confirmData = function(){
+        console.log("Modifica dati");
+        $scope.needRepeatPassword = false;
+        $scope.confermaDisabilitata = true;
+        $scope.pwDiverse = false;
+    }
 })
 
 // TAB-SEARCH Controller
