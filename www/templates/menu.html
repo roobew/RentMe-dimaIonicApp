@@ -34,86 +34,31 @@ navigation history that also transitions its views in and out.
   </ion-side-menu-content>
 
   <ion-side-menu side="left" expose-aside-when="large" class="dark">
-    <!--<ion-header-bar class="bar-stable">
-      <h1 class="title center" >{{user.username}}</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item class="item-remove-animate item-thumbnail center " type="item-text-wrap">
-            <img class="avatar" ng-src="{{user.picture}}">
-            <h2>{{user.name}}</h2>
-            <h2>{{user.surname}}</h2>
-            <h2>{{user.email}}</h2>
-        </ion-item>
-        <ion-item menu-close ng-click="openEditData()">
-          Modifica Dati
-        </ion-item>
-        <ion-item menu-close ng-click="openEditPw()">
-          Modifica Password
-        </ion-item>
-
-        <ion-item menu-close ng-click="logout()">
-            Logout
-        </ion-item>
-      </ion-list>
-    </ion-content>-->
       <ion-header-bar class="bar-assertive">
       </ion-header-bar>
       <ion-content>
         <ul class="list">
           <div class="item divMenuContent">
             <img class="menuImage" src="//ionicframework.com/img/docs/spengler.jpg">
+<!--            <img class="menuImage" ng-src="{{user.picture}}">-->
             <h2 style="margin-top:1em;">Nome</h2>
+<!--            <h2 style="margin-top:1em;">{{user.name}}</h2>-->
             <h2 style="margin-top:0.3em;">Cognome</h2>
-            <h4 style="margin-top:1em;"><i>Email@email.it</i></h4>
+<!--            <h2 style="margin-top:0.3em;">{{user.surname}}</h2>-->
+            <h4 style="margin-top:1em;"><i>nome.cognome@email.it</i></h4>
+<!--            <h4 style="margin-top:1em;"><i>{{user.email}}</i></h4>-->
           </div>
 
-            <a href="#/event/check-in" class="item icon-left ion-person firsMenuElement" menu-close>
-              <span class="menuElementPadding">Modifica profilo</span>
+            <a class="item icon-left ion-person firsMenuElement" menu-close>
+              <span class="menuElementPadding" ng-click="openEditData()">Modifica profilo</span>
             </a>
-            <a href="#/event/attendees" class="item icon ion-person-stalker" menu-close>
-              <span class="menuElementPadding">Contatti</span>
+            <a class="item icon ion-person-stalker" menu-close>
+              <span class="menuElementPadding" ng-click="openEditPw()">Contatti</span>
             </a>
-            <a href="" class="item icon ion-reply" menu-close>
-                <span class="menuElementPadding">Esci</span>
+            <a class="item icon ion-reply" menu-close>
+                <span class="menuElementPadding" ng-click="logout()">Esci</span>
             </a>
         </ul>
       </ion-content>
   </ion-side-menu>
 </ion-side-menus>
-
-<!--
-
-<ion-side-menus enable-menu-with-back-views="false">
-    <ion-side-menu-content>
-      <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button>
-        </ion-nav-back-button>
-        <ion-nav-buttons side="left">
-          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
-          </button>
-        </ion-nav-buttons>
-      </ion-nav-bar>
-      <ion-nav-view name="menuContent"></ion-nav-view>
-    </ion-side-menu-content>
-
-    <ion-side-menu side="left">
-      <ion-header-bar class="bar-assertive">
-        <h1 class="title">Left Menu</h1>
-      </ion-header-bar>
-      <ion-content>
-        <ul class="list">
-          <div class="item item-avatar">
-            <img src="//ionicframework.com/img/docs/spengler.jpg">
-            <h2>Pretty Hate Machine</h2>
-            <p>Nine Inch Nails</p>
-          </div>
-          <a href="#/event/check-in" class="item icon-left ion-home" menu-close>Home</a>
-          <a href="#/event/attendees" class="item icon ion-person-stalker" menu-close>Friends</a>
-          <a href="#/event/prices" class="item icon ion-star" menu-close>Prices</a>
-        </ul>
-      </ion-content>
-    </ion-side-menu>
-  </ion-side-menus>
-
--->
