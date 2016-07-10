@@ -301,6 +301,15 @@ angular.module('starter.controllers', [])
         $scope.needRepeatPassword = false;
         $scope.confermaDisabilitata = true;
         $scope.pwDiverse = false;
+
+        myUrl=  "http://rentme.altervista.org/changePassword.php?" +
+                            "id="       +   $scope.user.idRENTME      +
+                            "&loginType="   +   'rentMe'                                    +
+                            "&password="    +   $scope.edit.password  ;
+                    xhttp = new XMLHttpRequest;
+                    xhttp.open("GET", myUrl, false);
+                    xhttp.send();
+                    jUser=xhttp.response;
     }
 })
 
@@ -847,31 +856,31 @@ angular.module('starter.controllers', [])
 
          var myUrl=  "http://rentme.altervista.org/IONIC/salva_nuovoAnnuncio.php?" +
                 "id_annuncio="       +   $scope.e.id_annuncio      +
-                "id_utente="   +   $scope.e.id_utente       +
-                "descrizione="    +   $scope.e.descrizione  +
-                "autobus="    +   $scope.e.autobus  +
-                "metro="    +   $scope.e.metro  +
-                "tram="    +   $scope.e.tram  +
-                "treno="    +   $scope.e.treno  +
-                "indirizzo"    +   $scope.e.indirizzo  +
-                "zona"    +   $scope.e.zona  +
-                "titolo="    +   $scope.e.titolo  +
-                "imgPreview="    +   $scope.e.imgPreview  +
-                "img1="    +   $scope.e.img1  +
-                "img2="    +   $scope.e.img2  +
-                "img3="    +   $scope.e.img3  +
-                "img4="    +   $scope.e.img4  +
-                "img5="    +   $scope.e.img5  +
-                "img6="    +   $scope.e.img6  +
-                "num_locali="    +   $scope.e.num_locali  +
-                "piano="    +   $scope.e.piano  +
-                "tipo="    +   $scope.e.tipo  +
-                "superficie="    +   $scope.e.superficie  +
-                "prezzo="    +   $scope.e.prezzo  +
-                "posti_letto="    +   $scope.e.posti_letto  +
-                "posti_letto_tot="    +   $scope.e.posti_letto_tot  +
-                "lat="    +   $scope.e.lat  +
-                "lng="    +   $scope.e.long
+                "&id_utente="   +   $scope.e.id_utente       +
+                "&descrizione="    +   $scope.e.descrizione  +
+                "&autobus="    +   $scope.e.autobus  +
+                "&metro="    +   $scope.e.metro  +
+                "&tram="    +   $scope.e.tram  +
+                "&treno="    +   $scope.e.treno  +
+                "&indirizzo"    +   $scope.e.indirizzo  +
+                "&zona"    +   $scope.e.zona  +
+                "&titolo="    +   $scope.e.titolo  +
+                "&imgPreview="    +   $scope.e.imgPreview  +
+                "&img1="    +   $scope.e.img1  +
+                "&img2="    +   $scope.e.img2  +
+                "&img3="    +   $scope.e.img3  +
+                "&img4="    +   $scope.e.img4  +
+                "&img5="    +   $scope.e.img5  +
+                "&img6="    +   $scope.e.img6  +
+                "&num_locali="    +   $scope.e.num_locali  +
+                "&piano="    +   $scope.e.piano  +
+                "&tipo="    +   $scope.e.tipo  +
+                "&superficie="    +   $scope.e.superficie  +
+                "&prezzo="    +   $scope.e.prezzo  +
+                "&posti_letto="    +   $scope.e.posti_letto  +
+                "&posti_letto_tot="    +   $scope.e.posti_letto_tot  +
+                "&lat="    +   $scope.e.lat  +
+                "&lng="    +   $scope.e.long
             ;
 
         console.log("Sto inviando al DB..");

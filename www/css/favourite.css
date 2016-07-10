@@ -103,6 +103,8 @@
     margin-left: auto;
     margin-right: auto;
     display: block;
+    max-width: 5em;
+    max-height: 5em;
 }
 
 .menuElementPadding{
