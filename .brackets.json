@@ -60,6 +60,8 @@
         "C:/ionic/Dima_Ionic/plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
         "C:/ionic/Dima_Ionic/platforms/ios/cordova/lib/copy-www-build-step.js",
         "C:/ionic/Dima_Ionic/platforms/android/cordova/lib/check_reqs.js",
-        "C:/Users/Stefano/Documents/DIMA_Ionic/www/lib/ionic-platform-web-client/src/core/promise.js"
+        "C:/Users/Stefano/Documents/DIMA_Ionic/www/lib/ionic-platform-web-client/src/core/promise.js",
+        "C:/Users/Stefano/Documents/DIMA_Ionic/platforms/android/cordova/lib/builders/AntBuilder.js",
+        "C:/Users/Stefano/Documents/DIMA_Ionic/platforms/android/build/intermediates/assets/debug/www/cordova-js-src/android/nativeapiprovider.js"
     ]
 }

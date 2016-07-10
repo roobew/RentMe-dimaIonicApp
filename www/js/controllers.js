@@ -509,7 +509,7 @@ angular.module('starter.controllers', [])
             price= elem.prezzo
 
             var contentString =
-                '<a href="#/tab/search/result/'+idAnnuncio+'">'+
+                '<a href="#/tab/search/result/'+idAnnuncio+'" style="text-decoration:none">'+
                     '<div style="text-align:center">'+
                         '<img src="'+imgSrc+'" style="display:block; margin-left:auto; margin-right:auto;width:9em;height:7em;"/>'+
                         '<h5>'+title+'</h5>'+
@@ -850,17 +850,20 @@ angular.module('starter.controllers', [])
     };
 })
 
+
 // TAB-MESSAGGI Controller
 .controller('ChatsCtrl', function($scope, Chats) {
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
+    $scope.chats = Chats.all();
+    $scope.remove = function(chat) {
     Chats.remove(chat);
   };
+
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+    $scope.chat = Chats.get($stateParams.chatId);
+
 })
 
 
@@ -893,7 +896,7 @@ angular.module('starter.controllers', [])
             price= elem.prezzo
 
             var contentString =
-                '<a href="#/tab/favourites/'+idAnnuncio+'">'+
+                '<a href="#/tab/favourites/'+idAnnuncio+'" style="text-decoration:none">'+
                     '<div style="text-align:center">'+
                         '<img src="'+imgSrc+'" style="display:block; margin-left:auto; margin-right:auto;width:9em;height:7em;"/>'+
                         '<h5>'+title+'</h5>'+
@@ -963,8 +966,13 @@ angular.module('starter.controllers', [])
             FavouriteList.rimuovi(ss);
         }
 })
-.controller('FavouriteDetailCtrl', function($scope, $stateParams, FavouriteList) {
+.controller('FavouriteDetailCtrl', function($scope, $stateParams, FavouriteList ) {
 
     $scope.f = FavouriteList.getFavourite($stateParams.favId);
+
+
+
+
+
 });
 

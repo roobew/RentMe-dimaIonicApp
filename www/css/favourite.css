@@ -69,3 +69,11 @@
 .nonPreferitiColor{
     color:#fff !important;
 }
+
+.titoloAnnuncio{
+    min-height: 3em;
+    max-height: 4em;
+    white-space: normal !important;
+}
+
+

@@ -31,8 +31,8 @@
        <ion-list >
             <ion-item class="item item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="f in elencoRes" type="item-text-wrap" href="#/tab/search/result/{{f.id_annuncio}}">
                 <img ng-src="{{f.imgPreview}}" />
-                <h2>{{f.titolo}}</h2>
-                <h4>{{f.tipo}}</h4>
+                <h3 class="titoloAnnuncio">{{f.titolo}}</h3>
+                <h4>{{f.tipo}} - {{f.prezzo}}€</h4>
                 <h4>{{f.zona}}</h4>
 
                 <i class="icon ion-chevron-right icon-accessory"></i>
