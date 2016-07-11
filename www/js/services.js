@@ -323,16 +323,12 @@ angular.module('starter.services', [])
 
 .factory('BozzeList', function($http){
     var bozzeArray = [];
-<<<<<<< HEAD
-    var bozzeChanged = [];
-    var t = '[';
-     function callAjax(utenteID){
-          bozzeArray.splice(0, bozzeArray.length);
-=======
 
     function callAjax(utenteID){
+          bozzeArray.splice(0, bozzeArray.length);
+
          console.log(utenteID);
->>>>>>> origin/master
+
         $http({
             method : "GET",
             url : 'http://rentme.altervista.org/IONIC/get_bozze.php?'+
@@ -366,12 +362,7 @@ angular.module('starter.services', [])
             return bozzeArray;
         },
 
-<<<<<<< HEAD
-        getBozzeChangedArray : function(){
-            return bozzeChanged;
-        },
-=======
->>>>>>> origin/master
+
         rimuoviBozza : function (oldBozza){
             //console.log("Ricevo "+i);
             bozzeArray.splice(bozzeArray.indexOf(oldBozza), 1);

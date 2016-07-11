@@ -824,30 +824,14 @@ angular.module('starter.controllers', [])
 .controller('BozzeDetailCtrl', function($scope,$state, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera,ManageRentTabs) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
-<<<<<<< HEAD
-    $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
-
-    //ManageRentTabs.setBackFromBozze(true);
 
     $scope.myGoBack = function(){
 
-        if($scope.bc.changed==true){
-            console.log("Changed: Update DB");
-            $scope.bc.changed=false;
-            //console.log($scope.bc.id);
-            //console.log($scope.bc.changed);
-        }
-        else{
-            console.log("Nothing changed");
-           // console.log($scope.bc.id);
-           // console.log($scope.bc.changed);
-        }
         ManageRentTabs.set('boz');
         $state.go('tab.rent.bozze');
        // $ionicHistory.goBack();
     }
-=======
->>>>>>> origin/master
+
 
     $scope.checkField = function(){
         console.log("Checking.. ");
