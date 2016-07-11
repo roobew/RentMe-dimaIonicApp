@@ -563,6 +563,7 @@ angular.module('starter.services', [])
                     console.log(resArray.length);
                     resArray.splice(i, 1);
                     console.log(resArray.length);
+                    i--;
                 }
             }
             console.log(resArray.length);

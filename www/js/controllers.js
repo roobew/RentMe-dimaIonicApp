@@ -371,7 +371,7 @@ angular.module('starter.controllers', [])
 
 
     $scope.modalData = {"choice" : '-1',
-
+                        "dist": 0,
                         "curPos" : 'Posizione Attuale',
                         "zone" : '  Seleziona una zona',
                         "address" : '',
@@ -454,7 +454,7 @@ angular.module('starter.controllers', [])
            // e.preventDefault();
         }else{
            ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
-            ResultList.near(15);
+            ResultList.near($scope.modalData.dist);
             setTimeout(function(){
                 $state.go('tab.result');
             }, 1500);
@@ -594,6 +594,7 @@ angular.module('starter.controllers', [])
               $scope.modalData.zone = 'Scegli una zona';
               $scope.modalData.address = '';
               $scope.modalData.place = $scope.modalData.curPos;
+              $scope.modalData.dist = item;
               $scope.submit('place',1);
               break;
           case 2:
@@ -616,7 +617,7 @@ angular.module('starter.controllers', [])
     $scope.modalData.choice=n;
         switch($scope.modalData.choice){
             case 1:
-                $scope.modalData.place = $scope.modalData.curPos;
+                $scope.modalData.place = $scope.modalData.dist +"Km Vicino a te";
                 break;
             case 2:
                 $scope.modalData.place = $scope.modalData.zone;
