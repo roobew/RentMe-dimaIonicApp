@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
     $ionicModal.fromTemplateUrl('templates/signup.html', {
         id: 'signup',
         scope: $scope,
-        animation: 'null', //slide-in-up',
+        animation: 'slide-in-up', //slide-in-up',
         focusFirstInput: true
 
     }).then(function(modal) {
@@ -54,7 +54,7 @@ angular.module('starter.controllers', [])
            $scope.signUpData.password==''||
            $scope.check.password==''
           )
-            $scope.showAlert("Empty Fields");
+            $scope.showAlert("Inserisci valori validi");
         else{
 
             if($scope.signUpData.password != $scope.check.password){
@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
                         }else{
                             console.log("ERROR");
                             console.log(jUser);
-                            $scope.showAlert(JSON.parse(jUser).title,JSON.parse(jUser).message);
+                            $scope.showAlert("Email già esistente");
                             //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
                         }
                 }
@@ -93,7 +93,7 @@ angular.module('starter.controllers', [])
     };
 
     $scope.login = function(){
-        var authProvider = 'basic';
+       /* var authProvider = 'basic';
         var authSettings = { 'remember': true };
         var authSuccess = function(userRes) {
              $scope.user = Ionic.User.current();
@@ -112,7 +112,7 @@ angular.module('starter.controllers', [])
             // check the error and provide an appropriate message
             // for your application
           }
-        };
+        };*/
         //Ionic.Auth.login(authProvider, authSettings, $scope.loginData).then(authSuccess, authFailure);
         console.log("tutto ok");
 
@@ -131,7 +131,7 @@ angular.module('starter.controllers', [])
             localStorage.setItem("userData",jUser);
             $scope.startApp();
         }else{
-            $scope.showAlert(JSON.parse(jUser).title,JSON.parse(jUser).message);
+            $scope.showAlert("Dati non corretti");
             //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
         }
     };
@@ -443,8 +443,7 @@ angular.module('starter.controllers', [])
      $scope.checkSearchField = function(e){
         $scope.showAlert = function() {
             var alertPopup = $ionicPopup.alert({
-                title: 'ERROR',
-                template: 'choice a location'
+                template: 'Scegli un luogo'
             });
 
             alertPopup.then(function(res) {});
@@ -666,8 +665,7 @@ angular.module('starter.controllers', [])
     };
     $scope.showAlert = function() {
         var alertPopup = $ionicPopup.alert({
-            title: 'Wrong price range',
-             template: 'End value must be greater then the start value'
+             template: 'Intervallo errato'
         });
 
         alertPopup.then(function(res) {

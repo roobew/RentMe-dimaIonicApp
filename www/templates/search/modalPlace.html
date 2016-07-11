@@ -11,20 +11,21 @@
             <ion-item class="item item-input" style="visiblity: hidden; width:0px; height: 0px; background: transparent; border: 0;">
                 <input type="submit" style="width:0; height:0; background:transparent; border:0;" ng-click="submit('place',3)" >
             </ion-item>
-            <ion-item class="item-input" type="item-text-wrap">
-                <!--<button class="button button-block button-clear button-dark icon-left ion-location button-positive" ng-click="doSomething('Current Position',1)">Nelle vicinanze</button>-->
-                <div class="item-label">Nelle vicinanze:</div>
-                <div class="button-bar row">
+
+            <ion-item type="item-text-wrap" style="text-align:center">
+                <h2>Raggio</h2>
+                <div class="button-bar row" style="margin-top:1em">
                     <button class="button button-block button-outline button-dark col col-33 "  ng-click="doSomething(5,1)" >5Km</button>
                     <button class="button button-block button-outline button-dark col col-33 "  ng-click="doSomething(10,1)" >10Km</button>
                     <button class="button button-block button-outline button-dark col col-33 "  ng-click="doSomething(15,1)" >15Km</button>
                 </div>
             </ion-item>
+
             <ion-item class="item-input" type="item-text-wrap">
                 <button class="button button-block button-clear button-dark" ng-click="openModalZone()">{{modalData.zone}}</button>
             </ion-item>
             <ion-item class="item-input" type="item-text-wrap">
-                <input type="text" ng-model="modalData.address" placeholder="Indi"  ng-click="doSomething(modalData.address,3)"/>
+                <input type="text" class="bozzaTextInput" style="text-align:center;" ng-model="modalData.address" placeholder="Indirizzo"  ng-click="doSomething(modalData.address,3)" ng-blur="submit('place',3)"/>
                 <button type="submit" class="button button-small button-positive" style="margin: 12px" ng-click="submit('place',3)">OK</button>
             </ion-item>
 <!--

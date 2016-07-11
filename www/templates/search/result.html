@@ -39,7 +39,10 @@
                 <ion-option-button class="button-positive ion-star"\>
                 </ion-option-button>
             </ion-item>
-           <h4 class="titoloAnnuncio" ng-show="elencoRes.length==0">Nessun  annunciuo trovato per i parametri di ricerca impostati</h4>
+<!--           <h4 class="titoloAnnuncio" ng-show="elencoRes.length==0">Nessun  annuncio trovato per i parametri di ricerca impostati</h4>-->
+           <ion-item>
+                <h2 ng-show="elencoRes.length==0" style="border-bottom:0; margin-top:2em;">Spiacenti, nessun risultato trovato</h2>
+           </ion-item>
 
         </ion-list>
     </ion-content>
