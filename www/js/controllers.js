@@ -141,11 +141,19 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController) {
+.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController, RentPubblicatiList, BozzeList, FavouriteList) {
     $scope.$on('$ionicView.enter', function () {
     console.log("abc");
     $scope.user = JSON.parse(localStorage.getItem("userData"));
+
+
+    RentPubblicatiList.call($scope.user.idRENTME);
+    BozzeList.call($scope.user.idRENTME);
+    FavouriteList.call($scope.user.idRENTME);
   });
+
+
+
 
     $scope.logout = function(){
         console.log("logout");
@@ -192,6 +200,8 @@ angular.module('starter.controllers', [])
     }).then(function(modal) {
         $scope.modalEditData = modal;
     });
+
+
     $scope.openEditData = function (){
         console.log("Open");
         $scope.modalEditData.show();
@@ -199,7 +209,9 @@ angular.module('starter.controllers', [])
         $scope.pwDiverse = false;
     };
     $scope.closeEditData = function (){
+        $scope.resetSettings();
         $scope.modalEditData.hide();
+
     };
 
     $scope.showAlert = function(string) {
@@ -221,7 +233,7 @@ angular.module('starter.controllers', [])
         "password":'',
         "check": ''
     };
-    $scope.confirmPw = function(){
+  /*  $scope.confirmPw = function(){
 
             if($scope.edit.check==$scope.edit.password){
                 if($scope.edit.password.length>5){
@@ -242,7 +254,7 @@ angular.module('starter.controllers', [])
                 $scope.showAlert("Password must be the same");
             }
 
-    };
+    };*/
 
     $scope.takeProfileImage = function(){
         var options = {
@@ -274,11 +286,11 @@ angular.module('starter.controllers', [])
 
         $scope.needRepeatPassword = true;
 
-        if($scope.pwList.pw1 == $scope.pwList.pw2){
+        if($scope.pwList.pw1 == $scope.pwList.pw2 && $scope.pwList.pw1 != ""){
             $scope.confermaDisabilitata = false;
             $scope.pwDiverse = false;
         }
-        else if($scope.pwList.pw2 != null){
+        else if($scope.pwList.pw2 != null && $scope.pwList.pw2 != ""){
             $scope.pwDiverse = !$scope.pwDiverse;
             $scope.confermaDisabilitata = true;
         }
@@ -286,7 +298,7 @@ angular.module('starter.controllers', [])
 
     $scope.focusOutPw2 = function(){
         console.log($scope.pwList.pw2);
-        if($scope.pwList.pw1 == $scope.pwList.pw2){
+        if($scope.pwList.pw1 == $scope.pwList.pw2 && $scope.pwList.pw1 != ""){
             $scope.confermaDisabilitata = false;
             $scope.pwDiverse = false;
         }
@@ -298,27 +310,34 @@ angular.module('starter.controllers', [])
 
     $scope.confirmData = function(){
         console.log("Modifica dati");
-        $scope.needRepeatPassword = false;
-        $scope.confermaDisabilitata = true;
-        $scope.pwDiverse = false;
 
         myUrl=  "http://rentme.altervista.org/changePassword.php?" +
                             "id="       +   $scope.user.idRENTME      +
                             "&loginType="   +   'rentMe'                                    +
-                            "&password="    +   $scope.edit.password  ;
-                    xhttp = new XMLHttpRequest;
-                    xhttp.open("GET", myUrl, false);
-                    xhttp.send();
-                    jUser=xhttp.response;
+                            "&password="    +   $scope.pwList.pw1  ;
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        jResponse=xhttp.response;
+
+        $scope.closeEditData();
     }
+
+    $scope.resetSettings = function(){
+        $scope.pwList.pw1 = "";
+        $scope.pwList.pw2 = "";
+
+        $scope.needRepeatPassword = false;
+        $scope.confermaDisabilitata = true;
+        $scope.pwDiverse = false;
+    }
+
+
 })
 
 // TAB-SEARCH Controller
-.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList, RentPubblicatiList, BozzeList, FavouriteList) {
+.controller('SearchCtrl', function($scope,$state, $ionicModal, $timeout, $ionicPopup,ResultList) {
 
-    RentPubblicatiList.call();
-    BozzeList.call();
-    FavouriteList.call();
 
     $scope.modalData = {"choice" : '-1',
 

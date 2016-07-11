@@ -73,18 +73,25 @@ angular.module('starter.services', [])
 
     var favArray = [];
 
-    function callAjax(){
+    function callAjax(utenteID){
         $http({
             method : "GET",
-            url : 'http://rentme.altervista.org/IONIC/get_preferiti.php',
+            url : 'http://rentme.altervista.org/IONIC/get_preferiti.php?'+
+                    'id_user='+utenteID,
 
         }).then(function mySucces(response) {
             console.log("Get_Favourite: ");
 
-            for(var i=0; i<response.data.length; i++){
-                //console.log(response.data[i]);
-                favArray.push(response.data[i]);
+            if(response.data!=0){
+                for(var i=0; i<response.data.length; i++){
+                    //console.log(response.data[i]);
+                    favArray.push(response.data[i]);
+                }
             }
+            else{
+                console.log("Nessun Preferito");
+            }
+
 
             console.log(favArray);
         }, function myError(response) {
@@ -94,8 +101,8 @@ angular.module('starter.services', [])
 
 
     return{
-        call : function(){
-            callAjax();
+        call : function(idUSER){
+            callAjax(idUSER);
             return;
         },
 
@@ -147,28 +154,34 @@ angular.module('starter.services', [])
 .factory('RentPubblicatiList', function($http){
 
     var pubblicatiArray = [];
-    function callAjax(){
+    function callAjax(utenteID){
         $http({
             method : "GET",
-            url : 'http://rentme.altervista.org/IONIC/get_annuncio.php',
+            url : 'http://rentme.altervista.org/IONIC/get_annuncio.php?'+
+                    'id_user='+utenteID,
 
         }).then(function mySucces(response) {
             console.log("Get_Annuncio: ");
 
-            for(var i=0; i<response.data.length; i++){
-                //console.log(response.data[i]);
-                pubblicatiArray.push(response.data[i]);
+            if(response.data!=0){
+                for(var i=0; i<response.data.length; i++){
+                    pubblicatiArray.push(response.data[i]);
+                }
+            }
+            else{
+                console.log("Nessun Annuncio");
             }
 
             console.log(pubblicatiArray);
+
         }, function myError(response) {
             console.log(response.statusText);
         });
     }
 
     return {
-        call : function(){
-            callAjax();
+        call : function(idUSER){
+            callAjax(idUSER);
             return;
         },
 
@@ -205,32 +218,39 @@ angular.module('starter.services', [])
     var bozzeArray = [];
     var bozzeChanged = [];
     var t = '[';
-     function callAjax(){
+     function callAjax(utenteID){
         $http({
             method : "GET",
-            url : 'http://rentme.altervista.org/IONIC/get_bozze.php',
+            url : 'http://rentme.altervista.org/IONIC/get_bozze.php?'+
+                  'id_user='+utenteID,
 
         }).then(function mySucces(response) {
             console.log("Get_Bozze: ");
 
-            for(var i=0; i<response.data.length; i++){
-                bozzeArray.push(response.data[i]);
-                if(i!=0){t+=',';}
-                t+='{"id":"'+response.data[i].id_annuncio+'","changed":"false"}';
-            }
 
-            t+=']';
-            bozzeChanged=JSON.parse(t);
-            //console.log(bozzeChanged);
+            if(response.data!=0){
+                for(var i=0; i<response.data.length; i++){
+                    bozzeArray.push(response.data[i]);
+                    if(i!=0){t+=',';}
+                    t+='{"id":"'+response.data[i].id_annuncio+'","changed":"false"}';
+                }
+
+                t+=']';
+                bozzeChanged=JSON.parse(t);
+            }
+            else{
+                console.log("Nessuna Bozza");
+            }
             console.log(bozzeArray);
+
         }, function myError(response) {
             console.log(response.statusText);
         });
     }
 
     return {
-        call : function(){
-            callAjax();
+        call : function(idUSER){
+            callAjax(idUSER);
             return;
         },
 
