@@ -84,15 +84,12 @@ angular.module('starter.services', [])
 
             if(response.data!=0){
                 for(var i=0; i<response.data.length; i++){
-                    //console.log(response.data[i]);
                     favArray.push(response.data[i]);
                 }
             }
             else{
                 console.log("Nessun Preferito");
             }
-
-
             console.log(favArray);
         }, function myError(response) {
             console.log(response.statusText);
@@ -113,6 +110,16 @@ angular.module('starter.services', [])
         rimuovi : function (i){
             console.log(favArray);
             favArray.splice(favArray.indexOf(i), 1);
+
+
+             myUrl=  "http://rentme.altervista.org/IONIC/rimuovi_preferito.php?" +
+                        "id_preferito=" +   i.preferitoID
+                    ;
+                xhttp = new XMLHttpRequest;
+                xhttp.open("GET", myUrl, false);
+                xhttp.send();
+                jResponse=xhttp.response;
+
             console.log(favArray);
         },
 
@@ -172,7 +179,7 @@ angular.module('starter.services', [])
                 console.log("Nessun Annuncio");
             }
 
-            console.log(pubblicatiArray);
+            //console.log(pubblicatiArray);
 
         }, function myError(response) {
             console.log(response.statusText);
@@ -216,9 +223,9 @@ angular.module('starter.services', [])
 
 .factory('BozzeList', function($http){
     var bozzeArray = [];
-    var bozzeChanged = [];
-    var t = '[';
-     function callAjax(utenteID){
+
+    function callAjax(utenteID){
+         console.log(utenteID);
         $http({
             method : "GET",
             url : 'http://rentme.altervista.org/IONIC/get_bozze.php?'+
@@ -227,21 +234,14 @@ angular.module('starter.services', [])
         }).then(function mySucces(response) {
             console.log("Get_Bozze: ");
 
-
             if(response.data!=0){
                 for(var i=0; i<response.data.length; i++){
                     bozzeArray.push(response.data[i]);
-                    if(i!=0){t+=',';}
-                    t+='{"id":"'+response.data[i].id_annuncio+'","changed":"false"}';
                 }
-
-                t+=']';
-                bozzeChanged=JSON.parse(t);
             }
             else{
                 console.log("Nessuna Bozza");
             }
-            console.log(bozzeArray);
 
         }, function myError(response) {
             console.log(response.statusText);
@@ -257,10 +257,6 @@ angular.module('starter.services', [])
         getBozzeArray : function(){
            //console.log(bozzeArray);
             return bozzeArray;
-        },
-
-        getBozzeChangedArray : function(){
-            return bozzeChanged;
         },
 
         rimuoviBozza : function (oldBozza){
@@ -283,43 +279,25 @@ angular.module('starter.services', [])
         aggiungiBozza : function(nuovaBozza){
 
             console.log(nuovaBozza.id_annuncio);
-            var t= '[{"id":"'+nuovaBozza.id_annuncio+'","changed":"false"}]'
-            //console.log(t);
-            //console.log(JSON.parse(t)[0]);
+
             bozzeArray.push(nuovaBozza);
 
-
-            bozzeChanged.push(JSON.parse(t)[0]);
             console.log(bozzeArray)
-            console.log(bozzeChanged)
-        },
-
-        getBozzaChanged : function(xx){
-            for (var i = 0; i < bozzeChanged.length; i++) {
-                if (bozzeChanged[i].id == parseInt(xx)) {
-                    //console.log("Trovato");
-                    return bozzeChanged[i];
-                }
-            }
-            //console.log("Non trovato");
-            return null;
         }
     }
 })
 
 .factory('NuovoAnnuncioService', function(){
-    var startingID= 500,
-        created=false;
-
+    var annuncioCounter = 300;
     var nuovoAnnuncioArray = [{
-        "id_annuncio":startingID,
-        "id_utente":"23",
-        "titolo":"Inserisci titolo",
+        "id_annuncio":annuncioCounter,
+        "id_utente":JSON.parse(localStorage.getItem("userData")).idRENTME,
+        "titolo":"-",
         "tipo":"-",
         descrizione:"-",
         zona:"-",
         indirizzo:"-",
-        locali:"-",
+        num_locali:"-",
         superficie:"-",
         piano:"-",
         posti_letto:"-",
@@ -336,24 +314,42 @@ angular.module('starter.services', [])
     return {
         getNuovoAnnuncioArray : function(){
             //console.log("all!");
+            console.log(nuovoAnnuncioArray[0].id_annuncio);
             return nuovoAnnuncioArray[0];
         },
-        setCreated : function(){
-            created=true;
-        },
 
+        createNewArray : function(){
+            annuncioCounter+=1;
+            var x = [{
+                "id_annuncio":annuncioCounter,
+                "id_utente":JSON.parse(localStorage.getItem("userData")).idRENTME,
+                "titolo":"-",
+                "tipo":"-",
+                descrizione:"-",
+                zona:"-",
+                indirizzo:"-",
+                num_locali:"-",
+                superficie:"-",
+                piano:"-",
+                posti_letto:"-",
+                posti_letto_tot:"-",
+                autobus:"-",
+                metro:"-",
+                treno:"-",
+                tram:"-",
+                prezzo:"-",
+                imgPreview:"",
+                img1:"", img2:"", img3:"",img4:"", img5:"", img6:"",
+                lat:"", long:""
+            }];
+            console.log(x[0].id_annuncio);
+            return x[0];
+        },
         clearArray : function(){
             console.log("Clear NuovoAnnuncioArray");
-            if(created){
-                var temp_ID= startingID+1;
-                created=false;
-            }
-            else{
-                var temp_ID= startingID;
-            }
 
-            nuovoAnnuncioArray[0].id_annuncio = temp_ID;
-            nuovoAnnuncioArray[0].id_utente = "23";
+            nuovoAnnuncioArray[0].id_annuncio = annuncioCounter;
+            nuovoAnnuncioArray[0].id_utente=JSON.parse(localStorage.getItem("userData")).idRENTME,
             nuovoAnnuncioArray[0].titolo = "-";
             nuovoAnnuncioArray[0].tipo = "-";
             nuovoAnnuncioArray[0].descrizione = "-";

@@ -145,15 +145,13 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function () {
     console.log("abc");
     $scope.user = JSON.parse(localStorage.getItem("userData"));
-
-
-    RentPubblicatiList.call($scope.user.idRENTME);
-    BozzeList.call($scope.user.idRENTME);
-    FavouriteList.call($scope.user.idRENTME);
   });
 
+    var myUserId = JSON.parse(localStorage.getItem("userData")).idRENTME;
 
-
+    RentPubblicatiList.call(myUserId);
+    BozzeList.call(myUserId);
+    FavouriteList.call(myUserId);
 
     $scope.logout = function(){
         console.log("logout");
@@ -272,6 +270,15 @@ angular.module('starter.controllers', [])
         $cordovaCamera.getPicture(options).then(function(imageData) {
             $scope.user.picture = "data:image/jpeg;base64," + imageData;
 
+             myUrl=  "http://rentme.altervista.org/IONIC/changeProfilePicture.php?" +
+                            "id_user="+   $scope.user.idRENTME+
+                            "&new_picture="+   $scope.user.picture;
+                            ;
+            xhttp = new XMLHttpRequest;
+            xhttp.open("GET", myUrl, false);
+            xhttp.send();
+            jResponse=xhttp.response;
+
         }, function(err) {
             // error
         });
@@ -284,7 +291,12 @@ angular.module('starter.controllers', [])
         console.log($scope.pwList.pw1);
         console.log($scope.pwList.pw2);
 
-        $scope.needRepeatPassword = true;
+        if($scope.pwList.pw1 != ""){
+            $scope.needRepeatPassword = true;
+        }
+        else{
+            $scope.resetSettings();
+        }
 
         if($scope.pwList.pw1 == $scope.pwList.pw2 && $scope.pwList.pw1 != ""){
             $scope.confermaDisabilitata = false;
@@ -481,12 +493,31 @@ angular.module('starter.controllers', [])
     $scope.addToPreferiti = function(){
 
         if($scope.isPreferito){
+            console.log("Sto rimuovendo");
             FavouriteList.rimuoviPreferito($stateParams.resId);
+
+            myUrl=  "http://rentme.altervista.org/IONIC/rimuovi_preferito.php?" +
+                        "id_preferito=" +   $scope.f.preferitoID
+                    ;
+                xhttp = new XMLHttpRequest;
+                xhttp.open("GET", myUrl, false);
+                xhttp.send();
+                jResponse=xhttp.response;
+                return true;
         }
         else{
             FavouriteList.aggiungi($scope.f);
 
-        }
+             myUrl=  "http://rentme.altervista.org/IONIC/salva_preferito.php?" +
+                        "id_annuncio="       +   $scope.f.id_annuncio      +
+                        "&id_utente="   +   $scope.f.id_utente
+                    ;
+                xhttp = new XMLHttpRequest;
+                xhttp.open("GET", myUrl, false);
+                xhttp.send();
+                jResponse=xhttp.response;
+                return true;
+            }
     }
 
 })
@@ -746,26 +777,6 @@ angular.module('starter.controllers', [])
 .controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
-    $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
-
-    //ManageRentTabs.setBackFromBozze(true);
-
-    $scope.myGoBack = function(){
-
-        if($scope.bc.changed==true){
-            console.log("Changed: Update DB");
-            $scope.bc.changed=false;
-            //console.log($scope.bc.id);
-            //console.log($scope.bc.changed);
-        }
-        else{
-            console.log("Nothing changed");
-           // console.log($scope.bc.id);
-           // console.log($scope.bc.changed);
-        }
-
-        $ionicHistory.goBack();
-    }
 
     $scope.checkField = function(){
         console.log("Checking.. ");
@@ -1023,13 +1034,11 @@ angular.module('starter.controllers', [])
 
     $scope.nuovoAnnuncioModal = function() {
         console.log("Open modal");
-        NuovoAnnuncioService.clearArray();
         $scope.modal_uno.show();
     };
 
     $scope.closeModal = function() {
         console.log("Close Modal");
-        //console.log(NuovoAnnuncioService.getNuovoAnnuncioArray());
 
         $scope.showNuovoAnnuncioSheet();
     };
@@ -1074,11 +1083,78 @@ angular.module('starter.controllers', [])
 
             buttonClicked: function(index) {
                 console.log("Salvare bozza e inviare DB");
+                console.log($scope.n.id_annuncio);
 
-                NuovoAnnuncioService.setCreated();
-                BozzeList.aggiungiBozza($scope.n);
-                //console.log(BozzaList.getBozzeArray());
+                var nuovo=NuovoAnnuncioService.createNewArray();
+                console.log($scope.n.id_annuncio);
+
+                nuovo.id_annuncio=$scope.n.id_annuncio;
+                nuovo.id_utente=$scope.n.id_utente;
+                nuovo.titolo=$scope.n.titolo;
+                nuovo.prezzo=$scope.n.prezzo;
+                nuovo.tipo=$scope.n.tipo;
+                nuovo.descrizione=$scope.n.descrizione;
+                nuovo.zona=$scope.n.zona;
+                nuovo.indirizzo=$scope.n.indirizzo;
+                nuovo.num_locali=$scope.n.num_locali;
+                nuovo.superficie=$scope.n.superficie;
+                nuovo.piano=$scope.n.piano;
+                nuovo.posti_letto=$scope.n.posti_letto;
+                nuovo.posti_letto_tot=$scope.n.posti_letto_tot;
+                nuovo.autobus=$scope.n.autobus;
+                nuovo.metro=$scope.n.metro;
+                nuovo.treno=$scope.n.treno;
+                nuovo.tram=$scope.n.tram;
+                nuovo.prezzo=$scope.n.prezzo;
+                nuovo.imgPreview=$scope.n.imgPreview;
+                nuovo.img1=$scope.n.img1;
+                nuovo.img2=$scope.n.img2;
+                nuovo.img3=$scope.n.img3;
+                nuovo.img4=$scope.n.img4;
+                nuovo.img5=$scope.n.img5;
+                nuovo.img6=$scope.n.img6;
+                nuovo.lat=$scope.n.lat;
+                nuovo.long=$scope.n.long;
+
+                console.log(nuovo.id_annuncio);
+                BozzeList.aggiungiBozza(nuovo);
+
                 $scope.modal_uno.hide();
+                NuovoAnnuncioService.clearArray();
+
+
+                myUrl=  "http://rentme.altervista.org/IONIC/salva_bozza.php?" +
+                        "id_annuncio="       +   nuovo.id_annuncio      +
+                        "&id_utente="   +   nuovo.id_utente       +
+                        "&descrizione="    +   nuovo.descrizione  +
+                        "&autobus="    +   nuovo.autobus  +
+                        "&metro="    +   nuovo.metro  +
+                        "&tram="    +   nuovo.tram  +
+                        "&treno="    +   nuovo.treno  +
+                        "&indirizzo"    +   nuovo.indirizzo  +
+                        "&zona"    +   nuovo.zona  +
+                        "&titolo="    +   nuovo.titolo  +
+                        "&imgPreview="    +   nuovo.imgPreview  +
+                        "&img1="    +   nuovo.img1  +
+                        "&img2="    +   nuovo.img2  +
+                        "&img3="    +   nuovo.img3  +
+                        "&img4="    +   nuovo.img4  +
+                        "&img5="    +   nuovo.img5  +
+                        "&img6="    +   nuovo.img6  +
+                        "&num_locali="    +   nuovo.num_locali  +
+                        "&piano="    +   nuovo.piano  +
+                        "&tipo="    +   nuovo.tipo  +
+                        "&superficie="    +   nuovo.superficie  +
+                        "&prezzo="    +   nuovo.prezzo  +
+                        "&posti_letto="    +   nuovo.posti_letto  +
+                        "&posti_letto_tot="    +   nuovo.posti_letto_tot  +
+                        "&lat="    +   nuovo.lat  +
+                        "&lng="    +   nuovo.long
+                    ;
+                xhttp = new XMLHttpRequest;
+                xhttp.open("GET", myUrl, false);
+                xhttp.send();
+                jResponse=xhttp.response;
                 return true;
             }
         });
