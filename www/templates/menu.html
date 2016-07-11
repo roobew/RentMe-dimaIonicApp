@@ -45,14 +45,14 @@ navigation history that also transitions its views in and out.
             <h4 style="margin-top:1em;"><i>{{user.email}}</i></h4>
           </div>
 
-            <a class="item icon-left ion-person firsMenuElement" menu-close>
-              <span class="menuElementPadding" ng-click="openEditData()">Modifica profilo</span>
+            <a class="item icon-left ion-person firsMenuElement" menu-close ng-click="openEditData()">
+              <span class="menuElementPadding" >Modifica profilo</span>
             </a>
-            <a class="item icon ion-person-stalker" menu-close>
-              <span class="menuElementPadding" ng-click="openContacts()">Contatti</span>
+            <a class="item icon ion-person-stalker" menu-close  ng-click="openContacts()">
+              <span class="menuElementPadding">Contatti</span>
             </a>
-            <a class="item icon ion-reply" menu-close>
-                <span class="menuElementPadding" ng-click="logout()">Esci</span>
+            <a class="item icon ion-reply" menu-close ng-click="logout()">
+                <span class="menuElementPadding" >Esci</span>
             </a>
         </ul>
       </ion-content>

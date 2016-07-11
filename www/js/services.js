@@ -581,7 +581,8 @@ angular.module('starter.services', [])
         },
 
         near : function(km){
-            vicino(km);
+            if(km!=0)
+                vicino(km);
             return;
         },
 

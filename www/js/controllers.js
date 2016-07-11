@@ -561,7 +561,7 @@ angular.module('starter.controllers', [])
 
 .controller('modalPlaceCtrl', function($scope, $ionicModal) {
   $scope.zones = ["Centro",
-                  "Citta' Studi",
+                  "Citta Studi",
                   "Corso Buenos Aires",
                   "Porta Garibaldi",
                   "Fiera - San Siro",
@@ -602,11 +602,12 @@ angular.module('starter.controllers', [])
               $scope.modalData.zone = item;
               $scope.modalData.address = '';
               $scope.modalData.place = $scope.modalData.zone;
+               $scope.modalData.dist = 0;
               $scope.modalZone.hide();
               $scope.submit('place',2);
               break;
           case 3:
-
+                 $scope.modalData.dist = 0;
               $scope.modalData.zone = 'Scegli una zona';
               break;
       }
@@ -825,7 +826,7 @@ angular.module('starter.controllers', [])
 .controller('BozzeDetailCtrl', function($scope,$state, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera,ManageRentTabs) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
-
+    $scope.check = BozzeList.checkBozza()
     $scope.myGoBack = function(){
 
         ManageRentTabs.set('boz');
