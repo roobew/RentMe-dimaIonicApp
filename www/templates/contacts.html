@@ -1,0 +1,16 @@
+<ion-modal-view ng-controller="ContactsCtrl">
+  <ion-header-bar class="bar-positive">
+      <div class="buttons">
+      <button class="button button-clear ion-chevron-left" ng-click="closeContacts()"></button>
+    </div>
+      <h1 class="title">Contatti</h1>
+  </ion-header-bar>
+  <ion-content class="has-header">
+    <ion-list >
+        <ion-item class="item item-remove-animate item-icon-right " ng-repeat="f in contatti" type="item-text-wrap" ng-click="inviaEmail('{{f.mail}}')">
+            {{f.mail}}
+             <i class="icon ion-email"></i>
+    </ion-list>
+
+  </ion-content>
+</ion-modal-view>

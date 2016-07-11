@@ -141,7 +141,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController, RentPubblicatiList, BozzeList, FavouriteList) {
+.controller('AppCtrl', function($scope,$state,UserService,$ionicModal,$ionicPopup, $cordovaCamera, ModificaPasswordController, RentPubblicatiList, BozzeList, FavouriteList,ContactsList) {
     $scope.$on('$ionicView.enter', function () {
     console.log("abc");
     $scope.user = JSON.parse(localStorage.getItem("userData"));
@@ -175,20 +175,26 @@ angular.module('starter.controllers', [])
 
 
 
-    $ionicModal.fromTemplateUrl('templates/editPw.html', {
+    $ionicModal.fromTemplateUrl('templates/contacts.html', {
         id: 'edit',
         scope: $scope,
         animation: 'null', //slide-in-up',
         focusFirstInput: true
 
     }).then(function(modal) {
-        $scope.modalEditPw = modal;
+        $scope.modalContacts = modal;
     });
-    $scope.openEditPw = function (){
-        $scope.modalEditPw.show();
+    $scope.openContacts = function (){
+        console.log("dentro");
+        $scope.user = JSON.parse(localStorage.getItem("userData"));
+        console.log($scope.user.idRENTME);
+        ContactsList.call($scope.user.idRENTME);
+        $scope.contatti = ContactsList.getConArray();
+        $scope.modalContacts.show();
     };
-    $scope.closeEditPw = function (){
-        $scope.modalEditPw.hide();
+    $scope.closeContacts = function (){
+        $scope.modalContacts.hide();
+        ContactsList.clear();
     };
 
     $ionicModal.fromTemplateUrl('templates/editData.html', {
@@ -246,7 +252,7 @@ angular.module('starter.controllers', [])
                     xhttp.send();
                     jUser=xhttp.response;
 
-                    $scope.closeEditPw();
+                    $scope.closeContacts();
                 }else{
                     $scope.showAlert("Password too short");
                 }
@@ -333,6 +339,19 @@ angular.module('starter.controllers', [])
     }
 
 
+})
+
+.controller('ContactsCtrl', function($scope,$state,$ionicModal,ContactsList) {
+
+
+    $scope.inviaEmail = function(mail){
+        var url = "mailto:"+mail;
+
+        window.location.href =url;
+
+
+
+    };
 })
 
 // TAB-SEARCH Controller
@@ -423,8 +442,11 @@ angular.module('starter.controllers', [])
            // e.preventDefault();
         }else{
            ResultList.call($scope.modalData.zone,$scope.modalData.address,$scope.modalData.type,$scope.modalData.priceStart,$scope.modalData.priceEnd);
-           ResultList.near(15);
-            $state.go('tab.result');
+            ResultList.near(15);
+            setTimeout(function(){
+                $state.go('tab.result');
+            }, 1500);
+
 
         }
     };
@@ -438,6 +460,7 @@ angular.module('starter.controllers', [])
 
 .controller('ResultCtrl', function($scope,ResultList) {
 
+
     $scope.elencoRes = ResultList.getResArray();
 
     $scope.removeRes = function(ss){
@@ -450,8 +473,21 @@ angular.module('starter.controllers', [])
 .controller('ResultDetailCtrl', function($scope, $stateParams, ResultList, FavouriteList) {
 
     $scope.f = ResultList.getAnnuncio($stateParams.resId);
+    $scope.addContact = function(mail){
+        $scope.user = JSON.parse(localStorage.getItem("userData"));
+         var myUrl=  "http://rentme.altervista.org/IONIC/addContact.php?" +
+                "idRENTME="       +  $scope.user.idRENTME     +
+                "&mail="   +  mail;
+            ;
 
+        console.log("Aggiungo contatto..");
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        var resultCall=xhttp.response;
+    };
     $scope.inviaEmail = function(){
+        $scope.addContact($scope.f.email);
         var url = "mailto:"+$scope.f.email+"?subject="+$scope.f.titolo+"&body=Ciao,%0D%0Asono interessato al tuo annuncio:%0D%0A%0D%0ATITOLO:"+$scope.f.titolo+
                 "%0D%0A%0D%0ADescrizione:"+$scope.f.descrizione+
                 "%0D%0AIndirizzo:"+$scope.f.indirizzo+
@@ -463,6 +499,7 @@ angular.module('starter.controllers', [])
                 "%0D%0A%0D%0AAspetto tue notizie ed un eventuale incontro.%0D%0ASaluti";
 
         window.location.href =url;
+
 
 
     };
@@ -700,7 +737,7 @@ angular.module('starter.controllers', [])
 
 
 // TAB-AFFITTA Controller
-.controller('RentCtrl', function($scope) {
+.controller('RentCtrl', function($scope,ManageRentTabs) {
     //console.log("Rent Controller");
     /*if(ManageRentTabs.getBackFromBozze()){
         console.log("Da bozze");
@@ -712,15 +749,19 @@ angular.module('starter.controllers', [])
         console.log("Altro!");
     }*/
 
-    $scope.selectedTab = 'pub';
+    $scope.selectedTab = ManageRentTabs.get();
+    $scope.set = function(str){
+        ManageRentTabs.set(str);
+        $scope.selectedTab = ManageRentTabs.get();
 
+    };
     var myEl = angular.element( document.querySelector( '#divID' ) );
     myEl.removeClass('red');
 })
-.controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList) {
+.controller('RentPubblicatiCtrl', function($scope, RentPubblicatiList,ManageRentTabs) {
 
     //console.log("Pubblicati Controller");
-
+     $scope.selectedTab = ManageRentTabs.get();
     $scope.elencoPubblicati = RentPubblicatiList.getPubblicatiArray();
 
     $scope.removePubblicato = function(ss){
@@ -729,8 +770,9 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('RentBozzeCtrl', function($scope, BozzeList){
+.controller('RentBozzeCtrl', function($scope, BozzeList,ManageRentTabs){
     //console.log("Bozze Controller");
+      $scope.selectedTab = ManageRentTabs.get();
     $scope.elencoBozze = BozzeList.getBozzeArray();
 
     $scope.removeBozza = function(ss){
@@ -738,12 +780,17 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('RentDetailCtrl', function($scope, $stateParams, RentPubblicatiList) {
+.controller('RentDetailCtrl', function($scope,$state, $stateParams, RentPubblicatiList,ManageRentTabs) {
 
     $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
+     $scope.myGoBack = function(){
+        ManageRentTabs.set('pub');
+        $state.go('tab.rent.pubblicati');
+       // $ionicHistory.goBack();
+    }
 })
 
-.controller('BozzeDetailCtrl', function($scope, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera) {
+.controller('BozzeDetailCtrl', function($scope,$state, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera,ManageRentTabs) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
     $scope.bc = BozzeList.getBozzaChanged($stateParams.bozzaID);
@@ -763,8 +810,9 @@ angular.module('starter.controllers', [])
            // console.log($scope.bc.id);
            // console.log($scope.bc.changed);
         }
-
-        $ionicHistory.goBack();
+        ManageRentTabs.set('boz');
+        $state.go('tab.rent.bozze');
+       // $ionicHistory.goBack();
     }
 
     $scope.checkField = function(){
@@ -1313,7 +1361,22 @@ angular.module('starter.controllers', [])
 
     $scope.f = FavouriteList.getFavourite($stateParams.favId);
 
+    $scope.addContact = function(mail){
+        $scope.user = JSON.parse(localStorage.getItem("userData"));
+         var myUrl=  "http://rentme.altervista.org/IONIC/addContact.php?" +
+                "idRENTME="       +  $scope.user.idRENTME     +
+                "&mail="   +  mail;
+            ;
+
+        console.log("Aggiungo contatto..");
+        console.log(myUrl);
+        xhttp = new XMLHttpRequest;
+        xhttp.open("GET", myUrl, false);
+        xhttp.send();
+        var resultCall=xhttp.response;
+    };
     $scope.inviaEmail = function(){
+        $scope.addContact($scope.f.email);
         var url = "mailto:"+$scope.f.email+"?subject="+$scope.f.titolo+"&body=Ciao,%0D%0Asono interessato al tuo annuncio:%0D%0A%0D%0ATITOLO:"+$scope.f.titolo+
                 "%0D%0A%0D%0ADescrizione:"+$scope.f.descrizione+
                 "%0D%0AIndirizzo:"+$scope.f.indirizzo+

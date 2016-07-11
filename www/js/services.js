@@ -6,14 +6,14 @@ var url1= "http://www.alrocol.com/img/ospitalita/appartamento01-big.jpg",
 angular.module('starter.services', [])
 
 .factory('ManageRentTabs', function(){
-    var backFromBozze = false ;
+    var selectedTab = 'pub' ;
 
     return {
-        setBackFromBozze : function(value){
-            backFromBozze = value;
+        set : function(value){
+            selectedTab = value;
         },
-        getBackFromBozze : function(){
-            return backFromBozze;
+        get : function(){
+            return selectedTab;
         }
     };
 })
@@ -74,6 +74,7 @@ angular.module('starter.services', [])
     var favArray = [];
 
     function callAjax(utenteID){
+         favArray.splice(0, favArray.length);
         $http({
             method : "GET",
             url : 'http://rentme.altervista.org/IONIC/get_preferiti.php?'+
@@ -108,6 +109,14 @@ angular.module('starter.services', [])
 
         getFavArray : function(){
             return favArray;
+        },
+        clear : function (){
+
+                    favArray.splice(0, conArray.length);
+
+             return;
+
+
         },
 
         rimuovi : function (i){
@@ -151,10 +160,102 @@ angular.module('starter.services', [])
 
 })
 
+.factory('ContactsList', function($http){
+
+    var conArray = [];
+
+    function callAjax(utenteID){
+        $http({
+            method : "GET",
+            url : 'http://rentme.altervista.org/IONIC/get_contatti.php?'+
+                    'id_user='+utenteID,
+
+        }).then(function mySucces(response) {
+            console.log("Get_Contacts: ");
+
+            if(response.data!=0){
+                for(var i=0; i<response.data.length; i++){
+                    //console.log(response.data[i]);
+                    conArray.push(response.data[i]);
+                }
+            }
+            else{
+                console.log("Nessun Contatto");
+            }
+
+
+            console.log(conArray);
+        }, function myError(response) {
+            console.log(response.statusText);
+        });
+    }
+
+
+    return{
+        call : function(idUSER){
+            callAjax(idUSER);
+            return;
+        },
+
+        getConArray : function(){
+            return conArray;
+        },
+
+        rimuovi : function (i){
+            console.log(conArray);
+            conArray.splice(conArray.indexOf(i), 1);
+            console.log(conArray);
+        },
+         clear : function (){
+
+                    conArray.splice(0, conArray.length);
+
+             return;
+
+
+        },
+
+        rimuoviContatto : function(itemID){
+            console.log(conArray);
+            for (var i = 0; i < conArray.length; i++) {
+                if (conArray[i].id_annuncio == parseInt(itemID)) {
+                    conArray.splice(i, 1);
+                    console.log(conArray);
+                    return;
+                }
+            }
+            console.log("Fav_ non trovato");
+        },
+
+        aggiungi : function (newElement){
+            conArray.push(newElement);
+        },
+
+        getContacts : function(xx){
+            for (var i = 0; i < conArray.length; i++) {
+                if (conArray[i].id_annuncio == parseInt(xx)) {
+                    //console.log("Trovato");
+                    return conArray[i];
+                }
+            }
+            //console.log("Non trovato");
+            return null;
+        },
+
+        //setFavArray : function(myArray){
+        //    conArray = myArray;
+       // },
+
+    };
+
+})
+
+
 .factory('RentPubblicatiList', function($http){
 
     var pubblicatiArray = [];
     function callAjax(utenteID){
+        pubblicatiArray.splice(0, pubblicatiArray.length);
         $http({
             method : "GET",
             url : 'http://rentme.altervista.org/IONIC/get_annuncio.php?'+
@@ -189,7 +290,6 @@ angular.module('starter.services', [])
            //console.log(pubblicatiArray);
             return pubblicatiArray;
         },
-
         rimuoviPubblicato : function (i){
             //console.log("Ricevo "+i);
             pubblicatiArray.splice(pubblicatiArray.indexOf(i), 1);
@@ -219,6 +319,7 @@ angular.module('starter.services', [])
     var bozzeChanged = [];
     var t = '[';
      function callAjax(utenteID){
+          bozzeArray.splice(0, bozzeArray.length);
         $http({
             method : "GET",
             url : 'http://rentme.altervista.org/IONIC/get_bozze.php?'+
@@ -262,7 +363,6 @@ angular.module('starter.services', [])
         getBozzeChangedArray : function(){
             return bozzeChanged;
         },
-
         rimuoviBozza : function (oldBozza){
             //console.log("Ricevo "+i);
             bozzeArray.splice(bozzeArray.indexOf(oldBozza), 1);
