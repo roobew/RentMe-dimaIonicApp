@@ -130,6 +130,8 @@ angular.module('starter.controllers', [])
             console.log("dentro");
             localStorage.setItem("userData",jUser);
             $scope.startApp();
+             $scope.loginData.email = "";
+            $scope.loginData.password="";
         }else{
             $scope.showAlert("Dati non corretti");
             //navigator.notification.alert(JSON.parse(jUser).message, reload, JSON.parse(jUser).title);
