@@ -780,7 +780,7 @@ angular.module('starter.controllers', [])
         console.log("Altro!");
     }*/
 
-    $scope.selectedTab = ManageRentTabs.get();
+    $scope.selectedTab = 'pub';//ManageRentTabs.get();
     $scope.set = function(str){
         ManageRentTabs.set(str);
         $scope.selectedTab = ManageRentTabs.get();
@@ -815,7 +815,7 @@ angular.module('starter.controllers', [])
 
     $scope.e = RentPubblicatiList.getPubblicato($stateParams.rentID);
      $scope.myGoBack = function(){
-        ManageRentTabs.set('pub');
+        //ManageRentTabs.set('pub');
         $state.go('tab.rent.pubblicati');
        // $ionicHistory.goBack();
     }
@@ -826,7 +826,7 @@ angular.module('starter.controllers', [])
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
     $scope.myGoBack = function(){
 
-        ManageRentTabs.set('boz');
+        //ManageRentTabs.set('boz');
         $state.go('tab.rent.bozze');
        // $ionicHistory.goBack();
     }
