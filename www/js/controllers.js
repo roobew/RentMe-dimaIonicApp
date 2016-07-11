@@ -826,7 +826,6 @@ angular.module('starter.controllers', [])
 .controller('BozzeDetailCtrl', function($scope,$state, $stateParams, BozzeList, $ionicActionSheet, $timeout, $ionicHistory, RentPubblicatiList, $cordovaCamera,ManageRentTabs) {
 
     $scope.e = BozzeList.getBozza($stateParams.bozzaID);
-    $scope.check = BozzeList.checkBozza()
     $scope.myGoBack = function(){
 
         ManageRentTabs.set('boz');
@@ -1188,8 +1187,8 @@ angular.module('starter.controllers', [])
                         "&metro="    +   nuovo.metro  +
                         "&tram="    +   nuovo.tram  +
                         "&treno="    +   nuovo.treno  +
-                        "&indirizzo"    +   nuovo.indirizzo  +
-                        "&zona"    +   nuovo.zona  +
+                        "&indirizzo="    +   nuovo.indirizzo  +
+                        "&zona="    +   nuovo.zona  +
                         "&titolo="    +   nuovo.titolo  +
                         "&imgPreview="    +   nuovo.imgPreview  +
                         "&img1="    +   nuovo.img1  +
